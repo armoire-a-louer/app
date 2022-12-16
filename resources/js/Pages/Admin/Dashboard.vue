@@ -42,7 +42,7 @@
               Total clients
             </p>
             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              6389
+              {{ usersCount }}
             </p>
           </div>
         </div>
@@ -170,6 +170,9 @@
       </div>
 
       <!-- New Table -->
+      <h3 class="mt-6 text-xl font-semibold text-gray-700 dark:text-gray-200">
+        Dernières commandes
+      </h3>
       <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
@@ -849,6 +852,8 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 export default {
+  props: ['usersCount'],
+
   components: {
     AdminLayout,
   },
