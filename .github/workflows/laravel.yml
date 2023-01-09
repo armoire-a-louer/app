@@ -21,7 +21,7 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Run migrations
-      run: php artisan migrate --ansi
+      run: php artisan migrate --force
     - name: Install node dependencies
       run: npm install
     - name: Run node build
