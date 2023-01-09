@@ -24,8 +24,8 @@ jobs:
       run: php artisan cache:clear
     - name: Clear config
       run: php artisan config:clear
-    - name: Run migrations
-      run: ssh staging 'php artisan migrate'
+    # - name: Run migrations
+    #   run: ssh staging 'php artisan migrate'
     - name: Install node dependencies
       run: npm install
     - name: Run node build
