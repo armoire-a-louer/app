@@ -79,7 +79,7 @@
               form-input
             "
             type="text"
-            placeholder="Search for projects"
+            placeholder="FAIRE LA RECHERCHE"
             aria-label="Search"
           />
         </div>
@@ -164,7 +164,7 @@
               "
             ></span>
           </button>
-          <template x-if="isNotificationsMenuOpen">
+          <template v-if="isNotificationsMenuOpen">
             <ul
               @click.away="closeNotificationsMenu"
               @keydown.escape="closeNotificationsMenu"
@@ -308,7 +308,7 @@
               aria-hidden="true"
             />
           </button>
-          <template x-if="isProfileMenuOpen">
+          <template v-if="isProfileMenuOpen">
             <ul
               @click.away="closeProfileMenu"
               @keydown.escape="closeProfileMenu"
@@ -444,9 +444,24 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isNotificationsMenuOpen: false,
+      isProfileMenuOpen: false
+    }
+  },
+  
   methods: {
     toggleSideMenu() {
       this.$emit('toggleSideMenu');
+    },
+
+    toggleNotificationsMenu() {
+      this.isNotificationsMenuOpen = ! this.isNotificationsMenuOpen;
+    },
+
+    toggleProfileMenu() {
+      this.isProfileMenuOpen = ! this.isProfileMenuOpen;
     }
   }
 };

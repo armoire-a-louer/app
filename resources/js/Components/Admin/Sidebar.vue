@@ -10,18 +10,19 @@
       md:block
       flex-shrink-0
     "
-    :class="{ 'hidden': ! toggleSideMenu }"
+    :class="{ hidden: !toggleSideMenu }"
   >
     <div class="py-4 text-gray-500 dark:text-gray-400">
       <a
         class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
         href="#"
       >
-        Windmill
+        Armoire à louer
       </a>
       <ul class="mt-6">
         <li class="relative px-6 py-3">
           <span
+            v-if="path === '/admin'"
             class="
               absolute
               inset-y-0
@@ -32,20 +33,19 @@
             "
             aria-hidden="true"
           ></span>
-          <a
+          <Link
+            href="/admin"
             class="
               inline-flex
               items-center
               w-full
               text-sm
               font-semibold
-              text-gray-800
               transition-colors
               duration-150
               hover:text-gray-800
-              dark:hover:text-gray-200 dark:text-gray-100
             "
-            href="index.html"
+            :class="{ 'text-gray-800': path === '/admin' }"
           >
             <svg
               class="w-5 h-5"
@@ -61,13 +61,26 @@
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
               ></path>
             </svg>
-            <span class="ml-4">Dashboard</span>
-          </a>
+            <span class="ml-4">Tableau de bord</span>
+          </Link>
         </li>
       </ul>
       <ul>
         <li class="relative px-6 py-3">
-          <a
+          <span
+            v-if="path === '/admin/brands'"
+            class="
+              absolute
+              inset-y-0
+              left-0
+              w-1
+              bg-purple-600
+              rounded-tr-lg rounded-br-lg
+            "
+            aria-hidden="true"
+          ></span>
+          <Link
+            href="/admin/brands"
             class="
               inline-flex
               items-center
@@ -77,26 +90,27 @@
               transition-colors
               duration-150
               hover:text-gray-800
-              dark:hover:text-gray-200
             "
-            href="forms.html"
+            :class="{ 'text-gray-800': path === '/admin/brands' }"
           >
             <svg
               class="w-5 h-5"
-              aria-hidden="true"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
               viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
               stroke="currentColor"
             >
               <path
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-              ></path>
+                d="M2 20V4C2 3.44772 2.44772 3 3 3H8.44792C8.79153 3 9.11108 3.17641 9.29416 3.46719L10.5947 5.53281C10.7778 5.82359 11.0974 6 11.441 6H21C21.5523 6 22 6.44772 22 7V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20Z"
+                stroke="#200E32"
+                stroke-width="2"
+              />
+              <path d="M8 14L8 18" stroke="#200E32" stroke-width="2" />
+              <path d="M12 10L12 18" stroke="#200E32" stroke-width="2" />
+              <path d="M16 12L16 18" stroke="#200E32" stroke-width="2" />
             </svg>
-            <span class="ml-4">Forms</span>
-          </a>
+            <span class="ml-4">Marques</span>
+          </Link>
         </li>
         <li class="relative px-6 py-3">
           <a
@@ -419,8 +433,19 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
-    props: ['toggleSideMenu']
-}
+  props: ["toggleSideMenu"],
+
+  components: {
+    Link,
+  },
+
+  computed: {
+    path() {
+      return this.$inertia.page.props.path;
+    }
+  }
+};
 </script>

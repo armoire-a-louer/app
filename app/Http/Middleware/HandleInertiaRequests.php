@@ -43,6 +43,8 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+
+            'path' => $request->getPathInfo()
         ]);
     }
 }
