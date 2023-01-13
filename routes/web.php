@@ -41,10 +41,10 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard']);
 
     //Brands
-    Route::get('/brands', [BrandsController::class, 'index']);
-    Route::post('/brands/store', [BrandsController::class, 'store']);
-    Route::put('/brands/update', [BrandsController::class, 'update']);
-    Route::delete('/brands/delete', [BrandsController::class, 'delete']);
+    Route::get('/brands', [BrandsController::class, 'index'])->name('admin.brands.index');
+    Route::post('/brands/store', [BrandsController::class, 'store'])->name('admin.brands.store');
+    Route::patch('/brands/update/{id}', [BrandsController::class, 'update'])->name('admin.brands.update');
+    Route::delete('/brands/delete/{id}', [BrandsController::class, 'delete'])->name('admin.brands.delete');
 });
 
 require __DIR__.'/auth.php';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateBrandRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateBrandRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('admin', auth()->user());
     }
 
     /**
@@ -24,7 +25,23 @@ class UpdateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:255|unique:brands,name,' . $this->get('id'),
+            'image' => 'nullable|image',
+            'active' => 'boolean'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Champ nom requis',
+            'name.min' => 'Nom minimum 3 lettres',
+            'name.max' => 'Nom maximum 255 lettres',
+            'name.unique' => 'Une marque de ce nom existe déjà',
+
+            'image.image' => 'Le fichier doit être une image',
+
+            'active.boolean' => 'Champ actif invalide'
         ];
     }
 }
