@@ -14,9 +14,9 @@ jobs:
       - name: Deploy to production
         uses: appleboy/ssh-action@master
         with:
-          username: ${{ secrets.SSH_USERNAME }}
-          host: ${{ secrets.SSH_HOST }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          username: ${{ secrets.REMOTE_USER }}
+          host: ${{ secrets.REMOTE_HOST }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
           script: 'cd /var/www/armoire-a-louer-dev && chmod u+x ./server_deploy.sh && ./server_deploy.sh'
 
   laravel-deploy-prod:
@@ -26,7 +26,7 @@ jobs:
       - name: Deploy to production
         uses: appleboy/ssh-action@master
         with:
-          username: ${{ secrets.SSH_USERNAME }}
-          host: ${{ secrets.SSH_HOST }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          username: ${{ secrets.REMOTE_USER }}
+          host: ${{ secrets.REMOTE_HOST }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
           script: 'cd /var/www/armoire-a-louer && chmod u+x ./server_deploy.sh && ./server_deploy.sh'
