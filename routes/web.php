@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,12 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard']);
+
+    //Brands
+    Route::get('/brands', [BrandsController::class, 'index']);
+    Route::post('/brands/store', [BrandsController::class, 'store']);
+    Route::put('/brands/update', [BrandsController::class, 'update']);
+    Route::delete('/brands/delete', [BrandsController::class, 'delete']);
 });
 
 require __DIR__.'/auth.php';
