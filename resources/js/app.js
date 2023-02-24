@@ -17,9 +17,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTags } from '@fortawesome/free-solid-svg-icons'
 import { faCopyright } from '@fortawesome/free-solid-svg-icons'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faVenusMars } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faTags, faCopyright, faHome)
+library.add(faTags, faCopyright, faHome, faVenusMars)
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 

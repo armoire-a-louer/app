@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 
 /*
@@ -49,6 +50,9 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 
     // Products
     Route::get('/products', [ProductsController::class, 'index'])->name('admin.products.index');
+
+    // Categories
+    Route::get('/categories', [CategoriesController:: class, 'index'])->name('admin.categories.index');
 });
 
 require __DIR__.'/auth.php';
