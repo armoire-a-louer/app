@@ -5,7 +5,7 @@
     <span v-if="brand.active" class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 absolute">Active</span>
     <div class="flex flex-col items-center py-10">
       <img
-        class="w-24 h-24 mb-3 rounded-full shadow-lg"
+        class="w-24 h-24 mb-3 rounded-full shadow-lg object-cover object-center"
         :src="brand.image_url"
         :alt="brand.name"
       />
