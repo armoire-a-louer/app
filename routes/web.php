@@ -53,6 +53,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 
     // Categories
     Route::get('/categories', [CategoriesController:: class, 'index'])->name('admin.categories.index');
+    Route::post('/categories/store', [CategoriesController::class, 'store'])->name('admin.categories.store');
 });
 
 require __DIR__.'/auth.php';

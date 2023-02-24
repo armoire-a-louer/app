@@ -11,9 +11,17 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('updated_at', 'desc')->get();
+        $menCategories = Category::where('sex', Category::HOMME)->get();
+        $womenCategories = Category::where('sex', Category::HOMME)->get();
+
         return Inertia::render('Admin/Categories', [
-            'categories' => $categories
+            'menCategories' => $menCategories,
+            'womenCategories' => $womenCategories
         ]);
+    }
+
+    public function store()
+    {
+        
     }
 }
