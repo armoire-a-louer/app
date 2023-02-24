@@ -10,7 +10,7 @@
         :alt="brand.name"
       />
       <h5 class="mb-1 text-xl font-medium text-gray-900">{{ brand.name }}</h5>
-      <!-- <span class="text-sm text-gray-500">Visual Designer</span> -->
+      <!-- <span class="text-sm text-gray-500">Visual Designer</span> --> 
 
       <div v-if="isModalOpen" class="modal">
         <div
