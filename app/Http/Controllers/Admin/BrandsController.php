@@ -35,7 +35,7 @@ class BrandsController extends Controller
         $brand->name = $request->get('name');
         $brand->active = $request->get('active');
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $brand->media()->delete();
             $brand->addMediaFromRequest('image')->toMediaCollection('brands');
         }
@@ -52,6 +52,6 @@ class BrandsController extends Controller
         $brand->delete();
 
         $brands = Brand::orderBy('updated_at', 'desc')->get();
-        return response()->json($brands); 
+        return response()->json($brands);
     }
 }

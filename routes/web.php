@@ -43,7 +43,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     //Brands
     Route::get('/brands', [BrandsController::class, 'index'])->name('admin.brands.index');
     Route::post('/brands/store', [BrandsController::class, 'store'])->name('admin.brands.store');
-    Route::patch('/brands/update/{id}', [BrandsController::class, 'update'])->name('admin.brands.update');
+    Route::post('/brands/update/{id}', [BrandsController::class, 'update'])->name('admin.brands.update');
     Route::delete('/brands/delete/{id}', [BrandsController::class, 'delete'])->name('admin.brands.delete');
 });
 

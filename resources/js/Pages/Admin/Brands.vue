@@ -263,12 +263,13 @@ export default {
         })
         .then((response) => {
           this.brands = response.data;
+          this.isAddModalOpen = false;
           this.form = {
             name: null,
             image: null,
             active: true,
           }
-          this.isAddModalOpen = false;
+          this.success = "Entreprise ajoutée avec succès"
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

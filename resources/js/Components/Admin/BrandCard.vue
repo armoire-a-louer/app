@@ -1,7 +1,8 @@
 <template>
   <div
-    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md"
+    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md relative"
   >
+    <span v-if="brand.active" class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 absolute right-0 top-0">Active</span>
     <div class="flex flex-col items-center py-10">
       <img
         class="w-24 h-24 mb-3 rounded-full shadow-lg"
@@ -268,13 +269,19 @@ export default {
     },
 
     update() {
-        console.log(this.form)  
+      const url = route("admin.brands.update", this.form.id)
+      const data = {
+        id: this.form.id,
+        name: this.form.name,
+        image: this.form.image,
+        active: this.form.active ? 1 : 0
+      }
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+      }
+
       axios
-        .patch(route("admin.brands.update", this.form.id), this.form, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          }
-    })
+        .post(url, data, { headers: headers })
         .then((response) => {
           this.$emit("brands", response.data);
           this.$emit('success', 'Entreprise mise à jour avec succès');
@@ -286,6 +293,10 @@ export default {
     },
 
     softDelete() {
+      if (! confirm('Êtes-vous sûr de vouloir supprimer cette marque et tous les articles associés ?')) {
+        return;
+      }
+
       axios
         .delete(route("admin.brands.delete", this.brand.id))
         .then((response) => {
