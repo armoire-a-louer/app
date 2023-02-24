@@ -1,11 +1,12 @@
 <?php
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\Admin\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,11 +41,14 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard']);
 
-    //Brands
+    // Brands
     Route::get('/brands', [BrandsController::class, 'index'])->name('admin.brands.index');
     Route::post('/brands/store', [BrandsController::class, 'store'])->name('admin.brands.store');
     Route::post('/brands/update/{id}', [BrandsController::class, 'update'])->name('admin.brands.update');
     Route::delete('/brands/delete/{id}', [BrandsController::class, 'delete'])->name('admin.brands.delete');
+
+    // Products
+    Route::get('/products', [ProductsController::class, 'index'])->name('admin.products.index');
 });
 
 require __DIR__.'/auth.php';
