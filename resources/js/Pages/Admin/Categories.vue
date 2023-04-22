@@ -44,16 +44,21 @@
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-100"
               >
+                <th class="px-4 py-3">#</th>
                 <th class="px-4 py-3">Nom</th>
                 <th class="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y">
               <tr v-for="category in womenCategories" :key="category.id" class="text-gray-700">
+                <td>
+                  <img :src="category.image_url" :alt="category.name">
+                </td>
                 <td class="px-4 py-3">{{ category.name }}</td>
                 <td class="px-4 py-3 flex gap-3 justify-center">
                   <button
                     class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
+                    @click="update(category)"
                   >
                     Edit
                   </button>
@@ -80,25 +85,33 @@
               <tr
                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-100"
               >
-                <th class="px-4 py-3">Name</th>
+                <th class="px-4 py-3">#</th>
+                <th class="px-4 py-3">Nom</th>
                 <th class="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y">
               <tr v-for="category in menCategories" :key="category.id" class="text-gray-700">
+                <td>
+                  <img :src="category.image_url" :alt="category.name">
+                </td>
                 <td class="px-4 py-3">{{ category.name }}</td>
-                <td class="px-4 py-3 flex gap-3 justify-center">
-                  <button
-                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
-                    @click="destroy(category.id)"
-                  >
-                    Delete
-                  </button>
+                <td class="px-4 py-3">
+                  <div class="justify-center items-center flex gap-3">
+                    <button
+                      class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
+                      @click="update(category)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
+                      @click="destroy(category.id)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+
                 </td>
               </tr>
             </tbody>
@@ -193,7 +206,7 @@
       </div>
     </div>
 
-    <EditCategoryModal :category="editCategory" v-if="isEditModalOpen" @close="this.isEditModalOpen = false"/>
+    <EditCategoryModal :category="editCategory" v-if="isEditModalOpen" @close="this.isEditModalOpen = false" @updateCategoriesList="updateCategoriesList($event)"/>
   </AdminLayout>
 </template>
   
@@ -275,12 +288,23 @@ export default {
         .catch((error) => {
           console.error(error.response.data.errors);
         })
+    },
+
+    update(category) {
+      this.editCategory = category;
+      this.isEditModalOpen = true;
+    },
+
+    updateCategoriesList(categories) {
+      this.successMessage = "Catégorie mise à jour avec succès.";
+      this.womenCategories = categories.women_categories;
+      this.menCategories = categories.men_categories;
     }
   },
 };
 </script>
   
-  <style scoped>
+<style scoped>
 .add-modal {
   background: rgba(0, 0, 0, 0.2);
   height: 100vh;

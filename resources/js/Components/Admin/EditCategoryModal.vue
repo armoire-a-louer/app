@@ -1,5 +1,5 @@
 <template>
-  <div class="add-modal">
+  <div class="edit-modal" @click.self="$emit('close')">
     <div
       class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-1/3 p-5 border border-gray-200 rounded-lg shadow-xl"
     >
@@ -18,8 +18,8 @@
         </svg>
       </div>
 
-      <h2 class="text-xl">Ajouter une catégorie</h2>
-      <form @submit.prevent="store()">
+      <h2 class="text-xl">Modifier une catégorie</h2>
+      <form @submit.prevent="update()">
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
           for="name"
@@ -60,7 +60,6 @@
           class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
           type="file"
           @input="form.image = $event.target.files[0]"
-          required
         />
         <div v-if="errors && errors.image">
           <p class="text-red-500" v-for="error in errors.image" :key="error">
@@ -79,7 +78,7 @@
             class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             type="submit"
           >
-            Ajouter
+            Mettre à jour
           </button>
         </div>
       </form>
@@ -88,14 +87,51 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  props: ["category"],
   data() {
     return {
-
+      form: {
+        name: this.category.name,
+        sex: this.category.sex,
+        image: null,
+      },
     };
+  },
+
+  methods: {
+    update() {
+      axios
+        .post(route("admin.categories.update", this.category.id), this.form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          this.$emit("updateCategoriesList", response.data);
+          this.$emit('close');
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
+.edit-modal {
+  background: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

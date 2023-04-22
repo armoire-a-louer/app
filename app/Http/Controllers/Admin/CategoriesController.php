@@ -44,4 +44,23 @@ class CategoriesController extends Controller
             'men_categories' => $menCategories
         ]);
     }
+
+    public function update(Request $request, Category $category)
+    {
+        $category->name = $request->input('name');
+        $category->sex = $request->input('sex');
+        $category->save();
+
+        if ($request->file('image')) {
+            $category->media()->delete();
+            $category->addMediaFromRequest('image')->toMediaCollection('categories');
+        }
+
+        $womenCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::FEMME)->get();
+        $menCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::HOMME)->get();
+        return response()->json([
+            'women_categories' => $womenCategories,
+            'men_categories' => $menCategories
+        ]);
+    }
 }

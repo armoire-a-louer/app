@@ -55,6 +55,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::get('/categories', [CategoriesController:: class, 'index'])->name('admin.categories.index');
     Route::post('/categories/store', [CategoriesController::class, 'store'])->name('admin.categories.store');
     Route::delete('/categories/destroy/{category}', [CategoriesController::class, 'destroy'])->name('admin.categories.destroy');
+    Route::post('/categories/update/{category}', [CategoriesController::class, 'update'])->name('admin.categories.update');
 });
 
 require __DIR__.'/auth.php';
