@@ -59,6 +59,7 @@
                   </button>
                   <button
                     class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
+                    @click="destroy(category.id)"
                   >
                     Delete
                   </button>
@@ -94,6 +95,7 @@
                   </button>
                   <button
                     class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
+                    @click="destroy(category.id)"
                   >
                     Delete
                   </button>
@@ -151,7 +153,7 @@
             for="sex"
             >Sexe</label
           >
-          <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="sex" id="sex">
+          <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="sex" id="sex" v-model="form.sex">
             <option value="Femme">Femme</option>
             <option value="Homme">Homme</option>
           </select>
@@ -190,12 +192,15 @@
         </form>
       </div>
     </div>
+
+    <EditCategoryModal :category="editCategory" v-if="isEditModalOpen" @close="this.isEditModalOpen = false"/>
   </AdminLayout>
 </template>
   
   <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import axios from "axios";
+import EditCategoryModal from '@/Components/Admin/EditCategoryModal.vue';
 
 export default {
   name: "Products",
@@ -205,12 +210,15 @@ export default {
       isAddModalOpen: false,
       form: {
         name: null,
-        sex: null,
+        sex: 'Femme',
         image: null
       },
       successMessage: null,
       errorMessage: null,
       errors: null,
+
+      isEditModalOpen: false,
+      editCategory: null,
 
       menCategories: this.$inertia.page.props.menCategories,
       womenCategories: this.$inertia.page.props.womenCategories,
@@ -219,6 +227,7 @@ export default {
 
   components: {
     AdminLayout,
+    EditCategoryModal
   },
 
   methods: {
@@ -227,17 +236,45 @@ export default {
     },
 
     store() {
-        axios.post(route('admin.categories.store'), this.form, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                }
-            })
-            .then((response) => {
+        axios
+          .post(route('admin.categories.store'), this.form, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+          })
+          .then((response) => {
+            this.menCategories = response.data.men_categories;
+            this.womenCategories = response.data.women_categories;
 
-            })
-            .catch((error) => {
+            this.form = {
+              name: null,
+              sex: 'Femme',
+              image: null
+            }
 
-            });
+            this.isAddModalOpen = false;
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+          });
+    },
+
+    destroy(categoryId) {
+      if (! window.confirm("Êtes-vous sûr de vouloir supprimer la catégorie ?")) {
+        return;
+      }
+
+      axios
+        .delete(route('admin.categories.destroy', categoryId))
+        .then((response) => {
+            this.menCategories = response.data.men_categories;
+            this.womenCategories = response.data.women_categories;
+
+            this.successMessage = "Catégorie supprimée avec succès."
+        })
+        .catch((error) => {
+          console.error(error.response.data.errors);
+        })
     }
   },
 };

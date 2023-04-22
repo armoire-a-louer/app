@@ -11,8 +11,8 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $menCategories = Category::where('sex', Category::HOMME)->get();
-        $womenCategories = Category::where('sex', Category::HOMME)->get();
+        $menCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::HOMME)->get();
+        $womenCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::FEMME)->get();
 
         return Inertia::render('Admin/Categories', [
             'menCategories' => $menCategories,
@@ -20,8 +20,28 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        
+        $newCategory = Category::create($request->only(['name', 'sex']));
+        $newCategory->addMediaFromRequest('image')->toMediaCollection('categories');
+
+        $womenCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::FEMME)->get();
+        $menCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::HOMME)->get();
+        return response()->json([
+            'women_categories' => $womenCategories,
+            'men_categories' => $menCategories
+        ]);
+    }
+
+    public function destroy(Request $request, Category $category)
+    {
+        $category->delete();
+
+        $womenCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::FEMME)->get();
+        $menCategories = Category::orderBy('updated_at', 'desc')->where('sex', Category::HOMME)->get();
+        return response()->json([
+            'women_categories' => $womenCategories,
+            'men_categories' => $menCategories
+        ]);
     }
 }
