@@ -12,7 +12,7 @@
 
       <div class="flex justify-between items-center">
         <h2
-          class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+          class="my-6 text-2xl font-semibold text-gray-700"
         >
           Marques
         </h2>
@@ -155,10 +155,8 @@
                 peer-focus:outline-none
                 peer-focus:ring-4
                 peer-focus:ring-blue-300
-                dark:peer-focus:ring-blue-800
                 rounded-full
                 peer
-                dark:bg-gray-700
                 peer-checked:after:translate-x-full
                 peer-checked:after:border-white
                 after:content-['']
@@ -172,12 +170,11 @@
                 after:h-5
                 after:w-5
                 after:transition-all
-                dark:border-gray-600
                 peer-checked:bg-blue-600
               "
             ></div>
             <span
-              class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="ml-3 text-sm font-medium text-gray-900"
               >Active</span
             >
           </label>

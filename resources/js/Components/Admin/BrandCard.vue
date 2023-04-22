@@ -2,7 +2,7 @@
   <div
     class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md"
   >
-    <span v-if="brand.active" class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 absolute">Active</span>
+    <span v-if="brand.active" class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded absolute">Active</span>
     <div class="flex flex-col items-center py-10">
       <img
         class="w-24 h-24 mb-3 rounded-full shadow-lg object-cover object-center"
@@ -129,10 +129,8 @@
                   peer-focus:outline-none
                   peer-focus:ring-4
                   peer-focus:ring-blue-300
-                  dark:peer-focus:ring-blue-800
                   rounded-full
                   peer
-                  dark:bg-gray-700
                   peer-checked:after:translate-x-full
                   peer-checked:after:border-white
                   after:content-['']
@@ -146,7 +144,6 @@
                   after:h-5
                   after:w-5
                   after:transition-all
-                  dark:border-gray-600
                   peer-checked:bg-blue-600
                 "
               ></div>
@@ -156,7 +153,6 @@
                   text-sm
                   font-medium
                   text-gray-900
-                  dark:text-gray-300
                 "
                 >Active</span
               >

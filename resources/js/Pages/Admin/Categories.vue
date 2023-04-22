@@ -21,7 +21,7 @@
 
       <div class="flex justify-between items-center">
         <h2
-          class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+          class="my-6 text-2xl font-semibold text-gray-700"
         >
           Catégories
         </h2>

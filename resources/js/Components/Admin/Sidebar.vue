@@ -6,15 +6,14 @@
       w-64
       overflow-y-auto
       bg-white
-      dark:bg-gray-800
       md:block
       flex-shrink-0
     "
     :class="{ hidden: !toggleSideMenu }"
   >
-    <div class="py-4 text-gray-500 dark:text-gray-400">
+    <div class="py-4 text-gray-500">
       <a
-        class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+        class="ml-6 text-lg font-bold text-gray-800"
         href="#"
       >
         Armoire à louer
@@ -157,7 +156,6 @@
               transition-colors
               duration-150
               hover:text-gray-800
-              dark:hover:text-gray-200
             "
             href="buttons.html"
           >
@@ -189,7 +187,6 @@
               transition-colors
               duration-150
               hover:text-gray-800
-              dark:hover:text-gray-200
             "
             href="modals.html"
           >
@@ -221,7 +218,6 @@
               transition-colors
               duration-150
               hover:text-gray-800
-              dark:hover:text-gray-200
             "
             href="tables.html"
           >
@@ -252,7 +248,6 @@
               transition-colors
               duration-150
               hover:text-gray-800
-              dark:hover:text-gray-200
             "
             @click="togglePagesMenu"
             aria-haspopup="true"
@@ -300,7 +295,6 @@
                 rounded-md
                 shadow-inner
                 bg-gray-50
-                dark:text-gray-400 dark:bg-gray-900
               "
               aria-label="submenu"
             >
@@ -311,7 +305,6 @@
                   transition-colors
                   duration-150
                   hover:text-gray-800
-                  dark:hover:text-gray-200
                 "
               >
                 <a class="w-full" href="pages/login.html">Login</a>
@@ -323,7 +316,6 @@
                   transition-colors
                   duration-150
                   hover:text-gray-800
-                  dark:hover:text-gray-200
                 "
               >
                 <a class="w-full" href="pages/create-account.html">
@@ -337,7 +329,6 @@
                   transition-colors
                   duration-150
                   hover:text-gray-800
-                  dark:hover:text-gray-200
                 "
               >
                 <a class="w-full" href="pages/forgot-password.html">
@@ -351,7 +342,6 @@
                   transition-colors
                   duration-150
                   hover:text-gray-800
-                  dark:hover:text-gray-200
                 "
               >
                 <a class="w-full" href="pages/404.html">404</a>
@@ -363,7 +353,6 @@
                   transition-colors
                   duration-150
                   hover:text-gray-800
-                  dark:hover:text-gray-200
                 "
               >
                 <a class="w-full" href="pages/blank.html">Blank</a>
