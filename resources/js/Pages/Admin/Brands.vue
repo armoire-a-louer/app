@@ -73,6 +73,24 @@
 
           <label
             class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="description"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            v-model="form.description"
+            required
+          >
+          </textarea>
+          <div v-if="errors && errors.description">
+            <p class="text-red-500" v-for="error in errors.description" :key="error">
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
             for="image"
             >Image</label
           >
@@ -134,6 +152,7 @@ export default {
       isAddModalOpen: false,
       form: {
         name: null,
+        description: null,
         image: null,
         active: true,
       },

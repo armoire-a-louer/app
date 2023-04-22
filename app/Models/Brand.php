@@ -13,7 +13,7 @@ class Brand extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia;
 
-    protected $fillable = ['name', 'active'];
+    protected $fillable = ['name', 'active', 'description'];
 
     protected $appends = ['image_url'];
 

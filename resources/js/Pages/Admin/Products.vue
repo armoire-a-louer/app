@@ -20,11 +20,7 @@
       </div>
 
       <div class="flex justify-between items-center">
-        <h2
-          class="my-6 text-2xl font-semibold text-gray-700"
-        >
-          Produits
-        </h2>
+        <h2 class="my-6 text-2xl font-semibold text-gray-700">Produits</h2>
         <button
           @click="toggleModal()"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
@@ -45,7 +41,11 @@
       </div>
     </div>
 
-    <div class="add-modal" v-if="isAddModalOpen" @click.self='isAddModalOpen = falses'>
+    <div
+      class="add-modal"
+      v-if="isAddModalOpen"
+      @click.self="isAddModalOpen = falses"
+    >
       <div
         class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-2/3 p-5 border border-gray-200 rounded-lg shadow-xl"
       >
@@ -86,6 +86,94 @@
 
           <label
             class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="category_id"
+          >
+            Catégorie
+          </label>
+          <select
+            v-model="form.category_id"
+            name="category_id"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          >
+            <optgroup label="Femme">
+              <option
+                v-for="category in womenCategories"
+                :key="category.id"
+                :value="category.id"
+              >
+                {{ category.name }}
+              </option>
+            </optgroup>
+            <optgroup label="Homme">
+              <option
+                v-for="category in menCategories"
+                :key="category.id"
+                :value="category.id"
+              >
+                {{ category.name }}
+              </option>
+            </optgroup>
+          </select>
+          <div v-if="errors && errors.category_id">
+            <p
+              class="text-red-500"
+              v-for="error in errors.category_id"
+              :key="error"
+            >
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="brand_id"
+          >
+            Marque
+          </label>
+          <select
+            v-model="form.brand_id"
+            name="brand_id"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          >
+            <option
+              v-for="brand in brands"
+              :key="brand.id"
+              :value="brand.id"
+            >
+              {{ brand.name }}
+            </option>
+          </select>
+          <div v-if="errors && errors.brand_id">
+            <p
+              class="text-red-500"
+              v-for="error in errors.brand_id"
+              :key="error"
+            >
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="description"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            v-model="form.description"
+            required
+          ></textarea>
+          <div v-if="errors && errors.description">
+            <p class="text-red-500" v-for="error in errors.description" :key="error">
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
             for="image"
             >Image</label
           >
@@ -111,10 +199,7 @@
             <div
               class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
             ></div>
-            <span
-              class="ml-3 text-sm font-medium text-gray-900"
-              >Active</span
-            >
+            <span class="ml-3 text-sm font-medium text-gray-900">Active</span>
           </label>
 
           <div class="mt-5 flex gap-3 justify-end">
@@ -149,6 +234,9 @@ export default {
       isAddModalOpen: false,
       form: {
         name: null,
+        category_id: null,
+        brand_id: null,
+        description: null,
         image: null,
         active: true,
       },
@@ -156,6 +244,9 @@ export default {
       successMessage: null,
       errorMessage: null,
       errors: null,
+      womenCategories: this.$inertia.page.props.womenCategories,
+      menCategories: this.$inertia.page.props.menCategories,
+      brands: this.$inertia.page.props.brands,
     };
   },
 
