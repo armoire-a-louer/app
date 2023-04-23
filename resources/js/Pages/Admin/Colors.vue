@@ -219,6 +219,11 @@ export default {
           this.colors = response.data;
           this.successMessage = "Couleur ajoutée avec succès !";
           this.isAddModalOpen = false;
+
+          this.form = {
+            name: null,
+            hex_code: "#000000",
+          };
         })
         .catch((error) => {
           this.errorMessage = error.message;
