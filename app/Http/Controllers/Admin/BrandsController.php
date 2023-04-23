@@ -28,7 +28,6 @@ class BrandsController extends Controller
         return response()->json($brands);
     }
 
-    //API
     public function update(UpdateBrandRequest $request, int $id)
     {
         $brand = Brand::find($id);

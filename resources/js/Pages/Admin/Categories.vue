@@ -52,7 +52,7 @@
             <tbody class="bg-white divide-y">
               <tr v-for="category in womenCategories" :key="category.id" class="text-gray-700">
                 <td>
-                  <img :src="category.image_url" :alt="category.name">
+                  <img style="max-width: 50px; max-height: 50px;" :src="category.image_url" :alt="category.name">
                 </td>
                 <td class="px-4 py-3">{{ category.name }}</td>
                 <td class="px-4 py-3 flex gap-3 justify-center">
@@ -93,7 +93,7 @@
             <tbody class="bg-white divide-y">
               <tr v-for="category in menCategories" :key="category.id" class="text-gray-700">
                 <td>
-                  <img :src="category.image_url" :alt="category.name">
+                  <img style="max-width: 50px; max-height: 50px;" :src="category.image_url" :alt="category.name">
                 </td>
                 <td class="px-4 py-3">{{ category.name }}</td>
                 <td class="px-4 py-3">

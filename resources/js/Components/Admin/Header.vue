@@ -284,7 +284,6 @@
               focus:shadow-outline-purple focus:outline-none
             "
             @click="toggleProfileMenu"
-            @keydown.escape="closeProfileMenu"
             aria-label="Account"
             aria-haspopup="true"
           >
@@ -297,8 +296,6 @@
           </button>
           <template v-if="isProfileMenuOpen">
             <ul
-              @click.away="closeProfileMenu"
-              @keydown.escape="closeProfileMenu"
               class="
                 absolute
                 right-0

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\ProductsController;
 
 /*
@@ -56,6 +57,12 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::post('/categories/store', [CategoriesController::class, 'store'])->name('admin.categories.store');
     Route::delete('/categories/destroy/{category}', [CategoriesController::class, 'destroy'])->name('admin.categories.destroy');
     Route::post('/categories/update/{category}', [CategoriesController::class, 'update'])->name('admin.categories.update');
+
+    // Colors
+    Route::get('/colors', [ColorsController::class, 'index'])->name('admin.colors.index');
+    Route::post('/colors/store', [ColorsController::class, 'store'])->name('admin.colors.store');
+    Route::delete('/colors/delete/{color}', [ColorsController::class, 'delete'])->name('admin.colors.delete');
+    Route::put('/colors/update/{color}', [ColorsController::class, 'update'])->name('admin.colors.update');
 });
 
 require __DIR__.'/auth.php';

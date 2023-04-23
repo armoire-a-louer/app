@@ -44,7 +44,7 @@
     <div
       class="add-modal"
       v-if="isAddModalOpen"
-      @click.self="isAddModalOpen = falses"
+      @click.self="isAddModalOpen = false"
     >
       <div
         class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-2/3 p-5 border border-gray-200 rounded-lg shadow-xl"

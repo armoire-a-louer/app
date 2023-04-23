@@ -16,4 +16,28 @@ class ColorsController extends Controller
             'colors' => $colors
         ]);
     }
+
+    public function store(Request $request)
+    {
+        $color = Color::create($request->only(['name', 'hex_code']));
+
+        $colors = Color::orderBy('updated_at', 'desc')->get();
+        return response()->json($colors);
+    }
+
+    public function delete(Request $request, Color $color)
+    {
+        $color->delete();
+
+        $colors = Color::orderBy('updated_at', 'desc')->get();
+        return response()->json($colors);
+    }
+
+    public function update(Request $request, Color $color)
+    {
+        $color->update($request->only('name', 'hex_code'));
+
+        $colors = Color::orderBy('updated_at', 'desc')->get();
+        return response()->json($colors);
+    }
 }
