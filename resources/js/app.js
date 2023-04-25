@@ -14,10 +14,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faTags, faCopyright, faHome, faVenusMars, faPalette } from '@fortawesome/free-solid-svg-icons'
+import { faTags, faCopyright, faHome, faVenusMars, faPalette, faRecycle, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faTags, faCopyright, faHome, faVenusMars, faPalette);
+library.add(faTags, faCopyright, faHome, faVenusMars, faPalette, faRecycle, faCircleCheck, faCircleXmark);
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 

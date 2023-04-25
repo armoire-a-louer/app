@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ColorsController;
+use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\ProductsController;
 
 /*
@@ -51,6 +52,9 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 
     // Products
     Route::get('/products', [ProductsController::class, 'index'])->name('admin.products.index');
+    Route::post('/products/store', [ProductsController::class, 'store'])->name('admin.products.store');
+    Route::post('/products/update/{product}', [ProductsController::class, 'store'])->name('admin.products.update');
+    Route::delete('/products/delete/{product}', [ProductsController::class, 'delete'])->name('admin.products.delete');
 
     // Categories
     Route::get('/categories', [CategoriesController:: class, 'index'])->name('admin.categories.index');
@@ -63,6 +67,12 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::post('/colors/store', [ColorsController::class, 'store'])->name('admin.colors.store');
     Route::delete('/colors/delete/{color}', [ColorsController::class, 'delete'])->name('admin.colors.delete');
     Route::put('/colors/update/{color}', [ColorsController::class, 'update'])->name('admin.colors.update');
+
+    // Materials
+    Route::get('/materials', [MaterialsController::class, 'index'])->name('admin.materials.index');
+    Route::post('/materials/store', [MaterialsController::class, 'store'])->name('admin.materials.store');
+    Route::put('/materials/update/{material}', [MaterialsController::class, 'update'])->name('admin.materials.update');
+    Route::delete('/materials/delete/{material}', [MaterialsController::class, 'delete'])->name('admin.materials.delete');
 });
 
 require __DIR__.'/auth.php';

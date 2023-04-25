@@ -176,6 +176,37 @@
             <span class="ml-4">Couleurs</span>
           </Link>
         </li>
+        <li class="relative px-6 py-3">
+          <span
+            v-if="path === '/admin/materials'"
+            class="
+              absolute
+              inset-y-0
+              left-0
+              w-1
+              bg-purple-600
+              rounded-tr-lg rounded-br-lg
+            "
+            aria-hidden="true"
+          ></span>
+          <Link
+            href="/admin/materials"
+            class="
+              inline-flex
+              items-center
+              w-full
+              text-sm
+              font-semibold
+              transition-colors
+              duration-150
+              hover:text-gray-800
+            "
+            :class="{ 'text-gray-800': path === '/admin/materials' }"
+          >
+            <font-awesome-icon icon="fa-solid fa-recycle" class="text-xl"/> 
+            <span class="ml-4">Matériaux</span>
+          </Link>
+        </li>
       </ul>
       <div class="px-6 my-6">
         <button

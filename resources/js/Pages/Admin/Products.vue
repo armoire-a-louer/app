@@ -29,15 +29,55 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <BrandCard
-          v-for="brand in brands"
-          :key="brand.id"
-          :brand="brand"
-          :errors="errors"
-          @brands="setBrands($event)"
-          @successMessage="successMessage = $event"
-        />
+      <div class="w-full">
+        <div class="w-full overflow-x-auto rounded-lg shadow-lg">
+          <table class="w-full whitespace-no-wrap">
+            <thead>
+              <tr
+                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-100"
+              >
+                <th class="px-4 py-3 text-center">#</th>
+                <th class="px-4 py-3 text-center">Nom</th>
+                <th class="px-4 py-3 text-center">Marque</th>
+                <th class="px-4 py-3 text-center">Catégorie</th>
+                <th class="px-4 py-3 text-center">Prix par jour</th>
+                <th class="px-4 py-3 text-center">Actif</th>
+                <th class="px-4 py-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y">
+              <tr v-for="product in products" :key="product.id" class="text-gray-700">
+                <td class="px-4 py-3">
+                  <img style="max-width: 50px; max-height: 50px; margin: auto;" :src="product.image_url" :alt="product.name">
+                </td>
+                <td class="px-4 py-3 text-center">{{ product.name }}</td>
+                <td class="px-4 py-3 text-center">{{ product.brand.name }}</td>
+                <td class="px-4 py-3 text-center">{{ product.category.name }}</td>
+                <td class="px-4 py-3 text-center">{{ product.price_per_day }} €</td>
+                <td class="px-4 py-3 text-center">
+                  <font-awesome-icon class="text-lime-500" icon="fa-solid fa-circle-check" v-if="product.active"/>
+                  <font-awesome-icon class="text-red-700" icon="fa-solid fa-circle-xmark" v-else/>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="justify-center items-center flex gap-3">
+                    <button
+                      class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
+                      @click="update(product)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
+                      @click="destroy(product)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -47,7 +87,7 @@
       @click.self="isAddModalOpen = false"
     >
       <div
-        class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-2/3 p-5 border border-gray-200 rounded-lg shadow-xl"
+        class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-2/3 p-5 border border-gray-200 rounded-lg shadow-xl overflow-scroll"
       >
         <div class="flex justify-end">
           <svg
@@ -80,6 +120,25 @@
           />
           <div v-if="errors && errors.name">
             <p class="text-red-500" v-for="error in errors.name" :key="error">
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="price_per_day"
+            >Prix</label
+          >
+          <input
+            id="price_per_day"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="number"
+            min="0"
+            v-model="form.price_per_day"
+            required
+          />
+          <div v-if="errors && errors.price_per_day">
+            <p class="text-red-500" v-for="error in errors.price_per_day" :key="error">
               {{ error }}
             </p>
           </div>
@@ -149,6 +208,67 @@
             <p
               class="text-red-500"
               v-for="error in errors.brand_id"
+              :key="error"
+            >
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="season"
+          >
+            Saison
+          </label>
+          <select
+            v-model="form.season"
+            name="season"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          >
+            <option
+              v-for="season in seasons"
+              :key="season"
+              :value="season"
+            >
+              {{ season }}
+            </option>
+          </select>
+          <div v-if="errors && errors.season">
+            <p
+              class="text-red-500"
+              v-for="error in errors.season"
+              :key="error"
+            >
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="materials_ids"
+          >
+            Matériau(x)
+          </label>
+          <select
+            v-model="form.materials_ids"
+            name="materials_ids"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+            multiple
+          >
+            <option
+              v-for="material in materials"
+              :key="material"
+              :value="material.id"
+            >
+              {{ material.name }}
+            </option>
+          </select>
+          <div v-if="errors && errors.materials_ids">
+            <p
+              class="text-red-500"
+              v-for="error in errors.materials_ids"
               :key="error"
             >
               {{ error }}
@@ -234,11 +354,13 @@ export default {
       isAddModalOpen: false,
       form: {
         name: null,
+        price_per_day: null,
         category_id: null,
         brand_id: null,
+        materials_ids: null,
         description: null,
         image: null,
-        active: true,
+        active: true
       },
       products: this.$inertia.page.props.products,
       successMessage: null,
@@ -247,6 +369,8 @@ export default {
       womenCategories: this.$inertia.page.props.womenCategories,
       menCategories: this.$inertia.page.props.menCategories,
       brands: this.$inertia.page.props.brands,
+      seasons: this.$inertia.page.props.seasons,
+      materials: this.$inertia.page.props.materials
     };
   },
 
@@ -258,6 +382,36 @@ export default {
     toggleModal() {
       this.isAddModalOpen = !this.isAddModalOpen;
     },
+
+    store() {
+      this.form.active = this.form.active ? 1 : 0;
+
+        axios
+          .post(route('admin.products.store'), this.form, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+          })
+          .then((response) => {
+            this.products = response.data;
+            this.successMessage = "Produit ajouté avec succès !";
+
+            this.form = {
+              name: null,
+              price_per_day: null,
+              category_id: null,
+              brand_id: null,
+              materials_ids: null,
+              description: null,
+              image: null,
+              active: true
+            }
+            this.isAddModalOpen = false;
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+          });
+    }
   },
 };
 </script>
@@ -274,5 +428,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.add-modal > div {
+  overflow: scroll;
+  max-height: 90vh;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 </style>
