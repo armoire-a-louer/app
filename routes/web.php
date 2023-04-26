@@ -53,8 +53,8 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     // Products
     Route::get('/products', [ProductsController::class, 'index'])->name('admin.products.index');
     Route::post('/products/store', [ProductsController::class, 'store'])->name('admin.products.store');
-    Route::post('/products/update/{product}', [ProductsController::class, 'store'])->name('admin.products.update');
-    Route::delete('/products/delete/{product}', [ProductsController::class, 'delete'])->name('admin.products.delete');
+    Route::post('/products/update/{product}', [ProductsController::class, 'update'])->name('admin.products.update');
+    Route::delete('/products/destroy/{product}', [ProductsController::class, 'destroy'])->name('admin.products.delete');
 
     // Categories
     Route::get('/categories', [CategoriesController:: class, 'index'])->name('admin.categories.index');

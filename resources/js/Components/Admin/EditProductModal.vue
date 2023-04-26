@@ -1,103 +1,14 @@
 <template>
-  <AdminLayout>
-    <div class="container px-6 mx-auto grid">
-      <div
-        v-if="successMessage"
-        class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-5"
-        role="alert"
-      >
-        <p class="font-bold">Succès</p>
-        <p>{{ successMessage }}</p>
-      </div>
-
-      <div
-        v-else-if="errorMessage"
-        class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mt-5"
-        role="alert"
-      >
-        <p class="font-bold">Erreur</p>
-        <p>{{ errorMessage }}</p>
-      </div>
-
-      <div class="flex justify-between items-center">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700">Produits</h2>
-        <button
-          @click="toggleModal()"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        >
-          Ajouter
-        </button>
-      </div>
-
-      <div class="w-full">
-        <div class="w-full overflow-x-auto rounded-lg shadow-lg">
-          <table class="w-full whitespace-no-wrap">
-            <thead>
-              <tr
-                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-100"
-              >
-                <th class="px-4 py-3 text-center">#</th>
-                <th class="px-4 py-3 text-center">Nom</th>
-                <th class="px-4 py-3 text-center">Marque</th>
-                <th class="px-4 py-3 text-center">Catégorie</th>
-                <th class="px-4 py-3 text-center">Matériau(x)</th>
-                <th class="px-4 py-3 text-center">Prix par jour</th>
-                <th class="px-4 py-3 text-center">Actif</th>
-                <th class="px-4 py-3 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y">
-              <tr v-for="product in products" :key="product.id" class="text-gray-700">
-                <td class="px-4 py-3">
-                  <img style="max-width: 50px; max-height: 50px; margin: auto;" :src="product.image_url" :alt="product.name">
-                </td>
-                <td class="px-4 py-3 text-center">{{ product.name }}</td>
-                <td class="px-4 py-3 text-center">{{ product.brand.name }}</td>
-                <td class="px-4 py-3 text-center">{{ product.category.name }}</td>
-                <td class="px-4 py-3 text-center">
-                  <ul>
-                    <li v-for="material in product.materials" :key="material.id">- {{ material.name }}</li>
-                  </ul>
-                </td>
-                <td class="px-4 py-3 text-center">{{ product.price_per_day }} €</td>
-                <td class="px-4 py-3 text-center">
-                  <font-awesome-icon class="text-lime-500" icon="fa-solid fa-circle-check" v-if="product.active"/>
-                  <font-awesome-icon class="text-red-700" icon="fa-solid fa-circle-xmark" v-else/>
-                </td>
-                <td class="px-4 py-3">
-                  <div class="justify-center items-center flex gap-3">
-                    <button
-                      class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
-                      @click="update(product)"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
-                      @click="destroy(product)"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div
+  <div
       class="add-modal"
-      v-if="isAddModalOpen"
-      @click.self="isAddModalOpen = false"
+      @click.self="$emit('close')"
     >
       <div
         class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-2/3 p-5 border border-gray-200 rounded-lg shadow-xl overflow-scroll"
       >
         <div class="flex justify-end">
           <svg
-            @click="toggleModal()"
+            @click="$emit('close')"
             class="h-7 w-7 cursor-pointer"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
@@ -110,8 +21,8 @@
           </svg>
         </div>
 
-        <h2 class="text-xl">Ajouter un produit</h2>
-        <form @submit.prevent="store()">
+        <h2 class="text-xl">Modifier un produit</h2>
+        <form @submit.prevent="update()">
           <label
             class="block text-gray-700 text-sm font-bold mb-2 mt-5"
             for="name"
@@ -267,6 +178,7 @@
               v-for="material in materials"
               :key="material"
               :value="material.id"
+              :selected="product.materials.some(m => m.id === material.id)"
             >
               {{ material.name }}
             </option>
@@ -301,13 +213,12 @@
           <label
             class="block text-gray-700 text-sm font-bold mb-2 mt-5"
             for="image"
-            >Image</label
+            >Image (laisser vide pour ne pas la changer)</label
           >
           <input
             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             type="file"
             @input="form.image = $event.target.files[0]"
-            required
           />
           <div v-if="errors && errors.image">
             <p class="text-red-500" v-for="error in errors.image" :key="error">
@@ -330,7 +241,7 @@
 
           <div class="mt-5 flex gap-3 justify-end">
             <button
-              @click="toggleModal()"
+              @click="$emit('close')"
               class="inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
             >
               Annuler
@@ -339,117 +250,65 @@
               class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               type="submit"
             >
-              Ajouter
+              Mettre à jour
             </button>
           </div>
         </form>
       </div>
     </div>
-    <EditProductModal v-if="isEditModalOpen" @close="isEditModalOpen = false" @updateProductsList="products = $event" :product="editProduct" :menCategories="menCategories" :womenCategories="womenCategories" :brands="brands" :materials="materials" :seasons="seasons" @success="successMessage = $event"/>
-  </AdminLayout>
 </template>
-  
+
 <script>
-import AdminLayout from "@/Layouts/AdminLayout.vue";
 import axios from "axios";
-import EditProductModal from '@/Components/Admin/EditProductModal.vue';
 
 export default {
-  name: "Products",
+    name: "EditProductModal",
 
-  data() {
-    return {
-      isAddModalOpen: false,
-      form: {
-        name: null,
-        price_per_day: null,
-        category_id: null,
-        brand_id: null,
-        materials_ids: null,
-        description: null,
-        image: null,
-        active: true,
-        season: null
-      },
-      products: this.$inertia.page.props.products,
-      successMessage: null,
-      errorMessage: null,
-      errors: null,
-      womenCategories: this.$inertia.page.props.womenCategories,
-      menCategories: this.$inertia.page.props.menCategories,
-      brands: this.$inertia.page.props.brands,
-      seasons: this.$inertia.page.props.seasons,
-      materials: this.$inertia.page.props.materials,
+    props: ['product', 'menCategories', 'womenCategories', 'brands', 'seasons', 'materials'],
 
-      isEditModalOpen: false,
-      editProduct: null
-    };
-  },
+    data() {
+        return {
+            form: {
+                name: this.product.name,
+                price_per_day: this.product.price_per_day,
+                category_id: this.product.category_id,
+                brand_id: this.product.brand_id,
+                materials_ids: this.product.materials.map((el) => {
+                    return el.id
+                }),
+                description: this.product.description,
+                image: null,
+                active: this.product.active ? true : false,
+                season: this.product.season
+            },
 
-  components: {
-    AdminLayout,
-    EditProductModal
-  },
-
-  methods: {
-    toggleModal() {
-      this.isAddModalOpen = !this.isAddModalOpen;
+            errors: null
+        }
     },
 
-    store() {
-      this.form.active = this.form.active ? 1 : 0;
+    methods: {
+        update() {
+            this.form.active = this.form.active ? 1 : 0;
 
-        axios
-          .post(route('admin.products.store'), this.form, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            }
-          })
-          .then((response) => {
-            this.products = response.data;
-            this.successMessage = "Produit ajouté avec succès !";
-
-            this.form = {
-              name: null,
-              price_per_day: null,
-              category_id: null,
-              brand_id: null,
-              materials_ids: null,
-              description: null,
-              image: null,
-              active: true
-            }
-            this.isAddModalOpen = false;
-          })
-          .catch((error) => {
-            this.errors = error.response.data.errors;
-          });
-    },
-
-    destroy(product) {
-      if (! window.confirm("Êtes-vous sûr de vouloir supprimer le produit " + product.name)) {
-        return;
-      }
-
-      axios.delete(route("admin.products.delete", product.id))
-        .then((response) => {
-          this.products = response.data;
-          this.successMessage = "Produit supprimé avec succès !";
-        })
-        .catch((error) => {
-          this.errorMessage = error.message;
-        })
-    },
-
-    update(product) {
-      this.editProduct = product;
-      this.isEditModalOpen = true;
+            axios.post(route('admin.products.update', this.product.id), this.form, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    }
+                })
+                .then((response) => {
+                    this.$emit('updateProductsList', response.data);
+                    this.$emit('success', "Produit mis à jour avec succès !");
+                    this.$emit('close');
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                })
+        }
     }
-  },
-};
+}
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .add-modal {
   background: rgba(0, 0, 0, 0.2);
   height: 100vh;
