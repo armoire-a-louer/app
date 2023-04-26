@@ -16,20 +16,6 @@ class Product extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, InteractsWithMedia;
 
-    public const SIZE_XS = 'xs';
-    public const SIZE_S = 's';
-    public const SIZE_M = 'm';
-    public const SIZE_L = 'l';
-    public const SIZE_XL = 'xl';
-
-    public const SIZES = [
-        self::SIZE_XS,
-        self::SIZE_S,
-        self::SIZE_M,
-        self::SIZE_L,
-        self::SIZE_XL,
-    ];
-
     public const SEASONS = [
         "Été",
         "Automne",

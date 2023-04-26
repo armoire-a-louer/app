@@ -118,5 +118,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.edit-modal > div {
+  overflow: scroll;
+  max-height: 90vh;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 </style>

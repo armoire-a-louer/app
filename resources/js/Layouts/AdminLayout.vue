@@ -34,5 +34,34 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.fade-right-enter-active,
+.fade-right-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.fade-right-enter-from,
+.fade-right-leave-to {
+  transform: translateX(100%);
+}
+
+.fade-left-enter-active,
+.fade-left-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.fade-left-enter-from,
+.fade-left-leave-to {
+  transform: translateX(-100%);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

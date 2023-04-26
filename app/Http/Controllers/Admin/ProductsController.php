@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Material;
 use App\Models\Product;
+use App\Models\ProductSizeColor;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,11 +16,13 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::orderBy('updated_at', 'desc')->with(['brand', 'category', 'materials'])->get();
+        $products = $this->getProductsWithRelations();
         $menCategories = Category::where('sex', Category::HOMME)->get();
         $womenCategories = Category::where('sex', Category::FEMME)->get();
         $brands = Brand::get();
         $materials = Material::get();
+        $sizes = ProductSizeColor::SIZES;
+        $colors = Color::get();
         
         return Inertia::render('Admin/Products', [
             'products' => $products,
@@ -26,7 +30,9 @@ class ProductsController extends Controller
             'womenCategories' => $womenCategories,
             'brands' => $brands,
             'seasons' => Product::SEASONS,
-            'materials' => $materials
+            'materials' => $materials,
+            'sizes' => $sizes,
+            'colors' => $colors
         ]);
     }
 
@@ -36,8 +42,7 @@ class ProductsController extends Controller
         $product->addMediaFromRequest('image')->toMediaCollection('products');
         $product->materials()->sync($request->input('materials_ids'));
 
-        $products = Product::orderBy('updated_at', 'desc')->with(['brand', 'category', 'materials'])->get();
-        return response()->json($products);
+        return response()->json($this->getProductsWithRelations());
     }
 
     public function update(Request $request, Product $product)
@@ -50,15 +55,31 @@ class ProductsController extends Controller
         $product->materials()->sync($request->input('materials_ids'));
         $product->save();
 
-        $products = Product::orderBy('updated_at', 'desc')->with(['brand', 'category', 'materials'])->get();
-        return response()->json($products);
+        return response()->json($this->getProductsWithRelations());
     }
 
     public function destroy(Request $request, Product $product)
     {
         $product->delete();
 
-        $products = Product::orderBy('updated_at', 'desc')->with(['brand', 'category', 'materials'])->get();
-        return response()->json($products);
+        return response()->json($this->getProductsWithRelations());
+    }
+
+    public function addArticle()
+    {
+        // Ajoute dans la table products_sizes_colors
+        // Retourne juste success et modale reste ouverte
+    }
+
+    public function getProductsWithRelations()
+    {
+        return Product::orderBy('updated_at', 'desc')->with(['brand', 'category', 'materials', 'items.primaryColor', 'items.secondaryColor'])->get();
+    }
+
+    public function deleteItem(Request $request, ProductSizeColor $item)
+    {
+        $item->delete();
+
+        return response()->json($this->getProductsWithRelations());
     }
 }
