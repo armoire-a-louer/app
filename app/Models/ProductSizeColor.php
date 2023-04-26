@@ -30,6 +30,16 @@ class ProductSizeColor extends Model implements HasMedia
         self::SIZE_XL,
     ];
 
+    protected $fillable = [
+        'product_id',
+        'primary_color_id',
+        'secondary_color_id',
+        'size',
+        'quantity',
+        'model_size',
+        'active'
+    ];
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

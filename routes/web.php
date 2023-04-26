@@ -58,6 +58,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 
     // Items (products)
     Route::delete('/products/delete-item/{item}', [ProductsController::class, 'deleteItem'])->name('admin.products.items.delete');
+    Route::post('/products/store-item', [ProductsController::class, 'storeItem'])->name('admin.products.items.store');
 
     // Categories
     Route::get('/categories', [CategoriesController:: class, 'index'])->name('admin.categories.index');

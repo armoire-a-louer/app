@@ -82,4 +82,12 @@ class ProductsController extends Controller
 
         return response()->json($this->getProductsWithRelations());
     }
+
+    public function storeItem(Request $request)
+    {
+        dd($request);
+        $item = ProductSizeColor::create($request->only(['product_id', 'primary_color_id', 'secondary_color_id', 'size', 'quantity', 'model_size', 'active']));
+
+        // Une photo principale et 3 photos secondaires (min 1, max 3)
+    }
 }

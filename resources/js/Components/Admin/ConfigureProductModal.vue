@@ -143,8 +143,8 @@
         </div>
     </div>
 
-    <transition name="fade-right">
-        <AddItemModal v-if="isAddItemModalOpen" @close="isAddItemModalOpen = false" :product="product" :colors="colors" :sizes="sizes"/>
+    <transition name="fade-left">
+        <AddItemModal v-if="isAddItemModalOpen" @close="isAddItemModalOpen = false" :product="product" :colors="colors" :sizes="sizes" @success="successMessage = $event" @error="errorMessage = $event"/>
     </transition>
   </div>
 </template>
