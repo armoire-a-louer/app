@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Brand;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -44,7 +46,10 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
 
-            'path' => $request->getPathInfo()
+            'path' => $request->getPathInfo(),
+
+            'collections' => Category::where('sex', Category::FEMME)->limit(6)->get(),
+            'brands' => Brand::limit(6)->get()
         ]);
     }
 }

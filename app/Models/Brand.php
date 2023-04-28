@@ -8,6 +8,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Query\JoinClause;
 
 class Brand extends Model implements HasMedia
 {
@@ -22,5 +23,14 @@ class Brand extends Model implements HasMedia
         return Attribute::make(
             get: fn ($value) => $this->getFirstMediaUrl('brands')
         );
+    }
+
+    public static function getActiveBrandsWithActiveProductsAndItems()
+    {
+        return self::where('active', true)
+            ->join('products', function (JoinClause $join) {
+                $join->on('brands.id', '=', 'products.brand_id');
+                    // ->where('');
+            });
     }
 }

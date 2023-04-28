@@ -1,16 +1,40 @@
 <template>
-  <div class="container mx-auto px-3 sm:px-5 2xl:px-10">
+  <div>
+    <Navbar />
     <slot />
+    <div style="height: 200vh;"></div>
   </div>
 </template>
 
 <script>
-export default {
+import Navbar from "@/Components/Layout/Navbar.vue";
 
-}
+export default {
+  components: {
+    Navbar,
+  },
+};
 </script>
 
 <style>
+@font-face {
+  font-family: "Avenir";
+  src: local("Avenir"),
+    url(/fonts/Avenir/Avenir-Roman-12.ttf) format("truetype"),
+    url(/fonts/Avenir/Avenir-Heavy-05.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roslindale";
+  src: local("Roslindale"),
+    url(/fonts/RoslindaleText-Bold.ttf) format("truetype");
+}
+
+.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
 .fade-right-enter-active,
 .fade-right-leave-active {
   transition: transform 0.4s ease;
