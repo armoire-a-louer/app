@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,25 +23,7 @@ use App\Http\Controllers\Admin\ProductsController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
+// BACK-OFFICE
 Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard']);
 
@@ -79,5 +62,21 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::put('/materials/update/{material}', [MaterialsController::class, 'update'])->name('admin.materials.update');
     Route::delete('/materials/delete/{material}', [MaterialsController::class, 'delete'])->name('admin.materials.delete');
 });
+
+// FRONT
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+// Account
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
 
 require __DIR__.'/auth.php';
