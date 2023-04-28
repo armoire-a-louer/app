@@ -7,6 +7,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -39,6 +40,36 @@ class ProductSizeColor extends Model implements HasMedia
         'model_size',
         'active'
     ];
+
+    protected $appends = ['first_image_url', 'second_image_url', 'third_image_url', 'fourth_image_url'];
+
+    protected function firstImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+        );
+    }
+
+    protected function secondImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+        );
+    }
+
+    protected function thirdImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+        );
+    }
+
+    protected function fourthImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+        );
+    }
 
     public function product(): BelongsTo
     {

@@ -65,7 +65,7 @@
               <td>
                 <img
                   style="max-width: 50px; max-height: 50px; margin: auto"
-                  :src="product.image_url"
+                  :src="item.first_image_url"
                   :alt="product.name"
                 />
               </td>
@@ -85,7 +85,7 @@
               </td>
               <td>
                 <div class="flex justify-center">
-                  <div class="px-4 py-3 flex gap-3 items-center margin-auto">
+                  <div v-if="item.secondary_color" class="px-4 py-3 flex gap-3 items-center margin-auto">
                     <span
                       class="block h-6 w-6 border"
                       :style="
@@ -144,13 +144,18 @@
     </div>
 
     <transition name="fade-left">
-        <AddItemModal v-if="isAddItemModalOpen" @close="isAddItemModalOpen = false" :product="product" :colors="colors" :sizes="sizes" @success="successMessage = $event" @error="errorMessage = $event"/>
+      <AddItemModal v-if="isAddItemModalOpen" @close="isAddItemModalOpen = false" :product="product" :colors="colors" :sizes="sizes" @success="successMessage = $event" @error="errorMessage = $event" @updateProductsList="$emit('updateProductsList', $event)"/>
+    </transition>
+
+    <transition name="fade-right">
+      <EditItemModal v-if="isEditItemModalOpen" :item="editItem" :sizes="sizes" :colors="colors" @close="isEditItemModalOpen = false" @success="successMessage = $event" @error="errorMessage = $event" @updateItemsList="product.items = $event"/>
     </transition>
   </div>
 </template>
 
 <script>
 import AddItemModal from './AddItemModal.vue';
+import EditItemModal from './EditItemModal.vue';
 
 export default {
   props: ["product", "colors", "sizes"],
@@ -160,12 +165,16 @@ export default {
       successMessage: "",
       errorMessage: "",
 
-      isAddItemModalOpen: false
+      isAddItemModalOpen: false,
+
+      isEditItemModalOpen: false,
+      editItem: null
     };
   },
 
   components: {
-    AddItemModal
+    AddItemModal,
+    EditItemModal,
   },
 
   methods: {
@@ -191,7 +200,16 @@ export default {
             .catch((error) => {
                 this.errorMessage = error.message;
             })
+    },
+
+    update(item) {
+      this.editItem = item;
+      this.isEditItemModalOpen = true;
     }
+  },
+
+  mounted() {
+    console.log(this.product)
   }
 };
 </script>

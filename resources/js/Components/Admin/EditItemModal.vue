@@ -1,5 +1,5 @@
 <template>
-  <div class="add-modal" @click.self="$emit('close')">
+    <div class="add-modal" @click.self="$emit('close')">
     <div
       class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-2/3 p-5 border border-gray-200 rounded-lg shadow-xl"
     >
@@ -19,7 +19,7 @@
       </div>
 
       <h2 class="text-xl">Ajouter un article</h2>
-      <form @submit.prevent="store()">
+      <form @submit.prevent="update()">
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
           for="primary_color_id"
@@ -123,14 +123,13 @@
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
           for="image_1"
-          >Image principale</label
+          >Image principale (laisser vide pour ne pas changer)</label
         >
         <input
           id="image_1"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="file"
           @input="form.image_1 = $event.target.files[0]"
-          required
         />
         <div v-if="errors && errors.image_1">
           <p class="text-red-500" v-for="error in errors.image_1" :key="error">
@@ -141,14 +140,13 @@
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
           for="image_2"
-          >Images 2</label
+          >Images 2 (laisser vide pour ne pas changer)</label
         >
         <input
           id="image_2"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="file"
           @input="form.image_2 = $event.target.files[0]"
-          required
         />
         <div v-if="errors && errors.image_2">
           <p class="text-red-500" v-for="error in errors.image_2" :key="error">
@@ -159,14 +157,13 @@
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
           for="image_3"
-          >Images 3</label
+          >Images 3 (laisser vide pour ne pas changer)</label
         >
         <input
           id="image_3"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="file"
           @input="form.image_3 = $event.target.files[0]"
-          required
         />
         <div v-if="errors && errors.image_3">
           <p class="text-red-500" v-for="error in errors.image_3" :key="error">
@@ -177,7 +174,7 @@
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
           for="image_4"
-          >Images 4 (facultative)</label
+          >Images 4 (laisser vide pour ne pas changer)</label
         >
         <input
           id="image_4"
@@ -225,49 +222,47 @@
 
 <script>
 export default {
-  props: ["product", "colors", "sizes"],
+    props: ["item", "colors", "sizes"],
 
-  data() {
-    return {
-      form: {
-        product_id: this.product.id,
-        primary_color_id: null,
-        secondary_color_id: null,
-        size: null,
-        quantity: null,
-        model_size: null,
-        active: true,
-        image_1: null,
-        image_2: null,
-        image_3: null,
-        image_4: null,
-      },
-    };
-  },
-
-  methods: {
-    store() {
-      this.form.active = this.form.active ? 1 : 0;
-
-      axios
-        .post(route("admin.products.items.store"), this.form, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          this.product.items.unshift(response.data.item);
-          this.$emit('updateProductsList', response.data.products);
-          this.$emit("success", "Article ajouté avec succès !");
-          this.$emit('close');
-        })
-        .catch((error) => {
-          this.$emit("error", error.message);
-          this.$emit('close');
-        });
+data() {
+  return {
+    form: {
+      primary_color_id: this.item.primary_color_id,
+      secondary_color_id: this.item.secondary_color_id,
+      size: this.item.size,
+      quantity: this.item.quantity,
+      model_size: this.item.model_size,
+      active: this.item.active ? true : false,
+      image_1: null,
+      image_2: null,
+      image_3: null,
+      image_4: null,
     },
+  };
+},
+
+methods: {
+  update() {
+    this.form.active = this.form.active ? 1 : 0;
+
+    axios
+      .post(route("admin.products.items.update", this.item.id), this.form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        this.$emit('updateItemsList', response.data);
+        this.$emit("success", "Article modifié avec succès !");
+        this.$emit('close');
+      })
+      .catch((error) => {
+        this.$emit("error", error.message);
+        this.$emit('close');
+      });
   },
-};
+},
+}
 </script>
 
 <style scoped>

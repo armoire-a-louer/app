@@ -85,9 +85,49 @@ class ProductsController extends Controller
 
     public function storeItem(Request $request)
     {
-        dd($request);
         $item = ProductSizeColor::create($request->only(['product_id', 'primary_color_id', 'secondary_color_id', 'size', 'quantity', 'model_size', 'active']));
 
-        // Une photo principale et 3 photos secondaires (min 1, max 3)
+        $item->addMediaFromRequest('image_1')->toMediaCollection('image_1');
+        $item->addMediaFromRequest('image_2')->toMediaCollection('image_2');
+        $item->addMediaFromRequest('image_3')->toMediaCollection('image_3');
+        if ($request->hasFile('image_4')) {
+            $item->addMediaFromRequest('image_4')->toMediaCollection('image_4');
+        }
+
+        $products = $this->getProductsWithRelations();
+
+        $item = ProductSizeColor::with(['primaryColor', 'secondaryColor'])->find($item->id);
+
+        return response()->json([
+            'item' => $item,
+            'products' => $products
+        ]);
+    }
+
+    public function updateItem(Request $request, ProductSizeColor $item)
+    {
+        $item->update($request->only(['primary_color_id', 'secondary_color_id', 'size', 'quantity', 'model_size', 'active']));
+        $item->save();
+
+        if ($request->hasFile('image_1')) {
+            $item->clearMediaCollection('image_1');
+            $item->addMediaFromRequest('image_1')->toMediaCollection('image_1');
+        }
+        if ($request->hasFile('image_2')) {
+            $item->clearMediaCollection('image_2');
+            $item->addMediaFromRequest('image_2')->toMediaCollection('image_2');
+        }
+        if ($request->hasFile('image_3')) {
+            $item->clearMediaCollection('image_3');
+            $item->addMediaFromRequest('image_3')->toMediaCollection('image_3');
+        }
+        if ($request->hasFile('image_4')) {
+            $item->clearMediaCollection('image_4');
+            $item->addMediaFromRequest('image_4')->toMediaCollection('image_4');
+        }
+
+        $items = ProductSizeColor::where('product_id', $item->product_id)->with(['primaryColor', 'secondaryColor'])->get();
+        
+        return response()->json($items);
     }
 }
