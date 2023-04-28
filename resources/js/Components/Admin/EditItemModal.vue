@@ -18,7 +18,7 @@
         </svg>
       </div>
 
-      <h2 class="text-xl">Ajouter un article</h2>
+      <h2 class="text-xl">Modifier un article</h2>
       <form @submit.prevent="update()">
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
@@ -125,6 +125,7 @@
           for="image_1"
           >Image principale (laisser vide pour ne pas changer)</label
         >
+        <img :src="item.first_image_url" class="max-h-10 max-w-10">
         <input
           id="image_1"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -142,6 +143,7 @@
           for="image_2"
           >Images 2 (laisser vide pour ne pas changer)</label
         >
+        <img :src="item.second_image_url" class="max-h-10 max-w-10">
         <input
           id="image_2"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -159,6 +161,7 @@
           for="image_3"
           >Images 3 (laisser vide pour ne pas changer)</label
         >
+        <img :src="item.third_image_url" class="max-h-10 max-w-10">
         <input
           id="image_3"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -176,6 +179,7 @@
           for="image_4"
           >Images 4 (laisser vide pour ne pas changer)</label
         >
+        <img :src="item.fourth_image_url" class="max-h-10 max-w-10">
         <input
           id="image_4"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

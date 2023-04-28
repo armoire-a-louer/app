@@ -53,21 +53,21 @@ class ProductSizeColor extends Model implements HasMedia
     protected function secondImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+            get: fn ($value) => $this->getFirstMediaUrl('image_2')
         );
     }
 
     protected function thirdImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+            get: fn ($value) => $this->getFirstMediaUrl('image_3')
         );
     }
 
     protected function fourthImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->getFirstMediaUrl('image_1')
+            get: fn ($value) => $this->getFirstMediaUrl('image_4')
         );
     }
 
