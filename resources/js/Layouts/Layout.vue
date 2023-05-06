@@ -1,7 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <slot />
+    <main>
+      <slot/>
+    </main>
     <div style="height: 200vh;"></div>
   </div>
 </template>
@@ -17,6 +19,10 @@ export default {
 </script>
 
 <style>
+.title {
+  font-family: 'Roslindale', serif !important;
+}
+
 @font-face {
   font-family: "Avenir";
   src: local("Avenir"),
@@ -30,9 +36,19 @@ export default {
     url(/fonts/RoslindaleText-Bold.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "Gilroy-Bold";
+  src: local("Gilroy-Bold"),
+    url(/fonts/Gilroy-Bold.ttf) format("truetype");
+}
+
 .container {
     padding-left: 20px !important;
     padding-right: 20px !important;
+}
+
+.padding-navbar {
+  padding-top: 180px;
 }
 
 .fade-right-enter-active,

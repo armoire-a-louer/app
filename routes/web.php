@@ -65,6 +65,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 
 // FRONT
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'); 
 
 // Account
 Route::get('/dashboard', function () {

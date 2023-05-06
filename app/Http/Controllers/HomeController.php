@@ -13,4 +13,11 @@ class HomeController extends Controller
 
         ]);
     }
+
+    public function concept()
+    {
+        return Inertia::render('Concept', [
+
+        ]);
+    }
 }

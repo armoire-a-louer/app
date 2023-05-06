@@ -1,5 +1,5 @@
 <template>
-  <nav ref="navbar" class="navbar" :style="[scrolled ? 'color: black; background-color: white;' : 'color: white;', isHomePage ? 'position: fixed; top: 0; left: 0; width: 100%;' : '']" :class="scrolled ? 'box-shadow' : ''">
+  <nav ref="navbar" class="navbar fixed top-0 left-0 w-full" :style="[scrolled ? 'color: black; background-color: white;' : 'color: white;']" :class="scrolled ? 'box-shadow' : ''">
     <div class="container mx-auto">
       <div class="flex gap-10">
         <Link :href="route('index')" class="flex items-center">
@@ -51,7 +51,7 @@
             </div>
           </span>
           <span class="nav-link">
-            <Link class="nav-a py-2 px-4" :href="route('index')">Concept</Link>
+            <Link class="nav-a py-2 px-4" :href="route('concept')">Concept</Link>
           </span>
         </div>
       </div>
@@ -92,7 +92,7 @@ export default {
       brands: this.$inertia.page.props.brands,
 
       isHomePage: this.$inertia.page.props.path === '/',
-      scrolled: this.isHomePage ? true : false,
+      scrolled: this.isHomePage ? false : true,
 
       searchOpened: false
     };
@@ -128,6 +128,7 @@ export default {
 
 .navbar {
     transition: 300ms ease;
+    z-index: 100000;
 }
 
 .navbar .container {

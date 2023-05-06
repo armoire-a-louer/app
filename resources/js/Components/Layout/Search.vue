@@ -2,23 +2,23 @@
     <div
       id="defaultModal"
       tabindex="-1"
-      class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full text-black"
       @click.self="$emit('close')"
     >
       <div class="relative w-full max-w-2xl max-h-full">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-lg shadow">
           <!-- Modal header -->
           <div
-            class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600"
+            class="flex items-center justify-between p-4 border-b rounded-t"
           >
             <div class="flex items-center">
                 <img style="width: 20px" src="/images/icons/search_black.svg" />
-                <input class="search-input" type="text">
+                <input class="search-input" type="text" autofocus placeholder="Robes">
             </div>
             <button
               type="button"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
               data-modal-hide="defaultModal"
               @click="$emit('close')"
             >
@@ -43,7 +43,7 @@
           </div>
           <!-- Modal footer -->
           <div
-            class="flex justify-end items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
+            class="flex justify-end items-center p-6 space-x-2 border-t border-gray-200 rounded-b"
           >
             :)
           </div>
