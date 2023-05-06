@@ -1,9 +1,10 @@
 <template>
-  <nav ref="navbar" class="navbar">
+  <nav ref="navbar" class="navbar" :style="[scrolled ? 'color: black; background-color: white;' : 'color: white;', isHomePage ? 'position: fixed; top: 0; left: 0; width: 100%;' : '']" :class="scrolled ? 'box-shadow' : ''">
     <div class="container mx-auto">
       <div class="flex gap-10">
         <Link :href="route('index')" class="flex items-center">
-          <img style="width: 200px" src="/images/logo.svg" />
+          <img v-if="scrolled" style="width: 200px" src="/images/logo_black.svg" />
+          <img v-else style="width: 200px" src="/images/logo.svg" />
         </Link>
         <div class="nav-links">
           <span class="nav-link">
@@ -22,6 +23,7 @@
                   :href="route('index')"
                   v-for="collection in collections"
                   :key="collection.id"
+                  class="nav-dropdown-link"
                 >
                   {{ collection.name }}
                 </Link>
@@ -41,6 +43,7 @@
                   :href="route('index')"
                   v-for="brand in brands"
                   :key="brand.id"
+                  class="nav-dropdown-link"
                 >
                   {{ brand.name }}
                 </Link>
@@ -53,40 +56,78 @@
         </div>
       </div>
       <div class="flex gap-4 items-center">
+        <span class="p-4 cursor-pointer" @click="searchOpened = true">
+          <img v-if="scrolled" style="width: 17px" src="/images/icons/search_black.svg" />
+          <img v-else style="width: 17px" src="/images/icons/search.svg" />
+        </span>
         <Link class="p-4" :href="route('index')">
-          <img style="width: 17px" src="/images/icons/search.svg" />
+          <img v-if="scrolled" style="width: 17px" src="/images/icons/user_black.svg" />
+          <img v-else style="width: 17px" src="/images/icons/user.svg" />
         </Link>
         <Link class="p-4" :href="route('index')">
-          <img style="width: 17px" src="/images/icons/user.svg" />
-        </Link>
-        <Link class="p-4" :href="route('index')">
-          <img style="width: 17px" src="/images/icons/bag.svg" />
+          <img v-if="scrolled" style="width: 17px" src="/images/icons/bag_black.svg" />
+          <img v-else style="width: 17px" src="/images/icons/bag.svg" />
         </Link>
       </div>
     </div>
+    <transition name="fade">
+        <Search v-if="searchOpened" @close="searchOpened = false"/>
+    </transition>
   </nav>
 </template>
 
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
+import Search from './Search.vue';
 
 export default {
   components: {
     Link,
+    Search
   },
 
   data() {
     return {
       collections: this.$inertia.page.props.collections,
       brands: this.$inertia.page.props.brands,
+
+      isHomePage: this.$inertia.page.props.path === '/',
+      scrolled: this.isHomePage ? true : false,
+
+      searchOpened: false
     };
+  },
+
+  methods: {
+    handleScroll(event) {
+        if (! this.isHomePage) return;
+
+        if (window.scrollY > 50) {
+            this.scrolled = true;
+        } else {
+            this.scrolled = false;
+        }
+    }
+  },
+
+  mounted() {
+    this.handleScroll();
+    window.addEventListener('scroll', this.handleScroll);
+  },
+
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
 };
 </script>
 
 <style scoped>
+.box-shadow {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
 .navbar {
-  background: green;
+    transition: 300ms ease;
 }
 
 .navbar .container {
@@ -104,7 +145,6 @@ export default {
 }
 
 .nav-link {
-  color: white;
   position: relative;
   height: 100%;
   display: flex;
@@ -112,7 +152,6 @@ export default {
 }
 
 .nav-dropdown {
-  color: white;
   position: relative;
   display: inline-block;
   align-items: center;
@@ -151,14 +190,21 @@ export default {
   left: 0;
   color: black;
   z-index: 1000;
-  width: 150%;
+  min-width: 100%;
 }
 
 .nav-dropdown-menu div {
   background: white;
   margin-top: 10px;
-  text-align: center;
   padding: 10px 20px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.nav-dropdown-link {    
+    display: block;
 }
 </style>
