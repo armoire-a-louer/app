@@ -8,11 +8,20 @@
                     <p class="w-100 sm:w-4/5 md:w-3/5 lg:w-2/5 text-white">
                         L’Armoire à louer, plateforme de location de vêtements de haute couture vous offre l’opportunité de vivre un luxe responsable quand vous le souhaitez.
                     </p>
-                    <WhiteButton text="Découvrir nos marques" :route="route('index')"/>
+                    <WhiteButton class="mt-5" text="Découvrir nos marques" :route="route('index')"/>
                 </div>
             </div>
             <div class="header-bottom"></div>
         </div>
+        <section class="container flex justify-between items-center">
+            <div class="flex flex-col gap-5 ">
+                <img src="/images/home-1.png" alt="Choisissez vos vêtements">
+                <h3 class="text-center">Choisissez vos vêtements.</h3>
+                <p class="text-center">
+                    Parcourez nos collections et choisissez ce qu’il vous plaît
+                </p>
+            </div>
+        </section>
     </Layout>
 </template>
 
@@ -74,7 +83,7 @@ export default {
     font-size: 80px;
     font-weight: bold;
     color: white;
-    line-height: 65px;
+    line-height: 95px;
 }
 
 @media screen and (max-width: 1100px){
