@@ -23,6 +23,10 @@ export default {
   font-family: 'Roslindale', serif !important;
 }
 
+body {
+  overflow-x: hidden !important;
+}
+
 @font-face {
   font-family: "Avenir";
   src: local("Avenir"),

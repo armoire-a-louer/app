@@ -8,7 +8,7 @@
                     <p class="w-100 sm:w-4/5 md:w-3/5 lg:w-2/5 text-white">
                         L’Armoire à louer, plateforme de location de vêtements de haute couture vous offre l’opportunité de vivre un luxe responsable quand vous le souhaitez.
                     </p>
-                    <Button class="mt-5" text="Découvrir nos marques" :route="route('index')"/>
+                    <Button class="mt-5" text="Découvrir nos marques" :route="route('index')" color="white" textColor="black"/>
                 </div>
             </div>
             <div class="header-bottom"></div>
@@ -16,21 +16,21 @@
 
         <section class="steps container mx-auto flex justify-center items-center pt-28 flex-wrap gap-x-6 gap-y-16">
             <div class="flex flex-col gap-2 items-center">
-                <img src="/images/home-1.png" alt="Choisissez vos vêtements">
+                <img src="/images/illu-1.svg" alt="Choisissez vos vêtements">
                 <h3 class="text-center pt-5 title">Choisissez vos vêtements.</h3>
                 <p class="text-center w-2/3">
                     Parcourez nos collections et choisissez ce qu’il vous plaît
                 </p>
             </div>
             <div class="flex flex-col gap-2 items-center">
-                <img src="/images/home-2.png" alt="Portez-les">
+                <img src="/images/illu-2.svg" alt="Portez-les">
                 <h3 class="text-center pt-5 title">Portez-les.</h3>
                 <p class="text-center w-2/3">
                     Parcourez nos collections et choisissez ce qu’il vous plaît
                 </p>
             </div>
             <div class="flex flex-col gap-2 items-center">
-                <img src="/images/home-3.png" alt="Retournez-les ou achetez-les">
+                <img src="/images/illu-3.svg" alt="Retournez-les ou achetez-les">
                 <h3 class="text-center pt-5 title">Retournez-les ou achetez-les.</h3>
                 <p class="text-center w-2/3">
                     Parcourez nos collections et choisissez ce qu’il vous plaît
@@ -47,7 +47,7 @@
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                 </p>
-                <Button text="À propos de nous" :route="route('index')" border="black"/>
+                <Button text="À propos de nous" :route="route('index')" border="black" textColor="black"/>
             </div>
         </section>
 
@@ -63,7 +63,7 @@
 
         <img class="location-separation" src="/images/arrondi.svg">
         <section class="location">
-            <div class="container mx-auto py-20">
+            <div class="container mx-auto py-20 overflow-visible">
                 <div class="flex justify-between items-center">
                     <h2 class="title">Les plus loués.</h2>
                     <div class="flex gap-10">
@@ -198,6 +198,7 @@ export default {
 
 .a-propos h2 {
     font-size: 46px;
+    line-height: 59px;
 }
 
 .a-propos div > *{

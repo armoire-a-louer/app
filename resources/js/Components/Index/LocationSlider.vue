@@ -21,6 +21,8 @@
             </div>
         </div>
         </div>
+
+        <div class="slider__wraper"></div>
     </div>
   </div>
 </template>
@@ -95,7 +97,6 @@ export default {
 
   methods: {
     startDrag(e) {
-      e.preventDefault();
       this.dragging = true;
       this.dragStart = e.clientX || e.touches[0].clientX;
     },
@@ -163,6 +164,15 @@ export default {
   margin-top: 80px;
 }
 
+.slider__wraper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 300px;
+  background: transparent linear-gradient(271deg, #FAF9F7 0%, #FFFFFF00 100%) 0% 0% no-repeat padding-box;
+}
+
 .slider h3{
     font-size: 27px;
 }
@@ -197,6 +207,11 @@ export default {
 
 .slider__item img{
     transition: transform 300ms ease;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 500px;
 }
 
 .slider__item:hover .slider__item__hover{

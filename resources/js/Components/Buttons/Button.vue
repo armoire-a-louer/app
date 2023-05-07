@@ -44,12 +44,21 @@ export default {
   }
 }
 
-.button:hover {
-  transform: scale(1.02);
+.bg-white:hover {
+  background: none !important;
+  box-shadow: inset 0px 0px 0px 2px #fff !important;
+}
+
+.text-black:hover {
+  color: white !important;
 }
 
 .border {
   border: 2px solid;
+}
+
+.border:hover {
+  background: black !important;
 }
 
 .bg-black {
