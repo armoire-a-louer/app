@@ -173,6 +173,12 @@ export default {
   background: transparent linear-gradient(271deg, #FAF9F7 0%, #FFFFFF00 100%) 0% 0% no-repeat padding-box;
 }
 
+@media screen and (max-width: 850px) {
+  .slider__wraper {
+    width: 150px;
+  }
+}
+
 .slider h3{
     font-size: 27px;
 }

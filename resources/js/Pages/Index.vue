@@ -158,18 +158,21 @@ export default {
 @media screen and (max-width: 1100px){
     .header h1 {
         font-size: 60px;
-    }
+        line-height: 75px;
+    }   
 }
 
 @media screen and (max-width: 550px){
     .header h1 {
         font-size: 50px;
+        line-height: 65px;
     }
 }
 
 @media screen and (max-width: 460px){
     .header h1 {
         font-size: 40px;
+        line-height: 55px;
     }
 }
 
