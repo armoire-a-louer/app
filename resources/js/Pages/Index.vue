@@ -8,7 +8,7 @@
                     <p class="w-100 sm:w-4/5 md:w-3/5 lg:w-2/5 text-white">
                         L’Armoire à louer, plateforme de location de vêtements de haute couture vous offre l’opportunité de vivre un luxe responsable quand vous le souhaitez.
                     </p>
-                    <WhiteButton class="mt-5" text="Découvrir nos marques" :route="route('index')"/>
+                    <Button class="mt-5" text="Découvrir nos marques" :route="route('index')"/>
                 </div>
             </div>
             <div class="header-bottom"></div>
@@ -47,7 +47,7 @@
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                 </p>
-                <WhiteButton text="À propos de nous" :route="route('index')" border=":true"/>
+                <Button text="À propos de nous" :route="route('index')" border="black"/>
             </div>
         </section>
 
@@ -61,22 +61,49 @@
             </div>
         </section>
 
+        <img class="location-separation" src="/images/arrondi.svg">
         <section class="location">
-            <h2>Les plus loués.</h2>
+            <div class="container mx-auto py-20">
+                <div class="flex justify-between items-center">
+                    <h2 class="title">Les plus loués.</h2>
+                    <div class="flex gap-10">
+                        <button class="text-4xl" :class="canPrev ? '' : 'disabled'" type="button" @click="$refs.slider.prev()">
+                            <font-awesome-icon icon="fa-solid fa-chevron-left" />
+                        </button>
+                        <button class="text-4xl" :class="canNext ? '' : 'disabled'" type="button" @click="$refs.slider.next()">
+                            <font-awesome-icon icon="fa-solid fa-chevron-right" />
+                        </button>
+                    </div>
+                </div>
+
+                <LocationSlider ref="slider" @canPrev="canPrev = $event" @canNext="canNext = $event"/>
+            </div>
         </section>
+        <img src="/images/arrondi-bas.svg">
+
+
     </Layout>
 </template>
 
 <script>
 import Layout from '@/Layouts/Layout.vue'
-import WhiteButton from '@/Components/Buttons/WhiteButton.vue'
+import Button from '@/Components/Buttons/Button.vue'
+import LocationSlider from '@/Components/Index/LocationSlider.vue'
 
 export default {
     name: 'Index',
     
     components: {
         Layout,
-        WhiteButton
+        Button,
+        LocationSlider
+    },
+
+    data() {
+        return {
+            canPrev: false,
+            canNext: true
+        }
     }
 }
 </script>
@@ -255,7 +282,19 @@ export default {
     }
 }
 
+.location-separation {
+    margin-top: 100px;
+}
+
 .location {
-    margin-top: 80px;
+    background-color: rgba(202, 189, 168, 0.1);
+}
+
+.location h2{
+    font-size: 48px;
+}
+
+.disabled {
+    color: rgba(0, 0, 0, 0.3);
 }
 </style>

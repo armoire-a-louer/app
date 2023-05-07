@@ -64,7 +64,7 @@
           <img v-if="scrolled" style="width: 17px" src="/images/icons/user_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/user.svg" />
         </Link>
-        <Link class="p-4" :href="route('index')">
+        <Link class="p-4 pr-0" :href="route('index')">
           <img v-if="scrolled" style="width: 17px" src="/images/icons/bag_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/bag.svg" />
         </Link>

@@ -42,6 +42,12 @@ export default {
     url(/fonts/Gilroy-Bold.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "SackersGothic";
+  src: local("SackersGothic"),
+    url(/fonts/SackersGothicStd-Medium.otf) format("opentype");
+}
+
 .container {
     padding-left: 20px !important;
     padding-right: 20px !important;
