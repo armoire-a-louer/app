@@ -13,14 +13,56 @@
             </div>
             <div class="header-bottom"></div>
         </div>
-        <section class="container flex justify-between items-center">
-            <div class="flex flex-col gap-5 ">
+
+        <section class="steps container mx-auto flex justify-center items-center pt-28 flex-wrap gap-x-6 gap-y-16">
+            <div class="flex flex-col gap-2 items-center">
                 <img src="/images/home-1.png" alt="Choisissez vos vêtements">
-                <h3 class="text-center">Choisissez vos vêtements.</h3>
-                <p class="text-center">
+                <h3 class="text-center pt-5 title">Choisissez vos vêtements.</h3>
+                <p class="text-center w-2/3">
                     Parcourez nos collections et choisissez ce qu’il vous plaît
                 </p>
             </div>
+            <div class="flex flex-col gap-2 items-center">
+                <img src="/images/home-2.png" alt="Portez-les">
+                <h3 class="text-center pt-5 title">Portez-les.</h3>
+                <p class="text-center w-2/3">
+                    Parcourez nos collections et choisissez ce qu’il vous plaît
+                </p>
+            </div>
+            <div class="flex flex-col gap-2 items-center">
+                <img src="/images/home-3.png" alt="Retournez-les ou achetez-les">
+                <h3 class="text-center pt-5 title">Retournez-les ou achetez-les.</h3>
+                <p class="text-center w-2/3">
+                    Parcourez nos collections et choisissez ce qu’il vous plaît
+                </p>
+            </div>
+        </section>
+
+        <section class="relative a-propos mt-20 md:mt-52">
+            <img src="/images/photo-men.png" alt="">
+            <div class="flex flex-col gap-7 items-start py-24 px-16">
+                <h2 class="title">
+                    Avec l’Armoire à Louer, n’achetez plus vos vêtements, louez-les !
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                </p>
+                <WhiteButton text="À propos de nous" :route="route('index')" border=":true"/>
+            </div>
+        </section>
+
+        <section class="selection container mx-auto mt-20 md:mt-36">
+            <h2 class="title text-center">On les a séléctionnés pour vous.</h2>
+            <div class="flex justify-between mt-11">
+                <img src="/images/photo-1.png" alt="Vestes">
+                <img src="/images/photo-2.png" alt="Vestes">
+                <img src="/images/photo-3.png" alt="Vestes">
+                <img src="/images/photo-4.png" alt="Vestes">
+            </div>
+        </section>
+
+        <section class="location">
+            <h2>Les plus loués.</h2>
         </section>
     </Layout>
 </template>
@@ -106,5 +148,114 @@ export default {
 
 .header p {
     text-rendering: optimizeLegibility;
+}
+
+.steps h3 {
+    font-size: 27px;
+    font-family: 'Roslindaleme';
+}
+
+.steps img {
+    height: 230px;
+    width: auto;
+}
+
+.a-propos div{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    width: 60%;
+}
+
+.a-propos h2 {
+    font-size: 46px;
+}
+
+.a-propos div > *{
+    max-width: 600px;
+}
+
+@media screen and (max-width: 1220px){
+    .a-propos img{
+        max-height: 500px;
+        object-fit: cover;
+    }
+}
+
+@media screen and (max-width: 1023px){
+    .a-propos img{
+        width: 450px;
+    }
+}
+
+@media screen and (max-width: 850px){
+    .a-propos div{
+        position: relative;
+        width: 100%;
+        transform: none;
+    }
+
+    .a-propos img{
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: top;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .a-propos img{
+        height: 230px;
+    }
+
+    .a-propos div{
+        padding-top: 30px;
+    }
+
+    .a-propos h2 {
+        font-size: 24px;
+    }
+}
+
+.selection h2{
+    font-size: 48px;
+}
+
+.selection img {
+    width: 23%;
+}
+
+@media screen and (max-width: 980px){
+    .selection {
+        margin-top: 200px;
+    }
+}
+
+@media screen and (max-width: 700px){
+    .selection div {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .selection img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        object-position: top;
+    }
+
+    .selection h2 {
+        font-size: 24px;
+    }
+
+    .selection {
+        margin-top: 50px;
+    }
+}
+
+.location {
+    margin-top: 80px;
 }
 </style>
