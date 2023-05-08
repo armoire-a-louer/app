@@ -49,6 +49,14 @@ export default {
   box-shadow: inset 0px 0px 0px 2px #fff !important;
 }
 
+.bg-black:hover {
+  background: white !important;
+}
+
+.text-white:hover {
+  color: black !important;
+}
+
 .text-black:hover {
   color: white !important;
 }

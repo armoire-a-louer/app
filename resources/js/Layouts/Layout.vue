@@ -1,10 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <main>
+    <main class="overflow-hidden">
       <slot/>
     </main>
-    <div style="height: 200vh;"></div>
   </div>
 </template>
 
@@ -21,6 +20,27 @@ export default {
 <style>
 .title {
   font-family: 'Roslindale', serif !important;
+  font-size: 56px;
+}
+
+.smaller-title {
+  font-family: 'Roslindale', serif !important;
+  font-size: 46px;
+  line-height: 59px;
+}
+
+@media screen and (max-width: 1100px){
+    .smaller-title {
+        font-size: 34px !important;
+        line-height: 48px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .title, .smaller-title {
+        font-size: 24px !important;
+        line-height: 34px;
+    }
 }
 
 body {
