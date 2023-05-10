@@ -88,6 +88,35 @@
             </p>
         </section>
         <PartenairesSlider />
+        <div class="flex justify-center mt-4">
+            <Button text="Découvrir toutes nos marques" color="black" textColor="white"/>
+        </div>
+
+
+        <section class="mx-auto container mt-40">
+            <div class="products">
+                <div>
+                    <div class="w-11/12 sm:w-10/12 md:w-9/12 lg:w-7/12 xl:w-4/12 h-full mx-auto flex flex-col gap-10 justify-center items-center">
+                        <h2 class="title text-white text-center">Lorem ipsum.</h2>
+                        <p class="text-white text-center">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                        </p>
+                        <Button text="Parcourir nos produits" color="white" textColor="black"/>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq mt-32 container mx-auto">
+            <h2 class="title text-center">Vos questions fréquentes.</h2>
+            <FAQ />
+        </section>
+
+        <section class="feedbacks mt-36">
+            <h2 class="title text-center">Ils en parlent mieux que nous.</h2>
+
+            <Feedbacks />
+        </section>
     </Layout>
 </template>
 
@@ -96,6 +125,8 @@ import Layout from '@/Layouts/Layout.vue'
 import Button from '@/Components/Buttons/Button.vue'
 import LocationSlider from '@/Components/Index/LocationSlider.vue'
 import PartenairesSlider from '@/Components/Index/PartenairesSlider.vue'
+import FAQ from '@/Components/Index/FAQ.vue'
+import Feedbacks from '@/Components/Index/Feedbacks.vue'
 
 export default {
     name: 'Index',
@@ -104,7 +135,9 @@ export default {
         Layout,
         Button,
         LocationSlider,
-        PartenairesSlider
+        PartenairesSlider,
+        FAQ,
+        Feedbacks,
     },
 
     data() {
@@ -318,5 +351,19 @@ export default {
 
 .disabled {
     color: rgba(0, 0, 0, 0.3);
+}
+
+.products {
+    height: 560px;
+    display: flex;
+    background: url('/images/photo-container.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.products > div {
+    background: rgba(0, 0, 0, 0.3);
+    flex: 1;
 }
 </style>

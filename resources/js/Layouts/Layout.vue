@@ -34,6 +34,11 @@ export default {
         font-size: 34px !important;
         line-height: 48px;
     }
+
+    .title {
+      font-size: 42px !important;
+      line-height: 58px;
+    }
 }
 
 @media screen and (max-width: 600px){

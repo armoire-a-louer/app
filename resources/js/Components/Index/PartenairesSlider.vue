@@ -33,7 +33,6 @@ export default {
       dragStart: 0,
       dragEnd: 0,
       posX: 0,
-      width: 0,
     };
   },
 
@@ -54,32 +53,28 @@ export default {
     },
 
     move(e) {
-        if (this.dragging) {
+          if (this.dragging) {
             const currentPos = e.clientX || e.touches[0].clientX;
             const diff = currentPos - this.dragStart;
 
             this.posX += diff;
 
-            // Make sure the slider stays within the bounds of the wrapper
-            // if (this.posX > 0) {
-            // this.posX = 0;
-            // } 
-            // else if (this.posX < -(this.width - this.$refs.wrapper.offsetWidth)) {
-            // this.posX = -(this.width - this.$refs.wrapper.offsetWidth);
-            // }
+            // Ensure the slider doesn't move past its bounds
+            const wrapperWidth = this.$refs.wrapper.getBoundingClientRect().width;
+            const sliderWidth = this.$refs.wrapper.scrollWidth;
+            const minX = -(sliderWidth - wrapperWidth);
+            const maxX = sliderWidth - wrapperWidth;
+
+            if (this.posX < minX) {
+              this.posX = minX;
+            } else if (this.posX > maxX) {
+              this.posX = maxX;
+            }
 
             this.dragStart = currentPos;
-        }
-    },
-
-    setWidth() {
-      this.width = this.$refs.wrapper.offsetWidth;
-    },
-  },
-
-  mounted() {
-    this.setWidth();
-  },
+          }
+    }
+  }
 };
 </script>
 
