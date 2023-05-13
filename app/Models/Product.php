@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Rating;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -52,5 +53,10 @@ class Product extends Model implements HasMedia
     public function materials(): BelongsToMany
     {
         return $this->belongsToMany(Material::class, 'materials_products');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
     }
 }

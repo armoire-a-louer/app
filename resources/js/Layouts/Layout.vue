@@ -58,8 +58,9 @@ body {
 @font-face {
   font-family: "Avenir";
   src: local("Avenir"),
+    url(/fonts/Avenir/Avenir-Black-03.ttf) format("truetype"),
+    url(/fonts/Avenir/Avenir-Heavy-05.ttf) format("truetype"),
     url(/fonts/Avenir/Avenir-Roman-12.ttf) format("truetype"),
-    url(/fonts/Avenir/Avenir-Heavy-05.ttf) format("truetype");
 }
 
 @font-face {
@@ -80,13 +81,20 @@ body {
     url(/fonts/SackersGothicStd-Medium.otf) format("opentype");
 }
 
+.font-sackers {
+  font-family: "SackersGothic", sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+}
+
 .container {
     padding-left: 20px !important;
     padding-right: 20px !important;
 }
 
 .padding-navbar {
-  padding-top: 180px;
+  padding-top: 160px;
 }
 
 .fade-right-enter-active,

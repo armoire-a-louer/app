@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductsController as ProductsControllerFront;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 // FRONT
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'); 
+Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name('product');
 
 // Account
 Route::get('/dashboard', function () {
