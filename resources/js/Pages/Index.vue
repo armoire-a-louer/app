@@ -112,10 +112,31 @@
             <FAQ />
         </section>
 
-        <section class="feedbacks mt-36">
+        <section class="mt-36">
             <h2 class="title text-center">Ils en parlent mieux que nous.</h2>
 
             <Feedbacks />
+        </section>
+
+        
+        <img src="/images/arrondi-conseils.svg">
+        <section class="conseils pb-48">
+            <div class="container mx-auto">
+                <h2 class="title mb-5 pt-8">Nos conseils.</h2>
+                <p class="w-full md:w-3/4 xl:w-1/2 mb-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+
+                <div class="flex gap-8 lg:gap-4 flex-wrap lg:flex-nowrap">
+                    <div class="w-full">
+                        <ConseilCard />
+                    </div>
+                    <div class="w-full">
+                        <ConseilCard />
+                    </div>
+                    <div class="w-full">
+                        <ConseilCard />
+                    </div>
+                </div>
+            </div>
         </section>
     </Layout>
 </template>
@@ -127,6 +148,7 @@ import LocationSlider from '@/Components/Index/LocationSlider.vue'
 import PartenairesSlider from '@/Components/Index/PartenairesSlider.vue'
 import FAQ from '@/Components/Index/FAQ.vue'
 import Feedbacks from '@/Components/Index/Feedbacks.vue'
+import ConseilCard from '@/Components/Index/ConseilCard.vue'
 
 export default {
     name: 'Index',
@@ -138,6 +160,7 @@ export default {
         PartenairesSlider,
         FAQ,
         Feedbacks,
+        ConseilCard
     },
 
     data() {
@@ -365,5 +388,9 @@ export default {
 .products > div {
     background: rgba(0, 0, 0, 0.3);
     flex: 1;
+}
+
+.conseils {
+    background: rgba(202, 189, 168, 0.08);
 }
 </style>

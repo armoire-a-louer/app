@@ -4,15 +4,18 @@
     <main class="overflow-hidden">
       <slot/>
     </main>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from "@/Components/Layout/Navbar.vue";
+import Footer from "@/Components/Layout/Footer.vue";
 
 export default {
   components: {
     Navbar,
+    Footer
   },
 };
 </script>
