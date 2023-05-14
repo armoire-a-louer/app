@@ -29,39 +29,43 @@
         </button>
       </div>
 
-    <div class="w-full overflow-x-auto rounded-lg shadow-lg">
+      <div class="w-full overflow-x-auto rounded-lg shadow-lg">
         <table class="w-full whitespace-no-wrap">
-        <thead>
+          <thead>
             <tr
-            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-100"
+              class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-100"
             >
-            <th class="px-4 py-3">Nom</th>
-            <th class="px-4 py-3 text-center">Actions</th>
+              <th class="px-4 py-3">Nom</th>
+              <th class="px-4 py-3 text-center">Actions</th>
             </tr>
-        </thead>
-        <tbody class="bg-white divide-y">
-            <tr v-for="material in materials" :key="material.id" class="text-gray-700">
-            <td class="px-4 py-3">{{ material.name }}</td>
-            <td class="px-4 py-3">
+          </thead>
+          <tbody class="bg-white divide-y">
+            <tr
+              v-for="material in materials"
+              :key="material.id"
+              class="text-gray-700"
+            >
+              <td class="px-4 py-3">{{ material.name }}</td>
+              <td class="px-4 py-3">
                 <div class="justify-center items-center flex gap-3">
-                <button
+                  <button
                     class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
                     @click="update(material)"
-                >
+                  >
                     Edit
-                </button>
-                <button
+                  </button>
+                  <button
                     class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
                     @click="destroy(material)"
-                >
+                  >
                     Delete
-                </button>
+                  </button>
                 </div>
-            </td>
+              </td>
             </tr>
-        </tbody>
+          </tbody>
         </table>
-    </div>
+      </div>
     </div>
 
     <div
@@ -148,7 +152,7 @@ export default {
       materials: this.$page.props.materials,
       isAddModalOpen: false,
       form: {
-        name: null
+        name: null,
       },
       successMessage: null,
       errorMessage: null,
@@ -198,7 +202,9 @@ export default {
     destroy(material) {
       if (
         !window.confirm(
-          "Êtes-vous sûr de vouloir supprimer le matériau " + material.name + " ?"
+          "Êtes-vous sûr de vouloir supprimer le matériau " +
+            material.name +
+            " ?"
         )
       ) {
         return;

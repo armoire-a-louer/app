@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\MaterialsController;
+use App\Http\Controllers\Admin\ModelsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
@@ -62,6 +63,12 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::post('/materials/store', [MaterialsController::class, 'store'])->name('admin.materials.store');
     Route::put('/materials/update/{material}', [MaterialsController::class, 'update'])->name('admin.materials.update');
     Route::delete('/materials/delete/{material}', [MaterialsController::class, 'delete'])->name('admin.materials.delete');
+
+    // Models
+    Route::get('/models', [ModelsController::class, 'index'])->name('admin.models.index');
+    Route::post('/models/store', [ModelsController::class, 'store'])->name('admin.models.store');
+    Route::post('/models/update/{model}', [ModelsController::class, 'update'])->name('admin.models.update');
+    Route::delete('/models/delete/{model}', [ModelsController::class, 'delete'])->name('admin.models.delete');
 });
 
 // FRONT
