@@ -76,7 +76,8 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'); 
 Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name('product');
-Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("auth")->name('checkout');
+Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');
 
 // Account
 Route::get('/dashboard', function () {

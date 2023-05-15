@@ -1,6 +1,9 @@
 <template>
     <Layout>
-        <h1>Checkout</h1>
+        <section class="container mx-auto padding-navbar">
+            <h1 class="title">Checkout</h1>
+            <a :href="payUrl">PAYER</a>
+        </section>
     </Layout>
 </template>
 
@@ -10,7 +13,9 @@ import Layout from '@/Layouts/Layout.vue'
 export default {
     components: {
         Layout
-    }
+    },
+
+    props: ["payUrl"]
 }
 </script>
 

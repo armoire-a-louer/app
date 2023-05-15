@@ -2,15 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Color;
+use App\Models\Reservation;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class CheckoutController extends Controller
 {
     public function checkout()
     {
-        return Inertia::render('Checkout', [
+        $reservations = Reservation::where('user_id', auth()->id())->where('status', Reservation::STATUS_BASKET)->get();
 
+        $stripeSecretKey = "sk_test_51ITMg7LcoJJZyXObogUJhorUDbK4KcJtqkkWA4qmTKhSlcKcOzvRMJB8Abx3rHbckDTgNcGG3cIJf6zRaEElNkZT00gzM3YlhH";
+
+        \Stripe\Stripe::setApiKey($stripeSecretKey);
+
+        $product = \Stripe\Product::create([
+            'name' => "Paiement Armoire à louer",
+            'description' => 'Location',
         ]);
+
+        $amount = 0;
+        foreach ($reservations as $reservation) {
+            $amount += $reservation->price;
+        }
+
+        $price = \Stripe\Price::create([
+            'product' => $product->id,
+            'unit_amount' => $amount,
+            'currency' => 'eur'
+        ]);
+
+        $session = \Stripe\Checkout\Session::create([
+            'line_items' => [[
+                'price' => $price->id,
+                'quantity' => 1
+            ]],
+            'mode' => 'payment',
+            'success_url' => 'https://armoire-a-louer.test/',
+            'cancel_url' => 'https://armoire-a-louer.test/canceled'
+        ]);
+
+        $data = [
+            'payment_intent_id' => $session->payment_intent,
+            'type' => Transaction::TYPE_PAYMENT,
+            'status' => Transaction::STATUS_WAITING,
+            'user_id' => auth()->id(),
+            'amount' => $price->unit_amount,
+            'title' => $product->name
+        ];
+
+        $transaction = Transaction::create($data);
+
+        foreach ($reservations as $reservation) {
+            $reservation->transaction_id = $transaction->id;
+            $reservation->save();
+        }
+
+        return Inertia::render('Checkout', [
+            'payUrl' => $session->url
+        ]);
+    }
+
+    public function success()
+    {
+
+    }
+
+    public function webhook(Request $request)
+    {
+        $transaction =
+            Transaction::
+            where('payment_intent_id', $request->get('data')["object"]["id"])
+            ->with([
+                "reservations" => function ($q) {
+                    $q->where("status", Reservation::STATUS_BASKET);
+                }
+            ])
+            ->firstOrFail();
+        $transaction->status = Transaction::STATUS_SUCCESS;
+        $transaction->paid_at = Carbon::now();
+        $transaction->save();
+
+        foreach ($transaction->reservations as $reservation) {
+            $reservation->status = Reservation::STATUS_PAID;
+            $reservation->save();
+        }
     }
 }
