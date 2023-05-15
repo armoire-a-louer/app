@@ -98,18 +98,44 @@
 
         <label
           class="block text-gray-700 text-sm font-bold mb-2 mt-5"
-          for="model_size"
-          >Taille du modèle (en cm)</label
+          for="model_id"
+          >Modèle sur la photo</label
         >
-        <input
-          id="model_size"
+        <select
+          v-model="form.model_id"
+          name="model_id"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="number"
-          min="1"
-          max="220"
-          v-model="form.model_size"
           required
-        />
+        >
+          <option v-for="model in models" :key="model.name" :value="model.id">
+            {{ model.name }}
+          </option>
+        </select>
+        <div v-if="errors && errors.model_id">
+          <p
+            class="text-red-500"
+            v-for="error in errors.model_id"
+            :key="error"
+          >
+            {{ error }}
+          </p>
+        </div>
+
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+          for="model_size"
+          >Taille du modèle (porté sur la photo)</label
+        >
+        <select
+          v-model="form.model_size"
+          name="size"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required
+        >
+          <option v-for="size in sizes" :key="size" :value="size">
+            {{ size }}
+          </option>
+        </select>
         <div v-if="errors && errors.model_size">
           <p
             class="text-red-500"
@@ -225,7 +251,7 @@
 
 <script>
 export default {
-  props: ["product", "colors", "sizes"],
+  props: ["product", "colors", "sizes", "models"],
 
   data() {
     return {
@@ -235,6 +261,7 @@ export default {
         secondary_color_id: null,
         size: null,
         quantity: null,
+        model_id: null,
         model_size: null,
         active: true,
         image_1: null,

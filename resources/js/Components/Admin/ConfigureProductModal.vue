@@ -51,6 +51,7 @@
               <th class="px-4 py-3 text-center">Couleur secondaire</th>
               <th class="px-4 py-3 text-center">Taille</th>
               <th class="px-4 py-3 text-center">Quantité</th>
+              <th class="px-4 py-3 text-center">Nom du modèle</th>
               <th class="px-4 py-3 text-center">Taille du modèle</th>
               <th class="px-4 py-3 text-center">Actif</th>
               <th class="px-4 py-3 text-center">Actions</th>
@@ -103,7 +104,8 @@
               <td class="text-center">
                 {{ item.quantity }}
               </td>
-              <td class="text-center">{{ item.model_size }} cm</td>
+              <td class="text-center">{{ item.model ? item.model.name : '' }}</td>
+              <td class="text-center">{{ item.model_size }}</td>
               <td class="px-4 py-3 text-center">
                 <font-awesome-icon
                   class="text-lime-500"
@@ -144,11 +146,11 @@
     </div>
 
     <transition name="fade-left">
-      <AddItemModal v-if="isAddItemModalOpen" @close="isAddItemModalOpen = false" :product="product" :colors="colors" :sizes="sizes" @success="successMessage = $event" @error="errorMessage = $event" @updateProductsList="$emit('updateProductsList', $event)"/>
+      <AddItemModal v-if="isAddItemModalOpen" @close="isAddItemModalOpen = false" :product="product" :colors="colors" :sizes="sizes" :models="models" @success="successMessage = $event" @error="errorMessage = $event" @updateProductsList="$emit('updateProductsList', $event)"/>
     </transition>
 
     <transition name="fade-right">
-      <EditItemModal v-if="isEditItemModalOpen" :item="editItem" :sizes="sizes" :colors="colors" @close="isEditItemModalOpen = false" @success="successMessage = $event" @error="errorMessage = $event" @updateItemsList="product.items = $event"/>
+      <EditItemModal v-if="isEditItemModalOpen" :item="editItem" :sizes="sizes" :colors="colors" :models="models" @close="isEditItemModalOpen = false" @success="successMessage = $event" @error="errorMessage = $event" @updateItemsList="product.items = $event"/>
     </transition>
   </div>
 </template>
@@ -158,7 +160,7 @@ import AddItemModal from './AddItemModal.vue';
 import EditItemModal from './EditItemModal.vue';
 
 export default {
-  props: ["product", "colors", "sizes"],
+  props: ["product", "colors", "sizes", "models"],
 
   data() {
     return {

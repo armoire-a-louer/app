@@ -359,7 +359,7 @@
 
 
     <transition name="fade">
-      <ConfigureProductModal v-if="isConfigModalOpen" @close="isConfigModalOpen = false" :product="configProduct" @success="successMessage = $event" :colors="colors" :sizes="sizes" @updateProductsList="products = $event"/>
+      <ConfigureProductModal v-if="isConfigModalOpen" @close="isConfigModalOpen = false" :product="configProduct" @success="successMessage = $event" :colors="colors" :sizes="sizes" :models="models" @updateProductsList="products = $event"/>
     </transition>
   </AdminLayout>
 </template>
@@ -398,6 +398,7 @@ export default {
       materials: this.$inertia.page.props.materials,
       sizes: this.$inertia.page.props.sizes,
       colors: this.$inertia.page.props.colors,
+      models: this.$inertia.page.props.models,
 
       isEditModalOpen: false,
       editProduct: null,

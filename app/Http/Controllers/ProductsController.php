@@ -19,9 +19,10 @@ class ProductsController extends Controller
     {
         $product->load([
             "items.primaryColor",
+            "items.model",
             "brand:id,name",
             "category:id,name",
-            "ratings.user:id,firstname,lastname",
+            "ratings.user:id,firstname,lastname"
         ]);
 
         return Inertia::render('Product', [

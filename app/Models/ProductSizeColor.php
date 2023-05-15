@@ -37,11 +37,17 @@ class ProductSizeColor extends Model implements HasMedia
         'secondary_color_id',
         'size',
         'quantity',
+        'model_id',
         'model_size',
         'active'
     ];
 
     protected $appends = ['first_image_url', 'second_image_url', 'third_image_url', 'fourth_image_url'];
+
+    public function model(): BelongsTo
+    {
+        return $this->belongsTo(Models::class, 'model_id');
+    }
 
     protected function firstImageUrl(): Attribute
     {

@@ -53,14 +53,28 @@ export default {
 
 body {
   overflow-x: hidden !important;
+  font-family: "Avenir";
 }
 
 @font-face {
   font-family: "Avenir";
-  src: local("Avenir"),
-    url(/fonts/Avenir/Avenir-Black-03.ttf) format("truetype"),
-    url(/fonts/Avenir/Avenir-Heavy-05.ttf) format("truetype"),
-    url(/fonts/Avenir/Avenir-Roman-12.ttf) format("truetype"),
+  src: url(/fonts/Avenir/Avenir-Roman-12.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir";
+  src: url(/fonts/Avenir/Avenir-Heavy-05.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir";
+  src: url(/fonts/Avenir/Avenir-Black-03.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
 }
 
 @font-face {
