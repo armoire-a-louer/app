@@ -3,15 +3,16 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
-use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ColorsController;
-use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\ModelsController;
 use App\Http\Controllers\Admin\ProductsController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\MaterialsController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
 
 /*
@@ -75,6 +76,7 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'); 
 Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name('product');
+Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 // Account
 Route::get('/dashboard', function () {

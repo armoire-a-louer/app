@@ -11,12 +11,18 @@
 <script>
 import Navbar from "@/Components/Layout/Navbar.vue";
 import Footer from "@/Components/Layout/Footer.vue";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default {
   components: {
     Navbar,
     Footer
   },
+
+  mounted() {
+    AOS.init();
+  }
 };
 </script>
 
@@ -54,6 +60,10 @@ export default {
 body {
   overflow-x: hidden !important;
   font-family: "Avenir";
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 @font-face {

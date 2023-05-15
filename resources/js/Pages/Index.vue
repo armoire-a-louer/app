@@ -61,25 +61,8 @@
             </div>
         </section>
 
-        <img class="location-separation" src="/images/arrondi.svg">
-        <section class="location">
-            <div class="container mx-auto py-20 overflow-visible">
-                <div class="flex justify-between items-center">
-                    <h2 class="title">Les plus loués.</h2>
-                    <div class="flex gap-10">
-                        <button class="text-4xl" :class="canPrev ? '' : 'disabled'" type="button" @click="$refs.slider.prev()">
-                            <font-awesome-icon icon="fa-solid fa-chevron-left" />
-                        </button>
-                        <button class="text-4xl" :class="canNext ? '' : 'disabled'" type="button" @click="$refs.slider.next()">
-                            <font-awesome-icon icon="fa-solid fa-chevron-right" />
-                        </button>
-                    </div>
-                </div>
-
-                <LocationSlider ref="slider" @canPrev="canPrev = $event" @canNext="canNext = $event"/>
-            </div>
-        </section>
-        <img src="/images/arrondi-bas.svg">
+        <div class="location-separation"></div>
+        <VousAimerezAussi title="Les plus loués."/>
 
         <section class="partenaires mt-16 container mx-auto">
             <h2 class="text-center title">Nos marques partenaires.</h2>
@@ -144,11 +127,11 @@
 <script>
 import Layout from '@/Layouts/Layout.vue'
 import Button from '@/Components/Buttons/Button.vue'
-import LocationSlider from '@/Components/Index/LocationSlider.vue'
 import PartenairesSlider from '@/Components/Index/PartenairesSlider.vue'
 import FAQ from '@/Components/Index/FAQ.vue'
 import Feedbacks from '@/Components/Index/Feedbacks.vue'
 import ConseilCard from '@/Components/Index/ConseilCard.vue'
+import VousAimerezAussi from '@/Components/Index/VousAimerezAussi.vue'
 
 export default {
     name: 'Index',
@@ -156,17 +139,16 @@ export default {
     components: {
         Layout,
         Button,
-        LocationSlider,
         PartenairesSlider,
         FAQ,
         Feedbacks,
-        ConseilCard
+        ConseilCard,
+        VousAimerezAussi
     },
 
     data() {
         return {
-            canPrev: false,
-            canNext: true
+
         }
     }
 }
@@ -194,6 +176,10 @@ export default {
     left: 0;
     width: 100%;
     transform: translateY(5px);
+}
+
+.location-separation {
+    margin-top: 100px;
 }
 
 .header-container {
@@ -362,18 +348,6 @@ export default {
     .selection {
         margin-top: 50px;
     }
-}
-
-.location-separation {
-    margin-top: 100px;
-}
-
-.location {
-    background-color: rgba(202, 189, 168, 0.1);
-}
-
-.disabled {
-    color: rgba(0, 0, 0, 0.3);
 }
 
 .products {

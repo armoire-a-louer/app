@@ -119,6 +119,60 @@
         </div>
       </section>
     </div>
+
+    <VousAimerezAussi title="Vous aimerez aussi." />
+
+    <section id="avis" class="container mx-auto pb-28 overflow-hidden">
+      <div class="relative" data-sticky-container>
+        <h2 class="title">Ils ont loué cet article.</h2>
+
+        <div id="ratings-aside" data-margin-top="150" class="relative lg:absolute top-0 right-0 w-100 lg:w-4/12 xl:w-3/12 mt-8 lg:mt-0">
+          <div class="flex flex-row lg:flex-col items-start gap-x-10">
+            <span class="rating-big">
+              {{ ratingsAvg }}
+            </span>
+
+            <div class="flex flex-col items-start lg:items-center py-4">
+              <div class="flex">
+                <span v-for="index in 5" :key="index">
+                  <font-awesome-icon class="text-lg"  :icon="(ratingsAvg >= index ? 'fa-solid' : 'fa-regular') + ' fa-star'" style="color: #D9C9B0;"/>
+                </span>
+              </div>
+              <span>
+                {{ product.ratings.length }} avi{{ product.ratings.length > 1 ? 's' : '' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex flex-col gap-1">
+            <div class="flex gap-4 items-center" v-for="rate in 5" :key="rate">
+              <span class="flex gap-2 items-center">
+                <font-awesome-icon  icon="fa-solid fa-star"/>
+                <span>
+                  {{ rate }}
+                </span>
+              </span>
+
+              <div class="bg-bar-gray h-2 relative flex-1"><div data-aos="fade-right" class="absolute top-0 left-0 h-2 bg-bar-black" :style="{ width: itemsPercentageByRating(rate) }"></div></div>
+
+              <span>
+                {{ itemsCountByRating(rate) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-100 lg:w-7/12">
+          <div class="mt-16 flex flex-col gap-11" v-if="visibleRatings.length">
+            <Rating v-for="rating in visibleRatings" :key="rating.id" :rating="rating"/>
+          </div>
+          <p class="mt-16" v-else>Aucun avis pour le moment. Soyez le premier à en rédiger un.</p>
+        </div>
+      </div>
+
+      <Button v-if="product.ratings.length > visibleRatings.length" class="mt-14" text="Voir plus d'avis" color="white" border="black" textColor="black" @click="visibleRatingsCount += 3"/>
+
+    </section>
   </Layout>
 </template>
 
@@ -129,6 +183,9 @@ import SizeButton from '@/Components/Buttons/SizeButton.vue'
 import ColorButton from '@/Components/Buttons/ColorButton.vue'
 import DatesChoices from '@/Components/DatesChoices.vue'
 import Button from '@/Components/Buttons/Button.vue'
+import VousAimerezAussi from '@/Components/Index/VousAimerezAussi.vue'
+import Rating from '@/Components/Rating.vue'
+import Sticky from 'sticky-js';
 
 export default {
     name: "Product",
@@ -141,7 +198,9 @@ export default {
       SizeButton,
       ColorButton,
       DatesChoices,
-      Button
+      Button,
+      VousAimerezAussi,
+      Rating
     },
 
     data() {
@@ -156,6 +215,7 @@ export default {
         sizes: [],
         colors: [],
         liked: false,
+        visibleRatingsCount: 3,
       }
     },
 
@@ -279,18 +339,60 @@ export default {
         }
 
         return false;
+      },
+
+      itemsPercentageByRating(rate) {
+        if (! this.product.ratings.length) {
+          return '0 %';
+        }
+
+        const filteredRatings = this.product.ratings.filter((rating) => {
+          return rating.rating === rate;
+        })
+
+        return String(Math.ceil(filteredRatings.length / this.product.ratings.length * 100)) + '%';
+      },
+
+      itemsCountByRating(rate) {
+        if (! this.product.ratings.length) {
+          return '0 %';
+        }
+
+        return this.product.ratings.filter((rating) => {
+          return rating.rating === rate;
+        }).length;
+      },
+
+      handleSticky() {
+        // C'est pour la modale position absolue avec les différentes notes de l'article
+
+        const sticky = new Sticky('#ratings-aside');
+        if (window.innerWidth < 1024) {
+          sticky.destroy();
+        }
       }
     },
 
     mounted() {
-        console.log(this.product)
-        this.choseDefaultItem();
+      console.log(this.product.ratings)
+      this.choseDefaultItem();
+      
+      window.addEventListener('resize', this.handleSticky);
+      this.handleSticky()
+    },
+
+    destroyed() {
+      window.removeEventListener('resize', this.handleSticky);
     },
 
     computed: {
       ratingsAvg() {
         if (! this.product.ratings) return 0;
-        return this.product.ratings.reduce((sum, rating) => sum + rating.rating, 0);
+        return (this.product.ratings.reduce((sum, rating) => sum + rating.rating, 0) / this.product.ratings.length).toFixed(1);
+      },
+
+      visibleRatings() {
+        return this.product.ratings.slice(0, this.visibleRatingsCount);
       }
     }
 }
@@ -358,9 +460,19 @@ export default {
   line-height: 79px;
 }
 
+.rating-big {
+  font-size: 90px;
+  line-height: 90px;
+  font-family: "Roslindale";
+}
+
 @media screen and (max-width: 1000px){
   .description {
     font-size: 36px;
+  }
+
+  .rating-big {
+    font-size: 75px;
   }
 }
 
@@ -368,11 +480,23 @@ export default {
   .description {
     font-size: 24px;
   }
+
+  .rating-big {
+    font-size: 56px;
+  }
 }
 
 .model-name {
   font-family: "Roslindale", serif;
   font-size: 23px;
   line-height: 27px;
+}
+
+.bg-bar-gray {
+  background-color: #DBDBDB74;
+}
+
+.bg-bar-black {
+  background-color: #1A1A1A;
 }
 </style>

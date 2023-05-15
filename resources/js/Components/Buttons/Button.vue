@@ -1,15 +1,28 @@
 <template>
   <Link
+    v-if="route"
     class="button"
     :class="[
       color ? 'bg-' + color : '',
       textColor ? 'text-' + textColor : '',
-      border ? 'border border-' + border : ''
+      border ? 'border border-' + border : '',
     ]"
     :href="route"
   >
     {{ text }}
   </Link>
+  <button
+    v-else
+    type="button"
+    class="button"
+    :class="[
+      color ? 'bg-' + color : '',
+      textColor ? 'text-' + textColor : '',
+      border ? 'border border-' + border : '',
+    ]"
+  >
+    {{ text }}
+  </button>
 </template>
 
 <script>
