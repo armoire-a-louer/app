@@ -45,13 +45,14 @@ class Reservation extends Model
 
     /**
      * Il faut bien que le $endDate arrive avec un modfify de +1 jour
+     * $ignoreUser = si jamais on le coche on va ignorer toutes les réservations de l'utilisateur pour savoir si il peut réserver
      *
      * @param DateTime $startDate
      * @param DateTime $endDate
      * @param ProductSizeColor $item
      * @return array
      */
-    public static function canReserve(DateTime $startDate, DateTime $endDate, ProductSizeColor $item): array
+    public static function canReserve(DateTime $startDate, DateTime $endDate, ProductSizeColor $item, $ignoreUser = false): array
     {
         $interval = new DateInterval('P1D');
         $period = new DatePeriod($startDate, $interval, $endDate);
@@ -80,13 +81,33 @@ class Reservation extends Model
                             Reservation::STATUS_PAID,
                             Reservation::STATUS_PROTECTED,
                             Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
-                            Reservation::STATUS_WAITING_PAYMENT
+                            Reservation::STATUS_WAITING_PAYMENT,
                         ])
                         ->orWhere('user_id', auth()->id())
                         ->where('date', '>=', $startDate->format('Y-m-d'))
                         ->where('date', '<=', $endDate->format('Y-m-d'));
                 }
             ]);
+
+        if ($ignoreUser) {
+            $item =
+                ProductSizeColor::
+                find($item->id)
+                ->load([
+                    'product',
+                    'reservations' => function ($q) use ($startDate, $endDate) {
+                        $q
+                            ->whereIn('status', [
+                                Reservation::STATUS_PAID,
+                                Reservation::STATUS_PROTECTED,
+                                Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
+                                Reservation::STATUS_WAITING_PAYMENT,
+                            ])
+                            ->where('date', '>=', $startDate->format('Y-m-d'))
+                            ->where('date', '<=', $endDate->format('Y-m-d'));
+                    }
+                ]);
+        }
 
         // On crée un tableau: "2023-05-15" => "nombre de réservations ce jour là en int"
         $unavailableDays = [];
@@ -114,6 +135,39 @@ class Reservation extends Model
             "success" => $success,
             "unavailableDays" => array_keys($unavailableDays)
         ];
+    }
+
+    public static function canReserveAllBasket(User $user)
+    {
+        $reservations =
+            self::
+            where('user_id', $user->id)
+            ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
+            ->select(['product_size_color_id', 'user_id', 'reservation_common_uuid'])
+            ->selectRaw('MAX(date) as latest_date')
+            ->selectRaw('MIN(date) as earliest_date')
+            ->get();
+
+        $response = [
+            "success" => true,
+            "unavailable_days_of_reservation" => []
+        ];
+
+        foreach ($reservations as $reservation) {
+            $startDate = new DateTime($reservation->earliest_date);
+            $endDate = (new DateTime($reservation->latest_date))->modify('+1 day');
+
+            $item = ProductSizeColor::findOrFail($reservation->product_size_color_id);
+
+            $canReserve = self::canReserve($startDate, $endDate, $item, true);
+
+            if (! $canReserve["success"]) {
+                $response["success"] = false;
+                $response["unavailable_days_of_reservation"][$reservation->reservation_common_uuid] = $canReserve["unavailableDays"];
+            }
+        }
+
+        return $response;
     }
 
     public static function reserveWaitingPayment(User $user): void

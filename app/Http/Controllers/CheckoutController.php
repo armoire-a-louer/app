@@ -15,6 +15,14 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
+        // Ici on check qu'on puisse bien réserver tout le panier
+        $canReserve = Reservation::canReserveAllBasket(auth()->user());
+        if (! $canReserve["success"]) {
+            return Inertia::render('Checkout', [
+                'canReserve' => $canReserve
+            ]);
+        }
+
         Reservation::reserveWaitingPayment(auth()->user());
         
         $reservations = Reservation::where('user_id', auth()->id())->whereIn('status', [Reservation::STATUS_WAITING_PAYMENT, Reservation::STATUS_PROTECTED_WAITING_PAYMENT])->get();
