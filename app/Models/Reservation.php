@@ -76,7 +76,12 @@ class Reservation extends Model
                 'product',
                 'reservations' => function ($q) use ($startDate, $endDate) {
                     $q
-                        ->whereIn('status', [Reservation::STATUS_PAID, Reservation::STATUS_PROTECTED, Reservation::STATUS_PROTECTED_WAITING_PAYMENT, Reservation::STATUS_WAITING_PAYMENT])
+                        ->whereIn('status', [
+                            Reservation::STATUS_PAID,
+                            Reservation::STATUS_PROTECTED,
+                            Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
+                            Reservation::STATUS_WAITING_PAYMENT
+                        ])
                         ->where('date', '>=', $startDate->format('Y-m-d'))
                         ->where('date', '<=', $endDate->format('Y-m-d'));
                 }
@@ -124,7 +129,7 @@ class Reservation extends Model
             ->get();
 
         foreach ($reservations as $reservation) {
-            $startProtectedDate = new DateTime($reservation->latest_date);
+            $startProtectedDate = (new DateTime($reservation->latest_date))->modify('+1 day');
             $endProtectedDate = (clone $startProtectedDate)->modify('+' . self::DAYS_PROTECTED . 'days');
     
             $interval = new DateInterval('P1D');
