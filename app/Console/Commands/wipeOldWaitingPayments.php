@@ -35,7 +35,7 @@ class wipeOldWaitingPayments extends Command
                 Reservation::STATUS_WAITING_PAYMENT,
                 Reservation::STATUS_PROTECTED_WAITING_PAYMENT
             ])
-            ->where('updated_at', '<', Carbon::now())
+            ->where('updated_at', '<', Carbon::now()->subMinutes(10))
             ->get();
 
         foreach ($reservations as $reservation) {
