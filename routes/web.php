@@ -79,6 +79,7 @@ Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'
 Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name('product');
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("auth")->name('checkout');
 Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->middleware("auth")->name('add-to-basket');
+Route::post('/pay', [CheckoutController::class, 'pay'])->middleware('auth')->name('pay');
 
 // STRIPE
 Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');

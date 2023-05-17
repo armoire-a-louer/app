@@ -9,18 +9,29 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class CheckoutController extends Controller
 {
     public function checkout()
     {
+        // UPDATE CE NEST PAS LA QUE JE DOIS CREER MA SESSION. JE DOIS LA CREER AU MOMENT OU LE TYPE CLIQUE SUR PAYER
+        // ROUTE POUR CA
+
+
         // Ici on check qu'on puisse bien réserver tout le panier
+
+
+        return Inertia::render('Checkout', [
+        ]);
+    }
+
+    public function pay(Request $request)
+    {
         $canReserve = Reservation::canReserveAllBasket(auth()->user());
         if (! $canReserve["success"]) {
-            return Inertia::render('Checkout', [
-                'canReserve' => $canReserve
-            ]);
+            return response()->json(["canReserve" => $canReserve], 500);
         }
 
         Reservation::reserveWaitingPayment(auth()->user());
@@ -54,7 +65,7 @@ class CheckoutController extends Controller
             ]],
             'mode' => 'payment',
             'success_url' => 'https://armoire-a-louer.test/',
-            'cancel_url' => 'https://armoire-a-louer.test/canceled',
+            'cancel_url' => env('APP_URL'),
             'expires_at' => Carbon::now()->addMinutes(30)->timestamp
         ]);
 
@@ -74,14 +85,7 @@ class CheckoutController extends Controller
             $reservation->save();
         }
 
-        return Inertia::render('Checkout', [
-            'payUrl' => $session->url
-        ]);
-    }
-
-    public function success()
-    {
-
+        return response()->json(["redirect_stripe_url" => $session->url]);
     }
 
     public function webhook(Request $request)

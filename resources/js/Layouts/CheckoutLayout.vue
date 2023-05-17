@@ -1,16 +1,15 @@
 <template>
   <div>
-    <Navbar />
+    <CheckoutNavbar />
     <main class="overflow-hidden">
       <slot/>
       <Loading :loading="loading"/>
     </main>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Navbar from "@/Components/Layout/Navbar.vue";
+import CheckoutNavbar from "@/Components/Layout/CheckoutNavbar.vue";
 import Footer from "@/Components/Layout/Footer.vue";
 import Loading from '@/Components/Layout/Loading.vue';
 import AOS from 'aos';
@@ -18,7 +17,7 @@ import 'aos/dist/aos.css';
 
 export default {
   components: {
-    Navbar,
+    CheckoutNavbar,
     Footer,
     Loading
   },
@@ -27,7 +26,6 @@ export default {
 
   mounted() {
     AOS.init();
-    console.log(this.loading)
   }
 };
 </script>
