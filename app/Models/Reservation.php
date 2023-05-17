@@ -82,6 +82,7 @@ class Reservation extends Model
                             Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
                             Reservation::STATUS_WAITING_PAYMENT
                         ])
+                        ->orWhere('user_id', auth()->id())
                         ->where('date', '>=', $startDate->format('Y-m-d'))
                         ->where('date', '<=', $endDate->format('Y-m-d'));
                 }
@@ -111,7 +112,7 @@ class Reservation extends Model
 
         return [
             "success" => $success,
-            "unavailableDays" => $unavailableDays
+            "unavailableDays" => array_keys($unavailableDays)
         ];
     }
 
