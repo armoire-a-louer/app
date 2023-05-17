@@ -8,6 +8,7 @@
       border ? 'border border-' + border : '',
     ]"
     :href="route"
+    :disabled="disabled"
   >
     {{ text }}
   </Link>
@@ -20,6 +21,7 @@
       textColor ? 'text-' + textColor : '',
       border ? 'border border-' + border : '',
     ]"
+    :disabled="disabled"
   >
     {{ text }}
   </button>
@@ -31,7 +33,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 export default {
   name: "Button",
 
-  props: ["text", "route", "color", "textColor", "border"],
+  props: ["text", "route", "color", "textColor", "border", "disabled"],
 
   components: {
     Link,

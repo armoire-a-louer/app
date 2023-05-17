@@ -69,11 +69,11 @@
 
           <div>
             <h4 class="label">Vos dates de location</h4>
-            <DatesChoices class="flex-1 mt-3"/>
+            <DatesChoices ref="datesChoices" class="flex-1 mt-3" @startDate="startDate = $event" @endDate="endDate = $event"/>
           </div>
 
           <div class="flex gap-4 items-center mt-12 w-full xl:w-2/3">
-            <Button class="flex-1" text="ajouter au panier" route="#" color="white" textColor="black" border="black"/>
+            <Button class="flex-1" text="ajouter au panier" color="white" textColor="black" border="black"  @click="addToBasket()"/>
 
             <button class="like-button" type="button" @click="liked = !liked">
               <font-awesome-icon icon="fa-solid fa-heart" class="text-xl" v-if="liked"/>
@@ -186,6 +186,7 @@ import Button from '@/Components/Buttons/Button.vue'
 import VousAimerezAussi from '@/Components/Index/VousAimerezAussi.vue'
 import Rating from '@/Components/Rating.vue'
 import Sticky from 'sticky-js';
+import axios from 'axios'
 
 export default {
     name: "Product",
@@ -216,6 +217,8 @@ export default {
         colors: [],
         liked: false,
         visibleRatingsCount: 3,
+        startDate: null,
+        endDate: null
       }
     },
 
@@ -370,6 +373,29 @@ export default {
         if (window.innerWidth < 1024) {
           sticky.destroy();
         }
+      },
+
+      addToBasket() {
+        if (!this.startDate || !this.endDate) {
+          const dateChoices = this.$refs.datesChoices.focus();
+          console.log(dateChoices)
+          return;
+        }
+
+        const data = {
+          product_size_color_id: this.currentItem.id,
+          start_date: this.startDate,
+          end_date: this.endDate,
+        }
+
+        axios
+          .post(route('add-to-basket'), data)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+
+          })
       }
     },
 

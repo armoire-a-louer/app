@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductSizeColor extends Model implements HasMedia
 {
@@ -32,6 +33,7 @@ class ProductSizeColor extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'id',
         'product_id',
         'primary_color_id',
         'secondary_color_id',
@@ -47,6 +49,11 @@ class ProductSizeColor extends Model implements HasMedia
     public function model(): BelongsTo
     {
         return $this->belongsTo(Models::class, 'model_id');
+    }
+
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class);
     }
 
     protected function firstImageUrl(): Attribute

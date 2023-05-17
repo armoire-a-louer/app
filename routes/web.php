@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
+use App\Http\Controllers\ReservationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,9 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'); 
 Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name('product');
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("auth")->name('checkout');
+Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->middleware("auth")->name('add-to-basket');
+
+// STRIPE
 Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');
 
 // Account

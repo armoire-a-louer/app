@@ -15,7 +15,9 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
-        $reservations = Reservation::where('user_id', auth()->id())->where('status', Reservation::STATUS_BASKET)->get();
+        Reservation::reserveWaitingPayment(auth()->user());
+        
+        $reservations = Reservation::where('user_id', auth()->id())->whereIn('status', [Reservation::STATUS_WAITING_PAYMENT, Reservation::STATUS_PROTECTED_WAITING_PAYMENT])->get();
 
         $stripeSecretKey = "sk_test_51ITMg7LcoJJZyXObogUJhorUDbK4KcJtqkkWA4qmTKhSlcKcOzvRMJB8Abx3rHbckDTgNcGG3cIJf6zRaEElNkZT00gzM3YlhH";
 
@@ -80,7 +82,7 @@ class CheckoutController extends Controller
             where('payment_intent_id', $request->get('data')["object"]["id"])
             ->with([
                 "reservations" => function ($q) {
-                    $q->where("status", Reservation::STATUS_BASKET);
+                    $q->whereIn("status", [Reservation::STATUS_BASKET, Reservation::STATUS_WAITING_PAYMENT, Reservation::STATUS_PROTECTED_WAITING_PAYMENT]);
                 }
             ])
             ->firstOrFail();
@@ -89,7 +91,11 @@ class CheckoutController extends Controller
         $transaction->save();
 
         foreach ($transaction->reservations as $reservation) {
-            $reservation->status = Reservation::STATUS_PAID;
+            if ($reservation->status === Reservation::STATUS_WAITING_PAYMENT) {
+                $reservation->status = Reservation::STATUS_PAID;
+            } else if ($reservation->status === Reservation::STATUS_PROTECTED_WAITING_PAYMENT) {
+                $reservation->status = Reservation::STATUS_PROTECTED;
+            }
             $reservation->save();
         }
     }

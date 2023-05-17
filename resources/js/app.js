@@ -14,11 +14,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faTags, faCopyright, faHome, faVenusMars, faPalette, faRecycle, faCircleCheck, faCircleXmark, faPlus, faChevronDown, faChevronLeft, faChevronRight, faStar, faCheck, faPersonDress, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faTags, faCopyright, faHome, faVenusMars, faPalette, faRecycle, faCircleCheck, faCircleXmark, faPlus, faChevronDown, faChevronLeft, faChevronRight, faStar, faCheck, faPersonDress, faHeart as faHeartSolid, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarRegular, faCalendar, faHeart } from '@fortawesome/free-regular-svg-icons'
 
 /* add icons to the library */
-library.add(faTags, faCopyright, faHome, faVenusMars, faPalette, faRecycle, faCircleCheck, faCircleXmark, faPlus, faChevronDown, faChevronLeft, faChevronRight, faStar, faStarRegular, faCheck, faPersonDress, faCalendar, faHeart, faHeartSolid);
+library.add(faTags, faCopyright, faHome, faVenusMars, faPalette, faRecycle, faCircleCheck, faCircleXmark, faPlus, faChevronDown, faChevronLeft, faChevronRight, faStar, faStarRegular, faCheck, faPersonDress, faCalendar, faHeart, faHeartSolid, faXmark);
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
