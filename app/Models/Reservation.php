@@ -26,7 +26,7 @@ class Reservation extends Model
 
     // AMOUNT MUST BE LIKE THIS 15€99 => 1599
 
-    protected $fillable = ["product_size_color_id", "date", "status", "user_id", "price", "transaction_id"];
+    protected $fillable = ["product_size_color_id", "date", "status", "user_id", "price", "transaction_id", "reservation_common_uuid"];
 
     public function item(): BelongsTo
     {
@@ -121,7 +121,7 @@ class Reservation extends Model
             self::
             where('status', self::STATUS_BASKET)
             ->where('user_id', $user->id)
-            ->groupBy('product_size_color_id')
+            ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
             ->select(['product_size_color_id', 'user_id'])
             // ->selectRaw('id, COUNT(*) as count')
             ->selectRaw('MAX(date) as latest_date')
