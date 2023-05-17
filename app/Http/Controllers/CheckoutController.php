@@ -50,8 +50,6 @@ class CheckoutController extends Controller
             'expires_at' => Carbon::now()->addMinutes(30)->timestamp
         ]);
 
-        dd($session);
-
         $data = [
             'payment_intent_id' => $session->payment_intent,
             'type' => Transaction::TYPE_PAYMENT,
