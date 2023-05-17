@@ -45,21 +45,6 @@ class ReservationsController extends Controller
                     'price' => $price
                 ]);
             }
-
-            // Ca faut le mettre au moment du paiement !!
-            // Il faut créer toutes ces réservations au moment du paiement aussi avec un statut waiting paiement
-            // Peut-être mettre ça au moment ou la page checkout se rafraichit ou alors on ecoute un event stripe comme quoi la page de paiement est ouverte ou alors on ecoute quand on clique sur le bouton pour payer et on le fait à ce moment là ...
-            // tâche cron aussi pour clean toutes les réservaitons en waiting payment. (toutes les 5 minutes je dirais)
-
-            // foreach ($protectedDays as $day) {
-            //     Reservation::create([
-            //         'product_size_color_id' => $item->id,
-            //         'date' => $day->format('Y-m-d'),
-            //         'status' => Reservation::STATUS_PROTECTED,
-            //         'user_id' => auth()->id(),
-            //         'price' => 0
-            //     ]);
-            // }
         }
 
         return response()->json($canReserve);
