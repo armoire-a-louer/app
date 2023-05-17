@@ -46,8 +46,11 @@ class CheckoutController extends Controller
             ]],
             'mode' => 'payment',
             'success_url' => 'https://armoire-a-louer.test/',
-            'cancel_url' => 'https://armoire-a-louer.test/canceled'
+            'cancel_url' => 'https://armoire-a-louer.test/canceled',
+            'expires_at' => Carbon::now()->addMinutes(30)->timestamp
         ]);
+
+        dd($session);
 
         $data = [
             'payment_intent_id' => $session->payment_intent,
