@@ -212,4 +212,26 @@ class Reservation extends Model
             $reservation->save();
         }
     }
+
+    public static function getAllBasketReservations(User $user)
+    {
+        $reservations =
+            self::
+            whereIn('status', [self::STATUS_BASKET, self::STATUS_WAITING_PAYMENT])
+            ->where('user_id', $user->id)
+            ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
+            ->select(['product_size_color_id', 'user_id'])
+            // ->selectRaw('id, COUNT(*) as count')
+            ->selectRaw('MAX(date) as latest_date')
+            ->selectRaw('MIN(date) as earliest_date')
+            ->selectRaw('SUM(price) as total_price')
+            ->with([
+                "item",
+                "item.product:id,brand_id,name",
+                "item.product.brand:id,name"
+            ])
+            ->get();
+
+        return $reservations;
+    }
 }

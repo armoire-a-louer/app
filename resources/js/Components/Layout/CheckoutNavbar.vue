@@ -1,5 +1,5 @@
 <template>
-  <nav ref="navbar" class="navbar fixed top-0 left-0 w-full box-shadow flex items-center">
+  <nav ref="navbar" class="navbar fixed top-0 left-0 w-full box-shadow flex items-center bg-white">
     <div class="container mx-auto flex justify-center items-center">
         <Link :href="route('index')" class="flex items-center">
           <img style="width: 200px" src="/images/logo_black.svg" />

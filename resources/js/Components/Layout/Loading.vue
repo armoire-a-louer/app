@@ -29,7 +29,7 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 10000000;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -80,6 +81,7 @@ Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("auth")->name('checkout');
 Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->middleware("auth")->name('add-to-basket');
 Route::post('/pay', [CheckoutController::class, 'pay'])->middleware('auth')->name('pay');
+Route::post('/add-address', [AddressController::class, 'addAddress'])->middleware('auth')->name('add-address');
 
 // STRIPE
 Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');

@@ -13,7 +13,8 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Avenir', ...defaultTheme.fontFamily.sans],
-                serif: ['Roslindale', ...defaultTheme.fontFamily.serif]
+                serif: ['Roslindale', ...defaultTheme.fontFamily.serif],
+                gothic: ['SackersGothic', ...defaultTheme.fontFamily.sans]
             },
         },
     },

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Color;
 use App\Models\Reservation;
 use App\Models\Transaction;
@@ -16,14 +17,17 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
-        // UPDATE CE NEST PAS LA QUE JE DOIS CREER MA SESSION. JE DOIS LA CREER AU MOMENT OU LE TYPE CLIQUE SUR PAYER
-        // ROUTE POUR CA
+        $canReserve = Reservation::canReserveAllBasket(auth()->user());
+        if (! $canReserve["success"]) {
+            return redirect(route('basket'));
+        }
 
-
-        // Ici on check qu'on puisse bien réserver tout le panier
-
+        $reservations = Reservation::getAllBasketReservations(auth()->user());
+        $addresses = Address::where('user_id', auth()->id())->get();
 
         return Inertia::render('Checkout', [
+            "reservations" => $reservations,
+            "addresses" => $addresses
         ]);
     }
 
