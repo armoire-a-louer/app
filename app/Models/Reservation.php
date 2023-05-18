@@ -142,6 +142,7 @@ class Reservation extends Model
         $reservations =
             self::
             where('user_id', $user->id)
+            ->whereIn('status', [self::STATUS_BASKET, self::STATUS_WAITING_PAYMENT])
             ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
             ->select(['product_size_color_id', 'user_id', 'reservation_common_uuid'])
             ->selectRaw('MAX(date) as latest_date')
@@ -177,7 +178,7 @@ class Reservation extends Model
             where('status', self::STATUS_BASKET)
             ->where('user_id', $user->id)
             ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
-            ->select(['product_size_color_id', 'user_id'])
+            ->select(['product_size_color_id', 'user_id', 'reservation_common_uuid'])
             // ->selectRaw('id, COUNT(*) as count')
             ->selectRaw('MAX(date) as latest_date')
             ->selectRaw('MIN(date) as earliest_date')
@@ -196,7 +197,8 @@ class Reservation extends Model
                     'date' => $date->format('Y-m-d'),
                     'status' => Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
                     'user_id' => auth()->id(),
-                    'price' => 0
+                    'price' => 0,
+                    'reservation_common_uuid' => $reservation->reservation_common_uuid
                 ]);
             }
         }
@@ -220,7 +222,7 @@ class Reservation extends Model
             whereIn('status', [self::STATUS_BASKET, self::STATUS_WAITING_PAYMENT])
             ->where('user_id', $user->id)
             ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
-            ->select(['product_size_color_id', 'user_id'])
+            ->select(['product_size_color_id', 'user_id', 'reservation_common_uuid'])
             // ->selectRaw('id, COUNT(*) as count')
             ->selectRaw('MAX(date) as latest_date')
             ->selectRaw('MIN(date) as earliest_date')

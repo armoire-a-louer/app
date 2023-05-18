@@ -80,8 +80,10 @@ Route::get('/notre-concept', [HomeController::class, 'concept'])->name('concept'
 Route::get('/product/{product}', [ProductsControllerFront::class, 'view'])->name('product');
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("auth")->name('checkout');
 Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->middleware("auth")->name('add-to-basket');
+Route::delete('/remove-from-basket/{reservationCommonUuid}', [ReservationsController::class, 'deleteReservation'])->middleware("auth")->name('remove-from-basket');
 Route::post('/pay', [CheckoutController::class, 'pay'])->middleware('auth')->name('pay');
 Route::post('/add-address', [AddressController::class, 'addAddress'])->middleware('auth')->name('add-address');
+
 
 // STRIPE
 Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');

@@ -17,12 +17,16 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
-        $canReserve = Reservation::canReserveAllBasket(auth()->user());
-        if (! $canReserve["success"]) {
-            return redirect(route('basket'));
+        $reservations = Reservation::getAllBasketReservations(auth()->user());
+        if ($reservations->count() === 0) {
+            // return redirect(route('indexopenbasket'));
         }
 
-        $reservations = Reservation::getAllBasketReservations(auth()->user());
+        $canReserve = Reservation::canReserveAllBasket(auth()->user());
+        if (! $canReserve["success"]) {
+            return redirect(route('indexopenbasket'));
+        }
+
         $addresses = Address::where('user_id', auth()->id())->get();
 
         return Inertia::render('Checkout', [

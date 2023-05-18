@@ -53,4 +53,34 @@ class ReservationsController extends Controller
 
         return response()->json($canReserve);
     }
+
+    public function deleteReservation(Request $request, $reservationCommonUuid)
+    {
+        if (!$reservationCommonUuid ) {
+            return response()->json([
+                "success" => false
+            ], 500);
+        }
+
+        $reservations =
+            Reservation::
+            where('reservation_common_uuid', $reservationCommonUuid)
+            ->where('user_id', auth()->id())
+            ->get();
+
+        foreach ($reservations as $reservation) {
+            $reservation->delete();
+        }
+
+        $reservations = Reservation::getAllBasketReservations(auth()->user());
+
+        if ($reservations->count() === 0) {
+            // return redirect(route('indexopenbasket'));
+        }
+
+        return response()->json([
+            "reservations" => $reservations,
+            "success" => true
+        ]);
+    }
 }
