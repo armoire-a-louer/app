@@ -28,7 +28,7 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 flex flex-col gap-6">
-                        <div v-for="transaction in transactions" :key="transaction.id">
+                        <div v-for="transaction in transactions" :key="transaction.id" class="flex flex-col gap-4">
                             <div class="flex-1 flex items-center justify-between">
                                 <h2 class="font-serif text-2xl mb-4">Réservation payée le {{ transaction.paid_at }}.</h2>
                                 <h2 class="font-serif text-3xl mb-4">{{ transaction.amount / 100 }} €.</h2>
