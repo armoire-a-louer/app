@@ -16,7 +16,7 @@
                         Nous vous recommandons une date de livraison 2 à 3 jours avant l'évènement (évitez les dimanches et jours fériés)
                     </p>
 
-                    <input type="date" v-model="startDate" :min="min"/>
+                    <input type="date" v-model="startDate" :min="min" @change="endDate = null"/>
                     <input type="date" v-model="endDate" :min="startDatePlusThree" :disabled="! startDate"/>
 
                     <p class="text-red-700" v-if="dateErrors">{{ dateErrors }}</p>
