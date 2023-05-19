@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout ref="layout">
     <div class="container mx-auto">
       <Breadcrumb class="padding-navbar" :actualPage="product.name" :links="[{ name: product.category.name, route: route('index') }]"/>
       <section class="py-14 flex gap-16 xl:gap-32 items-start">
@@ -69,7 +69,7 @@
 
           <div>
             <h4 class="label">Vos dates de location</h4>
-            <DatesChoices ref="datesChoices" class="flex-1 mt-3" @startDate="startDate = $event" @endDate="endDate = $event"/>
+            <DatesChoices ref="datesChoices" class="flex-1 mt-3" :dateErrors="dateErrors" @startDate="startDate = $event" @endDate="endDate = $event"/>
           </div>
 
           <div class="flex gap-4 items-center mt-12 w-full xl:w-2/3">
@@ -218,7 +218,8 @@ export default {
         liked: false,
         visibleRatingsCount: 3,
         startDate: null,
-        endDate: null
+        endDate: null,
+        dateErrors: ""
       }
     },
 
@@ -392,9 +393,18 @@ export default {
           .post(route('add-to-basket'), data)
           .then((response) => {
             console.log(response);
+            if (response.data.success) {
+              this.$refs.layout.setReservations(response.data.reservations);
+              this.$refs.layout.toggleBasket();
+              this.dateErrors = "";
+            } else {
+              this.dateErrors = "Les dates suivantes ne sont pas disponibles: ";
+              this.dateErrors += response.data.unavailableDays.join(', ');
+              this.$refs.datesChoices.toggleModal();
+            }
           })
           .catch((error) => {
-
+            console.log(error)
           })
       }
     },

@@ -49,6 +49,8 @@ class ReservationsController extends Controller
                     'reservation_common_uuid' => $reservationCommonUuid
                 ]);
             }
+
+            $canReserve["reservations"] = Reservation::getAllBasketReservations(auth()->user());
         }
 
         return response()->json($canReserve);

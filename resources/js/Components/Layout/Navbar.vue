@@ -1,12 +1,17 @@
 <template>
   <nav ref="navbar" class="navbar fixed top-0 left-0 w-full" :style="[scrolled ? 'color: black; background-color: white;' : 'color: white;']" :class="scrolled ? 'box-shadow' : ''">
-    <div class="container mx-auto">
+    <div class="container mx-auto flex justify-between">
+      <div class="toggler cursor-pointer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <div class="flex gap-10">
         <Link :href="route('index')" class="flex items-center">
           <img v-if="scrolled" style="width: 200px" src="/images/logo_black.svg" />
           <img v-else style="width: 200px" src="/images/logo.svg" />
         </Link>
-        <div class="nav-links">
+        <div class="nav-links mobile-hide">
           <span class="nav-link">
             <Link class="nav-a py-2 px-4" :href="route('index')">Accueil</Link>
           </span>
@@ -55,35 +60,74 @@
           </span>
         </div>
       </div>
-      <div class="flex gap-4 items-center">
-        <span class="p-4 cursor-pointer" @click="searchOpened = true">
+      <div class="flex gap-1 md:gap-4 items-center justify-end">
+        <span class="p-4 cursor-pointer mobile-hide" @click="searchOpened = true">
           <img v-if="scrolled" style="width: 17px" src="/images/icons/search_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/search.svg" />
         </span>
-        <Link class="p-4" :href="route('index')">
+        <Link class="p-2 md:p-4" :href="route('dashboard')">
           <img v-if="scrolled" style="width: 17px" src="/images/icons/user_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/user.svg" />
         </Link>
-        <Link class="p-4 pr-0" :href="route('index')">
+        <div class="p-2 md:p-4 pr-0 cursor-pointer" @click="toggleBasket()">
           <img v-if="scrolled" style="width: 17px" src="/images/icons/bag_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/bag.svg" />
-        </Link>
+        </div>
       </div>
     </div>
     <transition name="fade">
         <Search v-if="searchOpened" @close="searchOpened = false"/>
     </transition>
+
+    <section class="basket" v-if="basketOpened" data-aos="fade-left" @click.self="toggleBasket()">
+      <div class="basket-container relative text-black px-10 gap-8">
+        <div class="absolute top-10 right-10 cursor-pointer" @click="toggleBasket()">
+          <font-awesome-icon icon="fa-solid fa-xmark" class="text-3xl"/>
+        </div>
+        <h2 class="font-serif text-xl md:text-2xl xl:text-3xl">Votre panier.</h2>
+
+        <div class="flex-1 flex flex-col gap-6 overflow-y-auto" v-if="reservations.length !== 0">
+          <div v-for="reservation in reservations" data-aos="fade-up" :key="reservation.id" class="flex justify-start items-center gap-8 py-7">
+              <img class="object-cover h-16 w-8" :src="reservation.item.first_image_url" :alt="reservation.item.product.name">
+
+              <div>
+                  <h3 class="text-sm lg:text-md font-gothic lowercase letter-spacing">{{ reservation.item.product.brand.name }}</h3>
+                  <h2 class="font-serif text-xl md:text-2xl xl:text-3xl pt-2">{{ reservation.item.product.name }}</h2>
+
+                  <span class="font-bold block pt-4">
+                      Du {{ formatDate(reservation.earliest_date) }} au {{ formatDate(reservation.latest_date) }}
+                  </span>
+                  <span class="block">
+                      {{ countDays(reservation.earliest_date, reservation.latest_date) }} jours de location
+                  </span>
+
+                  <button @click="removeFromBasket(reservation.reservation_common_uuid)" type="button" class="underline mt-3 text-beige">
+                      Supprimer
+                  </button>
+              </div>
+          </div>
+        </div>
+
+        <p class="flex-1" v-if="reservations.length === 0">
+          Votre panier est vide.
+        </p>
+
+        <Button :route="route('checkout')" text="valider" class="w-full" color="black" textColor="white" :disabled="reservations.length === 0"/>
+      </div>
+    </section>
   </nav>
 </template>
 
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 import Search from './Search.vue';
+import Button from '../Buttons/Button.vue';
 
 export default {
   components: {
     Link,
-    Search
+    Search,
+    Button
   },
 
   data() {
@@ -94,7 +138,10 @@ export default {
       isHomePage: this.$inertia.page.props.path === '/',
       scrolled: this.isHomePage ? false : true,
 
-      searchOpened: false
+      searchOpened: false,
+
+      basketOpened: false,
+      reservations: this.$inertia.page.props.reservations
     };
   },
 
@@ -107,6 +154,49 @@ export default {
         } else {
             this.scrolled = false;
         }
+    },
+
+    toggleBasket() {
+      this.basketOpened = ! this.basketOpened;
+    },
+
+    formatDate(date) {
+      date = new Date(date);
+
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      
+      return `${day}/${month}`;
+    },
+
+    countDays(earliestDate, latestDate) {
+      earliestDate = new Date(earliestDate);
+      latestDate = new Date(latestDate);
+
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      const diffInMilliseconds = Math.abs(latestDate - earliestDate);
+      // ON AJOUTE UN JOUR CAR IL FAUT TOUS LES COMPTER (PAS QUE LA DIFFERENCE)
+      const diffInDays = Math.floor(diffInMilliseconds / oneDay) + 1;
+
+      return `${diffInDays}`;
+    },
+
+    removeFromBasket(reservationCommonUuid) {
+      this.loading = true;
+      axios.delete(route('remove-from-basket', reservationCommonUuid))
+          .then((response) => {
+              this.reservations = response.data.reservations;
+              this.loading = false;
+          })
+          .catch((error) => {
+              this.loading = false;
+              console.log(error);
+          })
+    },
+
+    setReservations(reservations) {
+      this.reservations = reservations;
     }
   },
 
@@ -127,8 +217,11 @@ export default {
 }
 
 .navbar {
-    transition: 300ms ease;
-    z-index: 100000;
+  transition: 300ms ease;
+  z-index: 100000;
+  height: 120px;
+  display: flex;
+  align-items: center;
 }
 
 .navbar .container {
@@ -191,7 +284,7 @@ export default {
   left: 0;
   color: black;
   z-index: 1000;
-  min-width: 100%;
+  min-width: 150%;
 }
 
 .nav-dropdown-menu div {
@@ -207,5 +300,64 @@ export default {
 
 .nav-dropdown-link {    
     display: block;
+}
+
+.basket {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10000000;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: end;
+}
+
+.basket .basket-container {
+  width: 400px;
+  background: white;
+  height: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.text-beige {
+    color: #CABDA8;
+}
+
+.toggler {
+  display: none;
+}
+
+.toggler span {
+  width: 21px;
+  height: 2px;
+  background: black;
+}
+
+.toggler span:nth-child(2) {
+  width: 13px;
+}
+
+@media screen and (max-width: 1030px) {
+  .mobile-hide {
+    display: none;
+  }
+
+  .toggler {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .navbar > div {
+    flex: 1;
+  }
 }
 </style>

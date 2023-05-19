@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar ref="navbar"/>
     <main class="overflow-hidden">
       <slot/>
       <Loading :loading="loading"/>
@@ -24,6 +24,15 @@ export default {
   },
 
   props: ["loading"],
+
+  methods: {
+    setReservations(reservations) {
+      this.$refs.navbar.setReservations(reservations);
+    },
+    toggleBasket() {
+      this.$refs.navbar.toggleBasket();
+    }
+  },
 
   mounted() {
     AOS.init();

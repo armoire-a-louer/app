@@ -7,8 +7,7 @@
       textColor ? 'text-' + textColor : '',
       border ? 'border border-' + border : '',
     ]"
-    :href="route"
-    :disabled="disabled"
+    :href="disabled ? '#' : route"
   >
     {{ text }}
   </Link>

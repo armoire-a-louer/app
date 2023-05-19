@@ -19,6 +19,8 @@
                     <input type="date" v-model="startDate" :min="min"/>
                     <input type="date" v-model="endDate" :min="startDatePlusThree" :disabled="! startDate"/>
 
+                    <p class="text-red-700" v-if="dateErrors">{{ dateErrors }}</p>
+
                     <div>
                         <button type="button" @click="valider()">Valider</button>
                     </div>
@@ -38,6 +40,8 @@ export default {
             isFocus: false
         }
     },
+
+    props: ["dateErrors"],
 
     methods: {
         toggleModal() {
