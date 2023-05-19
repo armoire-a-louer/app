@@ -1,15 +1,15 @@
 <template>
   <nav ref="navbar" class="navbar fixed top-0 left-0 w-full" :style="[scrolled ? 'color: black; background-color: white;' : 'color: white;']" :class="scrolled ? 'box-shadow' : ''">
     <div class="container mx-auto flex justify-between">
-      <div class="toggler cursor-pointer">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="toggler cursor-pointer" @click="toggleMenu()">
+        <span :class="scrolled ? 'bg-black' : 'bg-white'"></span>
+        <span :class="scrolled ? 'bg-black' : 'bg-white'"></span>
+        <span :class="scrolled ? 'bg-black' : 'bg-white'"></span>
       </div>
       <div class="flex gap-10">
         <Link :href="route('index')" class="flex items-center">
-          <img v-if="scrolled" style="width: 200px" src="/images/logo_black.svg" />
-          <img v-else style="width: 200px" src="/images/logo.svg" />
+          <img class="logo" v-if="scrolled" style="width: 200px" src="/images/logo_black.svg" />
+          <img class="logo" v-else style="width: 200px" src="/images/logo.svg" />
         </Link>
         <div class="nav-links mobile-hide">
           <span class="nav-link">
@@ -115,6 +115,40 @@
         <Button :route="route('checkout')" text="valider" class="w-full" color="black" textColor="white" :disabled="reservations.length === 0"/>
       </div>
     </section>
+
+    <transition name="fade-down">
+      <div v-if="isMenuOpen" class="bg-white mobile-menu fixed w-full left-0 text-black" style="top: 120px;">
+        <div class="container mx-auto flex flex-col gap-2 my-4" style="align-items: start !important;">
+            <Link class="nav-a" :href="route('index')">Accueil</Link>
+
+            <span class="nav-a">Collections</span>
+
+            <div class="pl-2 flex flex-col gap-2">
+              <Link
+                :href="route('index')"
+                v-for="collection in collections"
+                :key="collection.id"
+              >
+                {{ collection.name }}
+              </Link>
+            </div>
+
+            <span class="nav-a">Marques</span>
+
+            <div class="pl-2 flex flex-col gap-2">
+              <Link
+                :href="route('index')"
+                v-for="brand in brands"
+                :key="brand.id"
+              >
+                {{ brand.name }}
+              </Link>
+            </div>
+
+            <Link class="nav-a" :href="route('concept')">Concept</Link>
+        </div>
+      </div>
+    </transition>
   </nav>
 </template>
 
@@ -141,7 +175,9 @@ export default {
       searchOpened: false,
 
       basketOpened: false,
-      reservations: this.$inertia.page.props.reservations
+      reservations: this.$inertia.page.props.reservations,
+
+      isMenuOpen: false
     };
   },
 
@@ -197,6 +233,10 @@ export default {
 
     setReservations(reservations) {
       this.reservations = reservations;
+    },
+
+    toggleMenu() {
+      this.isMenuOpen = ! this.isMenuOpen;
     }
   },
 
@@ -338,11 +378,16 @@ export default {
 .toggler span {
   width: 21px;
   height: 2px;
-  background: black;
 }
 
 .toggler span:nth-child(2) {
   width: 13px;
+}
+
+@media screen and (min-width: 1031px) {
+  .mobile-menu {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1030px) {
@@ -358,6 +403,10 @@ export default {
 
   .navbar > div {
     flex: 1;
+  }
+
+  .logo {
+    width: 120px !important;
   }
 }
 </style>

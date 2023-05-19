@@ -155,6 +155,18 @@ html {
   transform: translateX(-100%);
 }
 
+.fade-down-enter-active,
+.fade-down-leave-active {
+  transition: all 0.4s ease;
+  opacity: 1;
+}
+
+.fade-down-enter-from,
+.fade-down-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
