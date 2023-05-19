@@ -51,7 +51,7 @@ class HandleInertiaRequests extends Middleware
 
             'collections' => Category::where('sex', Category::FEMME)->limit(6)->get(),
             'brands' => Brand::limit(6)->get(),
-            'reservations' => Reservation::getAllBasketReservations(auth()->user())
+            'reservations' => auth()->user() ? Reservation::getAllBasketReservations(auth()->user()) : []
         ]);
     }
 }
