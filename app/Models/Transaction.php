@@ -18,6 +18,25 @@ class Transaction extends Model
 
     protected $fillable = ["payment_intent_id", "type", "status", "user_id", "amount", "title", "paid_at"];
 
+    protected $casts = [
+		'paid_at' => 'datetime:d/m/Y'
+	];
+
+    /**
+     * Accessor for the 'paid_at' attribute.
+     *
+     * @param mixed $value
+     * @return string|null
+     */
+    public function getPaidAtFormatted($value)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return $value->format('d/m/Y');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

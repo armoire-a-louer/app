@@ -245,4 +245,27 @@ class Reservation extends Model
 
         return $reservations;
     }
+
+    public static function getAllPaidTransactions(User $user)
+    {
+        return
+            Transaction::
+            where('user_id', $user->id)
+            ->where('status', Transaction::STATUS_SUCCESS)
+            ->with([
+                "reservations" => function ($q) {
+                    $q->where('status', self::STATUS_PAID)
+                        ->groupBy(['product_size_color_id', 'reservation_common_uuid'])
+                        ->select(['product_size_color_id', 'user_id', 'reservation_common_uuid', 'transaction_id'])
+                        ->selectRaw('MAX(date) as latest_date')
+                        ->selectRaw('MIN(date) as earliest_date')
+                        ->selectRaw('COUNT(*) as count')
+                        ->with([
+                            "item.product.brand",
+                            "item.primaryColor"
+                        ]);
+                }
+            ])
+            ->get();
+    }
 }

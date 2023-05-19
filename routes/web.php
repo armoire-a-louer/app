@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ModelsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
 use App\Http\Controllers\ReservationsController;
 
@@ -89,9 +90,7 @@ Route::post('/add-address', [AddressController::class, 'addAddress'])->middlewar
 Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');
 
 // Account
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'reservations'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
