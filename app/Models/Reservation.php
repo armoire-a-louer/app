@@ -77,13 +77,16 @@ class Reservation extends Model
                 'product',
                 'reservations' => function ($q) use ($startDate, $endDate) {
                     $q
-                        ->whereIn('status', [
-                            Reservation::STATUS_PAID,
-                            Reservation::STATUS_PROTECTED,
-                            Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
-                            Reservation::STATUS_WAITING_PAYMENT,
-                        ])
-                        ->orWhere('user_id', auth()->id())
+                        ->where(function ($query) {
+                            $query
+                                ->whereIn('status', [
+                                    Reservation::STATUS_PAID,
+                                    Reservation::STATUS_PROTECTED,
+                                    Reservation::STATUS_PROTECTED_WAITING_PAYMENT,
+                                    Reservation::STATUS_WAITING_PAYMENT,
+                                ])
+                                ->orWhere('user_id', auth()->id());
+                        })
                         ->where('date', '>=', $startDate->format('Y-m-d'))
                         ->where('date', '<=', $endDate->format('Y-m-d'));
                 }

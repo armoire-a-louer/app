@@ -116,7 +116,21 @@
                         </div>
                     </div>
 
-                    <Button class="w-full mt-7" text="valider ma réservation" color="black" textColor="white" @click="pay()"/>
+                    <form @submit.prevent="pay()" class="mt-8">
+                        <div class="flex items-start gap-4">
+                            <input class="checkbox mt-1" id="conditions_generales" type="checkbox" v-model="checkboxes.conditions_generales" required>
+                            <label for="conditions_generales">J’accepte les Conditions Générales de Location et la Politique de Confidentialité de l’Armoire à Louer.</label>
+                        </div>
+
+                        <div class="flex items-start gap-4 mt-2">
+                            <input class="checkbox mt-1" id="droit_retractation" type="checkbox" v-model="checkboxes.droit_retractation" required>
+                            <label for="droit_retractation">Je reconnais expressément renoncer à mon droit de rétractation puisque ma location débute avant l’expiration du délai de rétractation de 14 jours.</label>
+                        </div>
+
+                        <button type="submit">
+                            <Button class="mt-7 w-full" text="valider ma réservation" textColor="white" color="black"/>
+                        </button>
+                    </form>
                 </div>
 
             </div>
@@ -239,7 +253,7 @@
                         </div>
 
                         <button type="submit">
-                            <Button class="mt-11" text="valider ma réservation" textColor="white" color="black" />
+                            <Button class="mt-11" text="valider ma réservation" textColor="white" color="black"/>
                         </button>
                     </form>
                 </div>
