@@ -25,7 +25,7 @@
 
                         <div class="flex flex-col flex-1">
                             <span>Au: </span>
-                            <input class="w-full" type="date" v-model="endDate" :min="startDatePlusThree" :disabled="! startDate"/>
+                            <input class="w-full" type="date" v-model="endDate" :min="startDatePlusFour" :disabled="! startDate"/>
                         </div>
                     </div>
 
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
     data() {
         return {
@@ -88,61 +90,25 @@ export default {
 
     computed: {
         min() {
-            const date = new Date();
-            const year = date.getFullYear().toString();
-            let month = (date.getMonth() + 1).toString();
-            let day = (date.getDate() + 5).toString();
+            const date = moment();
 
-            if (month.length === 1) {
-            month = '0' + month;
-            }
-
-            if (day.length === 1) {
-            day = '0' + day;
-            }
-
-            const formattedDate = year + '-' + month + '-' + day;
-            return formattedDate;
+            return date.add('5', 'days').format('YYYY-MM-DD');
         },
 
-        startDatePlusThree() {
+        startDatePlusFour() {
             if (!this.startDate) return;
 
-            const date = new Date(this.startDate);
-            const year = date.getFullYear().toString();
-            let month = (date.getMonth() + 1).toString();
-            let day = (date.getDate() + 3).toString();
+            const date = moment(this.startDate);
 
-            if (month.length === 1) {
-            month = '0' + month;
-            }
-
-            if (day.length === 1) {
-            day = '0' + day;
-            }
-
-            const formattedDate = year + '-' + month + '-' + day;
-            return formattedDate;
+            return date.add('4', 'days').format('YYYY-MM-DD');
         },
         
         endDatePlusTwo() {
             if (!this.endDate) return;
 
-            const date = new Date(this.endDate);
-            const year = date.getFullYear().toString();
-            let month = (date.getMonth() + 1).toString();
-            let day = (date.getDate() + 2).toString();
+            const date = moment(this.endDate);
 
-            if (month.length === 1) {
-            month = '0' + month;
-            }
-
-            if (day.length === 1) {
-            day = '0' + day;
-            }
-
-            const formattedDate = year + '-' + month + '-' + day;
-            return formattedDate;
+            return date.add('2', 'days').format('YYYY-MM-DD');
         }
     }
 }
