@@ -1,5 +1,5 @@
 <template>
-    <Layout>
+    <Layout ref="layout">
         <div class="header">
             <div class="header-gradient"></div>
             <div class="container mx-auto header-container">
@@ -62,7 +62,7 @@
         </section>
 
         <div class="location-separation"></div>
-        <VousAimerezAussi title="Les plus loués."/>
+        <VousAimerezAussi title="Les plus loués." :products="mostRentedProducts"/>
 
         <section class="partenaires mt-16 container mx-auto">
             <h2 class="text-center title">Nos marques partenaires.</h2>
@@ -146,9 +146,17 @@ export default {
         VousAimerezAussi
     },
 
+    props: ["mostRentedProducts"],
+
     data() {
         return {
 
+        }
+    },
+
+    mounted() {
+        if (this.$inertia.page.props.openBasket) {
+            this.$refs.layout.toggleBasket();
         }
     }
 }

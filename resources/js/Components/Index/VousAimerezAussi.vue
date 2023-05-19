@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <LocationSlider ref="slider" @canPrev="canPrev = $event" @canNext="canNext = $event"/>
+            <LocationSlider ref="slider" :products="products" @canPrev="canPrev = $event" @canNext="canNext = $event"/>
         </div>
     </section>
     <img src="/images/arrondi-bas.svg">
@@ -28,7 +28,7 @@ export default {
         LocationSlider
     },
 
-    props: ["title"],
+    props: ["title", "products"],
 
     data() {
         return {

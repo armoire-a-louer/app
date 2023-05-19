@@ -2,22 +2,24 @@
   <div>
     <div class="slider" ref="slider" @mousedown="startDrag" @touchstart="startDrag" @mouseup="endDrag" @touchend="endDrag">
         <div class="slider__wrapper" ref="wrapper" :style="{ transform: 'translateX(' + posX + 'px)' }">
-        <div class="slider__item" v-for="(item, index) in items" :key="index" :style="{ flex: '0 0 calc(100% / ' + this.itemsPerPage + ')' }">
+        <div class="slider__item" v-for="(product, index) in products" :key="index" :style="{ flex: '0 0 calc(100% / ' + this.itemsPerPage + ')' }">
 
             <div>
-                <img :src="item.img" alt="">
+                <img :src="product.image_url" alt="">
                 <div class="slider__item__hover">
                     <LikeButton :liked="false"/>
-                    <Button class="w-full" text="ajouter au panier" :route="route('index')" color="black" textColor="white"/>
+                    <Button class="w-full" text="voir de plus près" :route="route('product', product.id)" color="black" textColor="white"/>
                 </div>
             </div>
 
             <div class="flex flex-col gap-2">
-                <h4 class="text-center">{{ item.brand }}</h4>
-                <h3 class="title text-center">{{ item.name }}</h3>
+              <Link :href="route('product', product.id)">
+                <h4 class="text-center">{{ product.brand.name }}</h4>
+                <h3 class="title text-center">{{ product.name }}</h3>
                 <p class="text-center">
-                    {{ item.price }} euros / jour
+                    {{ product.price_per_day }} euros / jour
                 </p>
+              </Link>
             </div>
         </div>
         </div>
@@ -30,49 +32,21 @@
 <script>
 import Button from '@/Components/Buttons/Button.vue'
 import LikeButton from '@/Components/Buttons/LikeButton.vue'
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     name: "Slider",
 
     components: {
         Button,
-        LikeButton
+        LikeButton,
+        Link
     },
+
+    props: ["products"],
     
   data() {
     return {
-      items: [
-        {
-            img: '/images/location-1.png',
-            brand: 'Ami Paris',
-            name: 'T-shirt Ami du Coeur',
-            price: 11
-        },
-        {
-            img: '/images/location-2.png',
-            brand: 'Isabel Marant',
-            name: 'Robe Costas',
-            price: 13
-        },
-        {
-            img: '/images/location-3.png',
-            brand: 'Parisienne et alors',
-            name: 'Perfecto Court Daru',
-            price: 14
-        },
-        {
-            img: '/images/location-4.png',
-            brand: 'Sezane',
-            name: 'Robe Pia',
-            price: 11
-        },
-        {
-            img: '/images/location-5.png',
-            brand: 'Sezane',
-            name: 'Costume',
-            price: 24
-        },
-      ],
       posX: 0,
       wrapperWidth: 0,
       itemWidth: 0,

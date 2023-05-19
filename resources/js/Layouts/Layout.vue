@@ -36,7 +36,6 @@ export default {
 
   mounted() {
     AOS.init();
-    console.log(this.loading)
   }
 };
 </script>

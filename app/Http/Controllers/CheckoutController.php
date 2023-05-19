@@ -19,12 +19,12 @@ class CheckoutController extends Controller
     {
         $reservations = Reservation::getAllBasketReservations(auth()->user());
         if ($reservations->count() === 0) {
-            // return redirect(route('indexopenbasket'));
+            return Redirect::route('index', ["openBasket" => true]);
         }
 
         $canReserve = Reservation::canReserveAllBasket(auth()->user());
         if (! $canReserve["success"]) {
-            return redirect(route('indexopenbasket'));
+            return Redirect::route('index', ["openBasket" => true]);
         }
 
         $addresses = Address::where('user_id', auth()->id())->get();

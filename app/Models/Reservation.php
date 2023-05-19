@@ -165,6 +165,12 @@ class Reservation extends Model
             if (! $canReserve["success"]) {
                 $response["success"] = false;
                 $response["unavailable_days_of_reservation"][$reservation->reservation_common_uuid] = $canReserve["unavailableDays"];
+
+                $deleteReservations = Reservation::where('reservation_common_uuid', $reservation->reservation_common_uuid)->get();
+
+                foreach ($deleteReservations as $deleteReservation) {
+                    $deleteReservation->delete();
+                }
             }
         }
 
