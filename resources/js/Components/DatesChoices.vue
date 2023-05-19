@@ -11,18 +11,42 @@
                 <div class="body-modal">
                     <font-awesome-icon @click="toggleModal()" class="text-2xl close cursor-pointer" icon="fa-solid fa-xmark" />
 
-                    <h3 class="text-center text-xl font-bold">Sélectionnez vos dates</h3>
-                    <p class="text-center w-2/3 lg:w-1/2 mx-auto">
+                    <h3 class="text-center text-xl font-bold text-gray-700">Sélectionnez vos dates</h3>
+                    <p class="text-center md:w-3/4 xl:w-1/2 mx-auto mt-3">
                         Nous vous recommandons une date de livraison 2 à 3 jours avant l'évènement (évitez les dimanches et jours fériés)
                     </p>
 
-                    <input type="date" v-model="startDate" :min="min" @change="endDate = null"/>
-                    <input type="date" v-model="endDate" :min="startDatePlusThree" :disabled="! startDate"/>
+
+                    <div class="flex gap-6 mt-4">
+                        <div class="flex flex-col flex-1">
+                            <span>Du: </span>
+                            <input class="w-full" type="date" v-model="startDate" :min="min" @change="endDate = null"/>
+                        </div>
+
+                        <div class="flex flex-col flex-1">
+                            <span>Au: </span>
+                            <input class="w-full" type="date" v-model="endDate" :min="startDatePlusThree" :disabled="! startDate"/>
+                        </div>
+                    </div>
 
                     <p class="text-red-700" v-if="dateErrors">{{ dateErrors }}</p>
 
-                    <div>
-                        <button type="button" @click="valider()">Valider</button>
+                    <div class="flex flex-col lg:flex-row gap-5 mt-6">
+                        <span class="flex-1 flex flex-col items-center justify-center text-center bg-gray-200 py-3 px-2 rounded-3xl">
+                            Livraison le
+                            <span class="block font-bold">
+                                {{ startDate }}
+                            </span>
+                        </span>
+
+                        <span class="flex-1 flex flex-col items-center justify-center text-center bg-gray-200 py-3 px-2 rounded-3xl">
+                            À retourner avant le
+                            <span class="block font-bold">
+                                {{ endDatePlusTwo }}
+                            </span>
+                        </span>
+
+                        <button class="flex-1 flex flex-col items-center justify-center text-white text-center bg-black py-3 px-2 rounded-3xl" type="button" @click="valider()" :disabled="!startDate || !endDate">Valider</button>
                     </div>
                 </div>
             </div>
@@ -99,6 +123,26 @@ export default {
 
             const formattedDate = year + '-' + month + '-' + day;
             return formattedDate;
+        },
+        
+        endDatePlusTwo() {
+            if (!this.endDate) return;
+
+            const date = new Date(this.endDate);
+            const year = date.getFullYear().toString();
+            let month = (date.getMonth() + 1).toString();
+            let day = (date.getDate() + 2).toString();
+
+            if (month.length === 1) {
+            month = '0' + month;
+            }
+
+            if (day.length === 1) {
+            day = '0' + day;
+            }
+
+            const formattedDate = year + '-' + month + '-' + day;
+            return formattedDate;
         }
     }
 }
@@ -132,7 +176,8 @@ export default {
 }
 
 .body-modal {
-    width: 50%;
+    width: 600px;
+    max-width: 100%;
     padding: 30px 40px;
     border-radius: 30px;
     background: white;
