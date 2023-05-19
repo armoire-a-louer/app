@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -73,7 +74,7 @@ class CheckoutController extends Controller
             ]],
             'mode' => 'payment',
             'success_url' => 'https://armoire-a-louer.test/',
-            'cancel_url' => env('APP_URL'),
+            'cancel_url' => route('index'),
             'expires_at' => Carbon::now()->addMinutes(30)->timestamp
         ]);
 
