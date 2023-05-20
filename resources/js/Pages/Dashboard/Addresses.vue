@@ -74,6 +74,7 @@
     </div>
 
     <!-- UPDATE MODAL -->
+    <transition name="fade">
     <div
       class="modal"
       v-if="selectedAddress"
@@ -256,8 +257,10 @@
         </button>
       </div>
     </div>
+    </transition>
 
     <!-- ADD MODAL -->
+    <transition name="fade">
     <div
       class="modal"
       v-if="isAddModalOpen"
@@ -428,6 +431,7 @@
         </form>
       </div>
     </div>
+    </transition>
   </AuthenticatedLayout>
 </template>
 

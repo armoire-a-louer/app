@@ -84,7 +84,7 @@
         <div class="absolute top-10 right-10 cursor-pointer" @click="toggleBasket()">
           <font-awesome-icon icon="fa-solid fa-xmark" class="text-3xl"/>
         </div>
-        <h2 class="font-serif text-xl md:text-2xl xl:text-3xl">Votre panier.</h2>
+        <h2 class="font-serif text-xl md:text-2xl xl:text-3xl border-b-gray-200 w-full pb-8" style="border-bottom-width: 1px;">Votre panier.</h2>
 
         <div class="flex-1 flex flex-col gap-6 overflow-y-auto" v-if="reservations.length !== 0">
           <div v-for="reservation in reservations" data-aos="fade-up" :key="reservation.id" class="flex justify-start items-center gap-8 py-7">
@@ -108,11 +108,22 @@
           </div>
         </div>
 
-        <p class="flex-1" v-if="reservations.length === 0">
-          Votre panier est vide.
+        <p class="flex-1 flex flex-col justify-center items-start" v-if="reservations.length === 0">
+          <span>Votre panier est vide...</span>
+          <span class="font-bold">Mais on a une solution !</span>
         </p>
 
-        <Button :route="route('checkout')" text="valider" class="w-full" color="black" textColor="white" :disabled="reservations.length === 0"/>
+        <div v-if="reservations.length !== 0" class="border-b-gray-200 pt-8 flex justify-between items-center w-full" style="border-top-width: 1px;">
+          <span class="font-bold">
+            Total
+          </span>
+          <span class="font-bold">
+            {{ total }}
+          </span>
+        </div>
+
+        <Button v-if="reservations.length === 0" route="" text="découvrir nos produits" class="w-full" color="black" textColor="white" />
+        <Button v-else :route="route('checkout')" text="valider" class="w-full" color="black" textColor="white"/>
       </div>
     </section>
 
@@ -179,6 +190,17 @@ export default {
 
       isMenuOpen: false
     };
+  },
+
+  computed: {
+    total() {
+      let total = 0;
+      this.reservations.forEach((reservation) => {
+        total += parseInt(reservation.total_price);
+      })
+
+      return (total / 100).toFixed(2).replace('.', ',') + "€";
+    }
   },
 
   methods: {
