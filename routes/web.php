@@ -94,7 +94,6 @@ Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("au
 Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->middleware("auth")->name('add-to-basket');
 Route::delete('/remove-from-basket/{reservationCommonUuid}', [ReservationsController::class, 'deleteReservation'])->middleware("auth")->name('remove-from-basket');
 Route::post('/pay', [CheckoutController::class, 'pay'])->middleware('auth')->name('pay');
-Route::post('/add-address', [AddressController::class, 'addAddress'])->middleware('auth')->name('add-address');
 
 
 // STRIPE
@@ -107,6 +106,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
+    Route::post('/add-address', [AddressController::class, 'addAddress'])->name('add-address');
+    Route::put('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
+    Route::delete('/addresses/{address}', [AddressController::class, 'delete'])->name('addresses.delete');
 });
 
 

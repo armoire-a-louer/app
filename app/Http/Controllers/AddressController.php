@@ -6,6 +6,7 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use Inertia\Inertia;
 
 class AddressController extends Controller
 {
@@ -25,6 +26,38 @@ class AddressController extends Controller
 
         return response()->json([
             "address" => $address,
+            "addresses" => $addresses
+        ]);
+    }
+
+    public function index(Request $request)
+    {
+        $addresses = Address::where('user_id', auth()->id())->get();
+
+        return Inertia::render('Dashboard/Addresses', [
+            'addresses' => $addresses
+        ]);
+    }
+
+    public function update(Request $request, Address $address)
+    {
+        $address->update($request->only(['address', 'postal_code', 'city', 'firstname', 'lastname', 'phone_number']));
+        $address->save();
+
+        $addresses = Address::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            "addresses" => $addresses
+        ]);
+    }
+
+    public function delete(Request $request, Address $address)
+    {
+        $address->delete();
+
+        $addresses = Address::where('user_id', auth()->id())->get();
+
+        return response()->json([
             "addresses" => $addresses
         ]);
     }
