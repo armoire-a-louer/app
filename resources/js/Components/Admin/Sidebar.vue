@@ -12,12 +12,9 @@
     :class="{ hidden: !toggleSideMenu }"
   >
     <div class="py-4 text-gray-500">
-      <a
-        class="ml-6 text-lg font-bold text-gray-800"
-        href="#"
-      >
-        Armoire à louer
-      </a>
+      <Link :href="route('admin.dashboard')">
+        <img src="/images/logo_black.svg" class="w-28 ml-6 text-lg font-bold text-gray-800">
+      </Link>
       <ul class="mt-6">
         <li class="relative px-6 py-3">
           <span
@@ -238,34 +235,38 @@
             <span class="ml-4">Modèles</span>
           </Link>
         </li>
+        <li class="relative px-6 py-3">
+          <span
+            v-if="path.includes('transaction')"
+            class="
+              absolute
+              inset-y-0
+              left-0
+              w-1
+              bg-purple-600
+              rounded-tr-lg rounded-br-lg
+            "
+            aria-hidden="true"
+          ></span>
+          <Link
+            href="/admin/transactions"
+            class="
+              inline-flex
+              items-center
+              w-full
+              text-sm
+              font-semibold
+              transition-colors
+              duration-150
+              hover:text-gray-800
+            "
+            :class="{ 'text-gray-800': path.includes('transaction') }"
+          >
+            <font-awesome-icon icon="fa-solid fa-sack-dollar" class="text-xl"/>
+            <span class="ml-4">Transactions</span>
+          </Link>
+        </li>
       </ul>
-      <div class="px-6 my-6">
-        <button
-          class="
-            flex
-            items-center
-            justify-between
-            w-full
-            px-4
-            py-2
-            text-sm
-            font-medium
-            leading-5
-            text-white
-            transition-colors
-            duration-150
-            bg-purple-600
-            border border-transparent
-            rounded-lg
-            active:bg-purple-600
-            hover:bg-purple-700
-            focus:outline-none focus:shadow-outline-purple
-          "
-        >
-          Create account
-          <span class="ml-2" aria-hidden="true">+</span>
-        </button>
-      </div>
     </div>
   </aside>
 </template>

@@ -79,7 +79,7 @@
               30 derniers jours
             </p>
             <p class="text-lg font-semibold text-gray-700">
-              46,760.89 €
+              {{ (transactionsAmount30LastDays / 100).toFixed(2) }} €
             </p>
           </div>
         </div>
@@ -116,7 +116,7 @@
               30 derniers jours
             </p>
             <p class="text-lg font-semibold text-gray-700">
-              376 locations
+              {{ transactions30LastDays }} location{{ transactions30LastDays > 1 ? 's' : '' }}
             </p>
           </div>
         </div>
@@ -163,8 +163,9 @@
 
       <!-- New Table -->
       <h3 class="mt-6 text-xl font-semibold text-gray-700">
-        10 Dernières commandes
+        10 Dernières transactions
       </h3>
+      <Link class="text-blue-600 cursor-pointer my-4" :href="route('admin.transactions.index')">Voir plus</Link>
       <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
@@ -190,18 +191,20 @@
             <tbody
               class="bg-white divide-y"
             >
-              <tr v-for="index in 10" :key="index" class="text-gray-700">
+              <tr v-for="transaction in transactions" :key="transaction.id" class="text-gray-700">
                 <td class="px-4 py-3">
                   <div class="flex items-center text-sm">
                     <div>
-                      <p class="font-semibold">Luis ZUNIGA</p>
+                      <p class="font-semibold">
+                        {{ transaction.user.firstname }} {{ transaction.user.lastname.toUpperCase() }}
+                      </p>
                       <p class="text-xs text-gray-600">
-                        luiszu7779@gmail.com
+                        {{ transaction.user.email }}
                       </p>
                     </div>
                   </div>
                 </td>
-                <td class="px-4 py-3 text-sm">$ 863.45</td>
+                <td class="px-4 py-3 text-sm">{{ (transaction.amount / 100).toFixed(2) }} €</td>
                 <td class="px-4 py-3 text-xs">
                   <span
                     class="
@@ -217,9 +220,11 @@
                     Approuvée
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm">6/10/2020</td>
+                <td class="px-4 py-3 text-sm">{{ transaction.paid_at }}</td>
                 <td class="px-4 py-3 text-sm">
-                  <a class="text-blue-500" href="">Voir</a>
+                  <Link class="text-blue-500" :href="route('admin.transactions.show', transaction.id)">
+                    Voir
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -234,13 +239,15 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Pagination from "@/Components/Admin/Pagination.vue";
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
-  props: ['usersCount'],
+  props: ['usersCount', 'transactionsAmount30LastDays', 'transactions30LastDays', 'transactions'],
 
   components: {
     AdminLayout,
-    Pagination
+    Pagination,
+    Link
   },
 };
 </script>

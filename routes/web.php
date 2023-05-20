@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ModelsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
 use App\Http\Controllers\ReservationsController;
@@ -31,7 +32,7 @@ use App\Http\Controllers\ReservationsController;
 
 // BACK-OFFICE
 Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard']);
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Brands
     Route::get('/brands', [BrandsController::class, 'index'])->name('admin.brands.index');
@@ -73,6 +74,10 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     Route::post('/models/store', [ModelsController::class, 'store'])->name('admin.models.store');
     Route::post('/models/update/{model}', [ModelsController::class, 'update'])->name('admin.models.update');
     Route::delete('/models/delete/{model}', [ModelsController::class, 'delete'])->name('admin.models.delete');
+
+    // Transactions
+    Route::get('/transactions', [TransactionsController::class, 'index'])->name('admin.transactions.index');
+    Route::get('/transaction/{transaction}', [TransactionsController::class, 'show'])->name('admin.transactions.show');
 });
 
 // FRONT
