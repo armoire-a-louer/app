@@ -266,6 +266,37 @@
             <span class="ml-4">Transactions</span>
           </Link>
         </li>
+        <li class="relative px-6 py-3">
+          <span
+            v-if="path.includes('user')"
+            class="
+              absolute
+              inset-y-0
+              left-0
+              w-1
+              bg-purple-600
+              rounded-tr-lg rounded-br-lg
+            "
+            aria-hidden="true"
+          ></span>
+          <Link
+            href="/admin/users"
+            class="
+              inline-flex
+              items-center
+              w-full
+              text-sm
+              font-semibold
+              transition-colors
+              duration-150
+              hover:text-gray-800
+            "
+            :class="{ 'text-gray-800': path.includes('user') }"
+          >
+            <font-awesome-icon icon="fa-regular fa-user" class="text-xl"/>
+            <span class="ml-4">Utilisateurs</span>
+          </Link>
+        </li>
       </ul>
     </div>
   </aside>

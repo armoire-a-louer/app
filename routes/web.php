@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\TransactionsController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
 use App\Http\Controllers\ReservationsController;
@@ -78,6 +79,11 @@ Route::middleware(['auth', 'admin'])->prefix('/admin')->group(function () {
     // Transactions
     Route::get('/transactions', [TransactionsController::class, 'index'])->name('admin.transactions.index');
     Route::get('/transaction/{transaction}', [TransactionsController::class, 'show'])->name('admin.transactions.show');
+
+    // Users
+    Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');
+    Route::get('/user/{user}', [UsersController::class, 'show'])->name('admin.users.show');
+    Route::put('/user/update/{user}', [UsersController::class, 'update'])->name('admin.users.update');
 });
 
 // FRONT
