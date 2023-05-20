@@ -75,7 +75,7 @@
           <div class="flex gap-4 items-center mt-12 w-full xl:w-2/3">
             <Button class="flex-1" text="ajouter au panier" color="white" textColor="black" border="black"  @click="addToBasket()"/>
 
-            <button class="like-button" type="button" @click="liked = !liked">
+            <button class="like-button" type="button" @click="like()">
               <font-awesome-icon icon="fa-solid fa-heart" class="text-xl" v-if="liked"/>
               <font-awesome-icon icon="fa-regular fa-heart" class="text-xl" v-else/>
             </button>
@@ -224,6 +224,27 @@ export default {
     },
 
     methods: {
+      like() {
+        if (! this.product.id) {
+            return;
+        }
+
+        axios.post(route('like-or-dislike', this.product.id))
+
+        this.liked = ! this.liked;
+      },
+
+      checkLike() {
+        if (! this.product.id) {
+            return;
+        }
+
+        axios.get(route('is-product-liked', this.product.id))
+            .then((response) => {
+                this.liked = response.data.liked;
+            })
+      },
+
       choseDefaultItem() {
         if (! this.product.items) {
           this.$inertia.replace(route('index'));
@@ -415,6 +436,8 @@ export default {
       
       window.addEventListener('resize', this.handleSticky);
       this.handleSticky()
+
+      this.checkLike();
     },
 
     destroyed() {

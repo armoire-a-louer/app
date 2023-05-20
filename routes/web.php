@@ -95,6 +95,10 @@ Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->m
 Route::delete('/remove-from-basket/{reservationCommonUuid}', [ReservationsController::class, 'deleteReservation'])->middleware("auth")->name('remove-from-basket');
 Route::post('/pay', [CheckoutController::class, 'pay'])->middleware('auth')->name('pay');
 
+// Route pour savoir si un utilisateur a liké un produit
+Route::get('/is-product-liked/{productId}', [ProductsControllerFront::class, 'isProductLiked'])->middleware('auth')->name('is-product-liked');
+Route::post('/like-or-dislike/{productId}', [ProductsControllerFront::class, 'likeOrDislike'])->name('like-or-dislike');
+
 
 // STRIPE
 Route::post('/webhook', [CheckoutController::class, 'webhook'])->name('webhook');
@@ -111,6 +115,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/add-address', [AddressController::class, 'addAddress'])->name('add-address');
     Route::put('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
     Route::delete('/addresses/{address}', [AddressController::class, 'delete'])->name('addresses.delete');
+
+    Route::get('/likes', [DashboardController::class, 'likes'])->name('likes.index');
 });
 
 

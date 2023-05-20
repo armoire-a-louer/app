@@ -3,7 +3,7 @@
     <div>
         <img :src="product.image_url" alt="" />
       <div class="card__hover">
-        <LikeButton :liked="false" />
+        <LikeButton :liked="false" :productId="product.id"/>
         <Button
           class="w-full"
           text="voir de plus près"
@@ -93,6 +93,6 @@ export default {
 }
 
 h3{
-    font-size: 27px;
+  font-size: 27px !important;
 }
 </style>

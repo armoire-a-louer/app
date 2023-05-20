@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductSizeColor;
+use App\Models\UserLike;
+use Error;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductsController extends Controller
 {
@@ -28,5 +31,31 @@ class ProductsController extends Controller
         return Inertia::render('Product', [
             'product' => $product,
         ]);
+    }
+
+    public function isProductLiked($productId)
+    {
+        return response()->json([
+            'liked' => UserLike::where('user_id', auth()->id())->where('product_id', $productId)->count() > 0
+        ]);
+    }
+
+    /**
+     * Une seule fonction pour like et dislike
+     *
+     * @return void
+     */
+    public function likeOrDislike($productId)
+    {
+        $like = UserLike::where('user_id', auth()->id())->where('product_id', $productId)->first();
+
+        if ($like) {
+            $like->delete();
+        } else {
+            $like = UserLike::create([
+                'user_id' => auth()->id(),
+                'product_id' => $productId
+            ]);
+        }
     }
 }

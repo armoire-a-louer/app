@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: "LikeButton",
 
@@ -19,12 +21,33 @@ export default {
 
     methods: {
         click() {
+            if (! this.productId) {
+                return;
+            }
+
+            axios.post(route('like-or-dislike', this.productId))
+
             this.isLiked = !this.isLiked;
             this.isScaled = true;
             setTimeout(() => {
                 this.isScaled = false;
             }, 150);
+        },
+
+        checkLiked() {
+            if (! this.productId) {
+                return;
+            }
+
+            axios.get(route('is-product-liked', this.productId))
+                .then((response) => {
+                    this.isLiked = response.data.liked;
+                })
         }
+    },
+
+    mounted() {
+        this.checkLiked();
     }
 }
 </script>
