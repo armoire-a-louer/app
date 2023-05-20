@@ -23,6 +23,7 @@ class TransactionsController extends Controller
     {
         $transaction->load([
             'user',
+            'address',
             'reservations' => function ($q) {
                 $q
                     ->groupBy(['reservation_common_uuid'])

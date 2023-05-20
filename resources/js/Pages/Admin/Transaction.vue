@@ -59,6 +59,15 @@
             </div>
         </div>
       </div>
+
+      <h3 class="mt-4 text-xl font-semibold">Adresse: </h3>
+
+      <div class="bg-white rounded shadow-md py-3 px-4 mt-6 flex flex-col items-start">
+        <p>{{ transaction.address.address }}</p>
+        <p>{{ transaction.address.postal_code }} {{ transaction.address.city.toUpperCase() }}</p>
+        <p class="font-bold">{{ transaction.address.firstname }} {{ transaction.address.lastname.toUpperCase() }}</p>
+        <p>{{ transaction.address.phone_number }}</p>
+      </div>
     </div>
   </AdminLayout>
 </template>

@@ -84,7 +84,8 @@ class CheckoutController extends Controller
             'status' => Transaction::STATUS_WAITING,
             'user_id' => auth()->id(),
             'amount' => $price->unit_amount,
-            'title' => $product->name
+            'title' => $product->name,
+            'address_id' => $request->get('address_id')
         ];
 
         $transaction = Transaction::create($data);

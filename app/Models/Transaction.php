@@ -16,7 +16,7 @@ class Transaction extends Model
     public const STATUS_WAITING = "waiting";
     public const STATUS_SUCCESS = "success";
 
-    protected $fillable = ["payment_intent_id", "type", "status", "user_id", "amount", "title", "paid_at"];
+    protected $fillable = ["payment_intent_id", "type", "status", "user_id", "amount", "title", "paid_at", "address_id"];
 
     protected $casts = [
 		'paid_at' => 'datetime:d/m/Y'
@@ -45,5 +45,10 @@ class Transaction extends Model
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
     }
 }

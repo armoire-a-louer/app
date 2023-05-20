@@ -358,7 +358,11 @@ export default {
 
             this.loading = true;
 
-            axios.post(route('pay'))
+            const data = {
+                address_id: this.selectedAddressId
+            }
+
+            axios.post(route('pay'), data)
                 .then((response) => {
                     window.location.href = response.data.redirect_stripe_url;
                     this.loading = false;
