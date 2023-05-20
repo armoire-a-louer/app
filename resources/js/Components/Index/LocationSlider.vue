@@ -2,25 +2,8 @@
   <div>
     <div class="slider" ref="slider" @mousedown="startDrag" @touchstart="startDrag" @mouseup="endDrag" @touchend="endDrag">
         <div class="slider__wrapper" ref="wrapper" :style="{ transform: 'translateX(' + posX + 'px)' }">
-        <div class="slider__item" v-for="(product, index) in products" :key="index" :style="{ flex: '0 0 calc(100% / ' + this.itemsPerPage + ')' }">
-
-            <div>
-                <img :src="product.image_url" alt="">
-                <div class="slider__item__hover">
-                    <LikeButton :liked="false"/>
-                    <Button class="w-full" text="voir de plus près" :route="route('product', product.id)" color="black" textColor="white"/>
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-2">
-              <Link :href="route('product', product.id)">
-                <h4 class="text-center">{{ product.brand.name }}</h4>
-                <h3 class="title text-center">{{ product.name }}</h3>
-                <p class="text-center">
-                    {{ product.price_per_day }} euros / jour
-                </p>
-              </Link>
-            </div>
+          <div class="slider__item" v-for="(product, index) in products" :key="index" :style="{ flex: '0 0 calc(100% / ' + this.itemsPerPage + ')' }">
+            <ProductCard :product="product"/>
         </div>
         </div>
 
@@ -30,20 +13,16 @@
 </template>
 
 <script>
-import Button from '@/Components/Buttons/Button.vue'
-import LikeButton from '@/Components/Buttons/LikeButton.vue'
-import { Link } from '@inertiajs/inertia-vue3';
+import ProductCard from '../ProductCard.vue';
 
 export default {
     name: "Slider",
 
-    components: {
-        Button,
-        LikeButton,
-        Link
-    },
-
     props: ["products"],
+
+    components: {
+      ProductCard
+    },
     
   data() {
     return {
