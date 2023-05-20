@@ -2,32 +2,12 @@
   <Layout ref="layout">
     <div class="container mx-auto">
       <Breadcrumb class="padding-navbar" :actualPage="product.name" :links="[{ name: product.category.name, route: route('index') }]"/>
-      <section class="py-14 flex gap-16 xl:gap-32 items-start">
+      <section class="py-14 flex flex-col md:flex-row gap-16 xl:gap-32 items-start">
         <div class="flex-1">
           <img class="w-full" :src="images.big">
           <div class="flex flex-wrap gap-4 mt-8">
             <img class="small-images cursor-pointer" v-for="(image, index) in images.smalls" :key="image" :src="image" @click="changeBigImage(index)">
           </div>
-
-          <div class="border-light mt-20 mb-10"></div>
-
-          <h2 class="description">Description</h2>
-          <p class="mt-9">
-            {{ product.description }}
-          </p>
-
-          <div class="flex gap-9 mt-8 items-center" v-if="currentItem">
-            <img class="object-cover object-center" style="height: 150px; width: 200px;" :src="currentItem.model.image_url" :alt="currentItem.model.name">
-
-            <div class="flex flex-col items-start justify-center">
-              <span>Article porté par</span>
-              <h5 class="mt-3 model-name">{{ currentItem.model.name }}</h5>
-              <span>{{ currentItem.model.size }}cm</span>
-              <span>Taille {{ currentItem.model_size.toUpperCase() }}</span>
-            </div>
-          </div>
-
-          <button type="button" class="font-xl font-bold uppercase underline mt-12">Voir le guide des tailles</button>
         </div>
         <div class="flex-1">
           <span class="font-sackers">{{ product.brand.name }}</span>
@@ -118,9 +98,30 @@
 
         </div>
       </section>
+      <div class="w-full md:w-1/2">
+        <div class="border-light mt-0 md:mt-20 mb-10"></div>
+
+        <h2 class="description">Description</h2>
+        <p class="mt-9">
+          {{ product.description }}
+        </p>
+
+        <div class="flex gap-9 mt-8 items-center" v-if="currentItem">
+          <img class="object-cover object-center" style="height: 150px; width: 200px;" :src="currentItem.model.image_url" :alt="currentItem.model.name">
+
+          <div class="flex flex-col items-start justify-center">
+            <span>Article porté par</span>
+            <h5 class="mt-3 model-name">{{ currentItem.model.name }}</h5>
+            <span>{{ currentItem.model.size }}cm</span>
+            <span>Taille {{ currentItem.model_size.toUpperCase() }}</span>
+          </div>
+        </div>
+
+        <button type="button" class="font-xl font-bold uppercase underline mt-12">Voir le guide des tailles</button>
+      </div>
     </div>
 
-    <VousAimerezAussi title="Vous aimerez aussi." />
+    <VousAimerezAussi title="Vous aimerez aussi." :products="otherProducts"/>
 
     <section id="avis" class="container mx-auto pb-28 overflow-hidden">
       <div class="relative" data-sticky-container>
@@ -191,7 +192,7 @@ import axios from 'axios'
 export default {
     name: "Product",
 
-    props: ["product"],
+    props: ["product", 'otherProducts'],
 
     components: {
       Layout,
