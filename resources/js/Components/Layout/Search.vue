@@ -14,7 +14,7 @@
           >
             <div class="flex items-center">
                 <img style="width: 20px" src="/images/icons/search_black.svg" />
-                <input class="search-input" type="text" autofocus placeholder="Robes">
+                <input v-model="search" @keyup.enter="makeSearch()" class="search-input" type="text" autofocus placeholder="Robes">
             </div>
             <button
               type="button"
@@ -53,7 +53,40 @@
 </template>
 
 <script>
-export default {};
+import { Inertia } from '@inertiajs/inertia'
+
+export default {
+  data() {
+    return {
+      search: ""
+    }
+  },
+
+  mounted() {
+    if (this.$page.props.queryParams && this.$page.props.queryParams.search) {
+      this.search = this.$page.props.queryParams.search;
+    }
+  },
+
+  methods: {
+    makeSearch() {
+      const data = {
+          search: this.search
+      }
+
+      const options = {
+          method: 'get',
+          data: data,
+          preserveScroll: false,
+          onSuccess: page => {
+
+          },
+      }
+
+      Inertia.visit(route('search'), options);
+    }
+  }
+};
 </script>
 
 <style scoped>

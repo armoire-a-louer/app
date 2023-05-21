@@ -16,6 +16,14 @@ class SearchController extends Controller
     {
         $products = Product::query()->scopes('active')->with(["brand"]);
 
+        if ($request->query('search')) {
+            $products =
+                $products
+                ->where(function ($q) use ($request){
+                    $q->where('name', 'LIKE', '%' . $request->query('search') . '%');
+                });
+        }
+
         if ($request->query('brands')) {
             $products = $products->whereIn('brand_id', $request->query('brands'));
         }

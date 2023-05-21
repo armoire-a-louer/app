@@ -121,7 +121,8 @@ export default {
                     value: "price_per_day,desc"
                 }
             ],
-            selectedSort: this.$page.props.queryParams.sort ? this.$page.props.queryParams.sort : 0
+            selectedSort: this.$page.props.queryParams.sort ? this.$page.props.queryParams.sort : 0,
+            search: this.$page.props.queryParams.search ? this.$page.props.queryParams.search : ""
         }
     },
 
@@ -159,7 +160,8 @@ export default {
                 colors: this.filters.selectedColors,
                 brands: this.filters.selectedBrands,
                 page: this.page,
-                sort: this.selectedSort
+                sort: this.selectedSort,
+                search: this.search
             }
 
             const options = {
