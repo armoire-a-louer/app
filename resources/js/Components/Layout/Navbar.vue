@@ -136,7 +136,7 @@
 
             <div class="pl-2 flex flex-col gap-2">
               <Link
-                :href="route('index')"
+                :href="route('search', { categories: [collection.id] })"
                 v-for="collection in collections"
                 :key="collection.id"
               >
@@ -148,7 +148,7 @@
 
             <div class="pl-2 flex flex-col gap-2">
               <Link
-                :href="route('index')"
+                :href="route('search', { brands: [brand.id] })"
                 v-for="brand in brands"
                 :key="brand.id"
               >
