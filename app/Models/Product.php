@@ -28,6 +28,11 @@ class Product extends Model implements HasMedia
 
     protected $appends = ['image_url'];
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
     protected function imageUrl(): Attribute
     {
         return Attribute::make(

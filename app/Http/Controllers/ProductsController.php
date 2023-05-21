@@ -28,7 +28,7 @@ class ProductsController extends Controller
             "ratings.user:id,firstname,lastname"
         ]);
 
-        $otherProducts = Product::where('id', '!=', $product->id)->inRandomOrder()->take(6)->with(['brand'])->get();
+        $otherProducts = Product::where('id', '!=', $product->id)->scopes('active')->inRandomOrder()->take(6)->with(['brand'])->get();
 
         return Inertia::render('Product', [
             'product' => $product,

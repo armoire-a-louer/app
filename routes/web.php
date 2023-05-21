@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\AddressController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\ModelsController;
+use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\MaterialsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\TransactionsController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController as ProductsControllerFront;
-use App\Http\Controllers\ReservationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,7 @@ Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware("au
 Route::post('/add-to-basket', [ReservationsController::class, 'addToBasket'])->middleware("auth")->name('add-to-basket');
 Route::delete('/remove-from-basket/{reservationCommonUuid}', [ReservationsController::class, 'deleteReservation'])->middleware("auth")->name('remove-from-basket');
 Route::post('/pay', [CheckoutController::class, 'pay'])->middleware('auth')->name('pay');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // Route pour savoir si un utilisateur a liké un produit
 Route::get('/is-product-liked/{productId}', [ProductsControllerFront::class, 'isProductLiked'])->middleware('auth')->name('is-product-liked');

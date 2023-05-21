@@ -1,7 +1,7 @@
 <template>
   <Layout ref="layout">
     <div class="container mx-auto">
-      <Breadcrumb class="padding-navbar" :actualPage="product.name" :links="[{ name: product.category.name, route: route('index') }]"/>
+      <Breadcrumb class="padding-navbar" :actualPage="product.name" :links="[{ name: product.category.name, route: route('search', { categories: [product.category.id] }) }]"/>
       <section class="py-14 flex flex-col md:flex-row gap-16 xl:gap-32 items-start">
         <div class="flex-1">
           <img class="w-full" :src="images.big">

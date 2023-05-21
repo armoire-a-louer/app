@@ -16,16 +16,16 @@
             <Link class="nav-a py-2 px-4" :href="route('index')">Accueil</Link>
           </span>
           <span class="nav-dropdown">
-            <Link class="nav-a py-2 px-4" :href="route('index')"
+            <span class="nav-a py-2 px-4"
               >Collections
               <font-awesome-icon
                 icon="fa-solid fa-chevron-down"
                 class="text-xs pl-2"
-            /></Link>
+            /></span>
             <div class="nav-dropdown-menu">
               <div>
                 <Link
-                  :href="route('index')"
+                  :href="route('search', { categories: [collection.id] })"
                   v-for="collection in collections"
                   :key="collection.id"
                   class="nav-dropdown-link"
@@ -36,16 +36,16 @@
             </div>
           </span>
           <span class="nav-dropdown">
-            <Link class="nav-a py-2 px-4" :href="route('index')"
+            <span class="nav-a py-2 px-4"
               >Marques
               <font-awesome-icon
                 icon="fa-solid fa-chevron-down"
                 class="text-xs pl-2"
-            /></Link>
+            /></span>
             <div class="nav-dropdown-menu">
               <div>
                 <Link
-                  :href="route('index')"
+                  :href="route('search', { brands: [brand.id] })"
                   v-for="brand in brands"
                   :key="brand.id"
                   class="nav-dropdown-link"
