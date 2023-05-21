@@ -54,7 +54,7 @@ class SearchController extends Controller
 
             $products = $products->orderBy($column, $direction);
         } else {
-            $products = $products->orderBy('created_at', 'asc');
+            $products = $products->orderBy('created_at', 'desc');
         }
 
         $products = $products->paginate(6);
