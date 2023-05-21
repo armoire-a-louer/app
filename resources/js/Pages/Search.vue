@@ -62,7 +62,14 @@
                             {{ products.total }} produit{{ products.total > 1 ? 's' : '' }}
                         </span>
                         <div>
-                            <span class="font-bold">Trier par</span>
+                            <span class="font-bold">
+                                Trier par
+                                <select class="select" v-model="selectedSort">
+                                    <option :selected="selectedSort == sort.value" v-for="sort in sorts" :key="sort.name" :value="sort.value">
+                                        {{ sort.name }}
+                                    </option>
+                                </select>
+                            </span>
                         </div>
                     </div>
 
@@ -70,8 +77,8 @@
                         <ProductCard v-for="product in products.data" :key="product.id" :product="product"/>
                     </div>
 
-                    <div class="flex justify-center">
-                        <Pagination :paginationData="paginationData"/>
+                    <div class="flex justify-center mt-16">
+                        <Pagination :paginationData="paginationData" @setPage="page = $event"/>
                     </div>
                 </div>
             </div>
@@ -98,7 +105,23 @@ export default {
                 selectedSexes: this.$page.props.queryParams.sexes ? this.$page.props.queryParams.sexes : [],
                 selectedColors: this.$page.props.queryParams.colors ? this.$page.props.queryParams.colors : [],
                 selectedBrands: this.$page.props.queryParams.brands ? this.$page.props.queryParams.brands : [],
-            }
+            },
+            page: this.products.current_page,
+            sorts: [
+                {
+                    name: "Nouveautés",
+                    value: 0
+                },
+                {
+                    name: "Prix croissant",
+                    value: "price_per_day,asc"
+                },
+                {
+                    name: "Prix décroissant",
+                    value: "price_per_day,desc"
+                }
+            ],
+            selectedSort: this.$page.props.queryParams.sort ? this.$page.props.queryParams.sort : 0
         }
     },
 
@@ -108,6 +131,16 @@ export default {
                 this.reload();
             },
             deep: true
+        },
+        page: {
+            handler(newValue, oldValue) {
+                this.reload();
+            }
+        },
+        selectedSort: {
+            handler(newValue, oldValue) {
+                this.reload();
+            }
         }
     },
     
@@ -125,7 +158,8 @@ export default {
                 sexes: this.filters.selectedSexes,
                 colors: this.filters.selectedColors,
                 brands: this.filters.selectedBrands,
-                page: this.products.current_page
+                page: this.page,
+                sort: this.selectedSort
             }
 
             const options = {
@@ -167,5 +201,10 @@ export default {
 
 .checkbox:checked {
     background-color: black;
+}
+
+.select {
+    border: none;
+    font-weight: 400;
 }
 </style>

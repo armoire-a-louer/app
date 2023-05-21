@@ -39,7 +39,17 @@ class SearchController extends Controller
             $products = $products->whereIn('category_id', $request->query('categories'));
         }
 
-        $products = $products->paginate(2);
+        if ($request->query('sort')) {
+            $sort = explode(',', $request->query('sort'));
+            $column = $sort[0];
+            $direction = $sort[1];
+
+            $products = $products->orderBy($column, $direction);
+        } else {
+            $products = $products->orderBy('created_at', 'asc');
+        }
+
+        $products = $products->paginate(1);
 
         $categories = Category::all();
         $colors = Color::all();
