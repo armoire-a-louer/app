@@ -1,7 +1,7 @@
 <template>
   <AdminLayout>
     <div class="container px-6 mx-auto grid">
-      <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+      <h2 class="my-6 text-2xl font-semibold text-gray-700">
         Tableau de bord
       </h2>
       
@@ -16,7 +16,6 @@
             bg-white
             rounded-lg
             shadow-xs
-            dark:bg-gray-800
           "
         >
           <div
@@ -26,7 +25,6 @@
               text-orange-500
               bg-orange-100
               rounded-full
-              dark:text-orange-100 dark:bg-orange-500
             "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -37,11 +35,11 @@
           </div>
           <div>
             <p
-              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+              class="mb-2 text-sm font-medium text-gray-600"
             >
               Total clients
             </p>
-            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            <p class="text-lg font-semibold text-gray-700">
               {{ usersCount }}
             </p>
           </div>
@@ -55,7 +53,6 @@
             bg-white
             rounded-lg
             shadow-xs
-            dark:bg-gray-800
           "
         >
           <div
@@ -65,7 +62,6 @@
               text-green-500
               bg-green-100
               rounded-full
-              dark:text-green-100 dark:bg-green-500
             "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -78,12 +74,12 @@
           </div>
           <div>
             <p
-              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+              class="mb-2 text-sm font-medium text-gray-600"
             >
               30 derniers jours
             </p>
-            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              46,760.89 €
+            <p class="text-lg font-semibold text-gray-700">
+              {{ (transactionsAmount30LastDays / 100).toFixed(2) }} €
             </p>
           </div>
         </div>
@@ -96,7 +92,6 @@
             bg-white
             rounded-lg
             shadow-xs
-            dark:bg-gray-800
           "
         >
           <div
@@ -106,7 +101,6 @@
               text-blue-500
               bg-blue-100
               rounded-full
-              dark:text-blue-100 dark:bg-blue-500
             "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -117,12 +111,12 @@
           </div>
           <div>
             <p
-              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+              class="mb-2 text-sm font-medium text-gray-600"
             >
               30 derniers jours
             </p>
-            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              376 locations
+            <p class="text-lg font-semibold text-gray-700">
+              {{ transactions30LastDays }} location{{ transactions30LastDays > 1 ? 's' : '' }}
             </p>
           </div>
         </div>
@@ -135,7 +129,6 @@
             bg-white
             rounded-lg
             shadow-xs
-            dark:bg-gray-800
           "
         >
           <div
@@ -145,7 +138,6 @@
               text-teal-500
               bg-teal-100
               rounded-full
-              dark:text-teal-100 dark:bg-teal-500
             "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -158,11 +150,11 @@
           </div>
           <div>
             <p
-              class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+              class="mb-2 text-sm font-medium text-gray-600"
             >
               Demandes de contact
             </p>
-            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            <p class="text-lg font-semibold text-gray-700">
               35
             </p>
           </div>
@@ -170,9 +162,10 @@
       </div>
 
       <!-- New Table -->
-      <h3 class="mt-6 text-xl font-semibold text-gray-700 dark:text-gray-200">
-        10 Dernières commandes
+      <h3 class="mt-6 text-xl font-semibold text-gray-700">
+        10 Dernières transactions
       </h3>
+      <Link class="text-blue-600 cursor-pointer my-4" :href="route('admin.transactions.index')">Voir plus</Link>
       <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
@@ -185,9 +178,7 @@
                   text-left text-gray-500
                   uppercase
                   border-b
-                  dark:border-gray-700
                   bg-gray-50
-                  dark:text-gray-400 dark:bg-gray-800
                 "
               >
                 <th class="px-4 py-3">Client</th>
@@ -198,20 +189,22 @@
               </tr>
             </thead>
             <tbody
-              class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+              class="bg-white divide-y"
             >
-              <tr v-for="index in 10" :key="index" class="text-gray-700 dark:text-gray-400">
+              <tr v-for="transaction in transactions" :key="transaction.id" class="text-gray-700">
                 <td class="px-4 py-3">
                   <div class="flex items-center text-sm">
                     <div>
-                      <p class="font-semibold">Luis ZUNIGA</p>
-                      <p class="text-xs text-gray-600 dark:text-gray-400">
-                        luiszu7779@gmail.com
+                      <p class="font-semibold">
+                        {{ transaction.user.firstname }} {{ transaction.user.lastname.toUpperCase() }}
+                      </p>
+                      <p class="text-xs text-gray-600">
+                        {{ transaction.user.email }}
                       </p>
                     </div>
                   </div>
                 </td>
-                <td class="px-4 py-3 text-sm">$ 863.45</td>
+                <td class="px-4 py-3 text-sm">{{ (transaction.amount / 100).toFixed(2) }} €</td>
                 <td class="px-4 py-3 text-xs">
                   <span
                     class="
@@ -222,15 +215,16 @@
                       text-green-700
                       bg-green-100
                       rounded-full
-                      dark:bg-green-700 dark:text-green-100
                     "
                   >
                     Approuvée
                   </span>
                 </td>
-                <td class="px-4 py-3 text-sm">6/10/2020</td>
+                <td class="px-4 py-3 text-sm">{{ transaction.paid_at }}</td>
                 <td class="px-4 py-3 text-sm">
-                  <a class="text-blue-500" href="">Voir</a>
+                  <Link class="text-blue-500" :href="route('admin.transactions.show', transaction.id)">
+                    Voir
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -245,13 +239,15 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Pagination from "@/Components/Admin/Pagination.vue";
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
-  props: ['usersCount'],
+  props: ['usersCount', 'transactionsAmount30LastDays', 'transactions30LastDays', 'transactions'],
 
   components: {
     AdminLayout,
-    Pagination
+    Pagination,
+    Link
   },
 };
 </script>

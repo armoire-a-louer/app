@@ -13,24 +13,28 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-white border-b border-gray-100 py-3">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
+                                <Link :href="route('index')">
+                                    <img src="/images/logo_black.svg" alt="Logo Armoire à louer" style="width: 150px">
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    Mes réservations
+                                </NavLink>
+                                <NavLink :href="route('addresses.index')" :active="route().current('addresses.index')">
+                                    Mes adresses
+                                </NavLink>
+                                <NavLink :href="route('likes.index')" :active="route().current('likes.index')">
+                                    Mes favoris
                                 </NavLink>
                             </div>
                         </div>
@@ -115,6 +119,12 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('addresses.index')" :active="route().current('addresses.index')">
+                            Mes adresses
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('likes.index')" :active="route().current('likes.index')">
+                            Mes favoris
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -127,9 +137,9 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> Profil </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Déconnexion
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -150,3 +160,141 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+
+<style>
+.title {
+  font-family: 'Roslindale', serif !important;
+  font-size: 56px;
+}
+
+.smaller-title {
+  font-family: 'Roslindale', serif !important;
+  font-size: 46px;
+  line-height: 59px;
+}
+
+@media screen and (max-width: 1100px){
+    .smaller-title {
+        font-size: 34px !important;
+        line-height: 48px;
+    }
+
+    .title {
+      font-size: 42px !important;
+      line-height: 58px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .title, .smaller-title {
+        font-size: 24px !important;
+        line-height: 34px;
+    }
+}
+
+body {
+  overflow-x: hidden !important;
+  font-family: "Avenir";
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@font-face {
+  font-family: "Avenir";
+  src: url(/fonts/Avenir/Avenir-Roman-12.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir";
+  src: url(/fonts/Avenir/Avenir-Heavy-05.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir";
+  src: url(/fonts/Avenir/Avenir-Black-03.ttf) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roslindale";
+  src: local("Roslindale"),
+    url(/fonts/RoslindaleText-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy-Bold";
+  src: local("Gilroy-Bold"),
+    url(/fonts/Gilroy-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "SackersGothic";
+  src: local("SackersGothic"),
+    url(/fonts/SackersGothicStd-Medium.otf) format("opentype");
+}
+
+.font-sackers {
+  font-family: "SackersGothic", sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+}
+
+.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.padding-navbar {
+  padding-top: 160px;
+}
+
+.fade-right-enter-active,
+.fade-right-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.fade-right-enter-from,
+.fade-right-leave-to {
+  transform: translateX(100%);
+}
+
+.fade-left-enter-active,
+.fade-left-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.fade-left-enter-from,
+.fade-left-leave-to {
+  transform: translateX(-100%);
+}
+
+.fade-down-enter-active,
+.fade-down-leave-active {
+  transition: all 0.4s ease;
+  opacity: 1;
+}
+
+.fade-down-enter-from,
+.fade-down-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

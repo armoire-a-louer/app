@@ -1,5 +1,5 @@
 <template>
-  <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+  <header class="z-10 py-4 bg-white shadow-md">
     <div
       class="
         container
@@ -10,7 +10,6 @@
         px-6
         mx-auto
         text-purple-600
-        dark:text-purple-300
       "
     >
       <!-- Mobile hamburger -->
@@ -66,11 +65,6 @@
               bg-gray-100
               border-0
               rounded-md
-              dark:placeholder-gray-500
-              dark:focus:shadow-outline-gray
-              dark:focus:placeholder-gray-600
-              dark:bg-gray-700
-              dark:text-gray-200
               focus:placeholder-gray-500
               focus:bg-white
               focus:border-purple-300
@@ -160,7 +154,6 @@
                 bg-red-600
                 border-2 border-white
                 rounded-full
-                dark:border-gray-800
               "
             ></span>
           </button>
@@ -180,7 +173,6 @@
                 border border-gray-100
                 rounded-md
                 shadow-md
-                dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700
               "
             >
               <li class="flex">
@@ -198,7 +190,6 @@
                     duration-150
                     rounded-md
                     hover:bg-gray-100 hover:text-gray-800
-                    dark:hover:bg-gray-800 dark:hover:text-gray-200
                   "
                   href="#"
                 >
@@ -216,7 +207,6 @@
                       text-red-600
                       bg-red-100
                       rounded-full
-                      dark:text-red-100 dark:bg-red-600
                     "
                   >
                     13
@@ -238,7 +228,6 @@
                     duration-150
                     rounded-md
                     hover:bg-gray-100 hover:text-gray-800
-                    dark:hover:bg-gray-800 dark:hover:text-gray-200
                   "
                   href="#"
                 >
@@ -256,7 +245,6 @@
                       text-red-600
                       bg-red-100
                       rounded-full
-                      dark:text-red-100 dark:bg-red-600
                     "
                   >
                     2
@@ -278,7 +266,6 @@
                     duration-150
                     rounded-md
                     hover:bg-gray-100 hover:text-gray-800
-                    dark:hover:bg-gray-800 dark:hover:text-gray-200
                   "
                   href="#"
                 >
@@ -297,7 +284,6 @@
               focus:shadow-outline-purple focus:outline-none
             "
             @click="toggleProfileMenu"
-            @keydown.escape="closeProfileMenu"
             aria-label="Account"
             aria-haspopup="true"
           >
@@ -310,8 +296,6 @@
           </button>
           <template v-if="isProfileMenuOpen">
             <ul
-              @click.away="closeProfileMenu"
-              @keydown.escape="closeProfileMenu"
               class="
                 absolute
                 right-0
@@ -324,7 +308,6 @@
                 border border-gray-100
                 rounded-md
                 shadow-md
-                dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700
               "
               aria-label="submenu"
             >
@@ -342,7 +325,6 @@
                     duration-150
                     rounded-md
                     hover:bg-gray-100 hover:text-gray-800
-                    dark:hover:bg-gray-800 dark:hover:text-gray-200
                   "
                   href="#"
                 >
@@ -377,7 +359,6 @@
                     duration-150
                     rounded-md
                     hover:bg-gray-100 hover:text-gray-800
-                    dark:hover:bg-gray-800 dark:hover:text-gray-200
                   "
                   href="#"
                 >
@@ -413,7 +394,6 @@
                     duration-150
                     rounded-md
                     hover:bg-gray-100 hover:text-gray-800
-                    dark:hover:bg-gray-800 dark:hover:text-gray-200
                   "
                   href="#"
                 >

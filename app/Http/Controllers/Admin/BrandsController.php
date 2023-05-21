@@ -21,14 +21,13 @@ class BrandsController extends Controller
 
     public function store(StoreBrandRequest $request)
     {
-        $newBrand = Brand::create($request->only(['name', 'active']));
+        $newBrand = Brand::create($request->only(['name', 'active', 'description']));
         $newBrand->addMediaFromRequest('image')->toMediaCollection('brands');
 
         $brands = Brand::orderBy('updated_at', 'desc')->get();
         return response()->json($brands);
     }
 
-    //API
     public function update(UpdateBrandRequest $request, int $id)
     {
         $brand = Brand::find($id);

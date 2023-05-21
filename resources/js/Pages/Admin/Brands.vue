@@ -11,22 +11,10 @@
       </div>
 
       <div class="flex justify-between items-center">
-        <h2
-          class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-        >
-          Marques
-        </h2>
+        <h2 class="my-6 text-2xl font-semibold text-gray-700">Marques</h2>
         <button
           @click="toggleModal()"
-          class="
-            bg-blue-500
-            hover:bg-blue-700
-            text-white
-            font-bold
-            py-2
-            px-4
-            rounded-full
-          "
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
         >
           Ajouter
         </button>
@@ -44,19 +32,9 @@
       </div>
     </div>
 
-    <div class="add-modal" v-if="isAddModalOpen">
+    <div class="add-modal" v-if="isAddModalOpen" @click.self="isAddModalOpen = false">
       <div
-        class="
-          bg-white
-          w-11/12
-          sm:w-3/4
-          lg:w-1/2
-          xl:w-1/3
-          p-5
-          border border-gray-200
-          rounded-lg
-          shadow-xl
-        "
+        class="bg-white w-11/12 sm:w-3/4 lg:w-1/2 xl:w-1/3 p-5 border border-gray-200 rounded-lg shadow-xl"
       >
         <div class="flex justify-end">
           <svg
@@ -82,18 +60,7 @@
           >
           <input
             id="name"
-            class="
-              shadow
-              appearance-none
-              border
-              rounded
-              w-full
-              py-2
-              px-3
-              text-gray-700
-              leading-tight
-              focus:outline-none focus:shadow-outline
-            "
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             v-model="form.name"
             required
@@ -106,30 +73,29 @@
 
           <label
             class="block text-gray-700 text-sm font-bold mb-2 mt-5"
+            for="description"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            v-model="form.description"
+            required
+          >
+          </textarea>
+          <div v-if="errors && errors.description">
+            <p class="text-red-500" v-for="error in errors.description" :key="error">
+              {{ error }}
+            </p>
+          </div>
+
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2 mt-5"
             for="image"
             >Image</label
           >
           <input
-            class="
-              form-control
-              block
-              w-full
-              px-3
-              py-1.5
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding
-              border border-solid border-gray-300
-              rounded
-              transition
-              ease-in-out
-              m-0
-              focus:text-gray-700
-              focus:bg-white
-              focus:border-blue-600
-              focus:outline-none
-            "
+            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             type="file"
             @input="form.image = $event.target.files[0]"
             required
@@ -148,67 +114,20 @@
               checked
             />
             <div
-              class="
-                w-11
-                h-6
-                bg-gray-200
-                peer-focus:outline-none
-                peer-focus:ring-4
-                peer-focus:ring-blue-300
-                dark:peer-focus:ring-blue-800
-                rounded-full
-                peer
-                dark:bg-gray-700
-                peer-checked:after:translate-x-full
-                peer-checked:after:border-white
-                after:content-['']
-                after:absolute
-                after:top-[2px]
-                after:left-[2px]
-                after:bg-white
-                after:border-gray-300
-                after:border
-                after:rounded-full
-                after:h-5
-                after:w-5
-                after:transition-all
-                dark:border-gray-600
-                peer-checked:bg-blue-600
-              "
+              class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
             ></div>
-            <span
-              class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Active</span
-            >
+            <span class="ml-3 text-sm font-medium text-gray-900">Active</span>
           </label>
 
           <div class="mt-5 flex gap-3 justify-end">
             <button
               @click="toggleModal()"
-              class="
-                inline-block
-                bg-gray-500
-                hover:bg-gray-700
-                text-white
-                font-bold
-                py-2
-                px-4
-                rounded-full
-              "
+              class="inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
             >
               Annuler
             </button>
             <button
-              class="
-                inline-block
-                bg-blue-500
-                hover:bg-blue-700
-                text-white
-                font-bold
-                py-2
-                px-4
-                rounded-full
-              "
+              class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               type="submit"
             >
               Ajouter
@@ -233,12 +152,13 @@ export default {
       isAddModalOpen: false,
       form: {
         name: null,
+        description: null,
         image: null,
         active: true,
       },
       brands: this.$inertia.page.props.brands,
       success: null,
-      errors: null
+      errors: null,
     };
   },
 
@@ -259,7 +179,7 @@ export default {
         .post(route("admin.brands.store"), form, {
           headers: {
             "Content-Type": "multipart/form-data",
-          }
+          },
         })
         .then((response) => {
           this.brands = response.data;
@@ -268,8 +188,8 @@ export default {
             name: null,
             image: null,
             active: true,
-          }
-          this.success = "Entreprise ajoutée avec succès"
+          };
+          this.success = "Entreprise ajoutée avec succès";
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
