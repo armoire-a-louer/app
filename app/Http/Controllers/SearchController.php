@@ -57,7 +57,7 @@ class SearchController extends Controller
             $products = $products->orderBy('created_at', 'asc');
         }
 
-        $products = $products->paginate(1);
+        $products = $products->paginate(6);
 
         $categories = Category::all();
         $colors = Color::all();
