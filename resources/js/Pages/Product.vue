@@ -53,7 +53,8 @@
           </div>
 
           <div class="flex gap-4 items-center mt-12 w-full xl:w-2/3">
-            <Button class="flex-1" text="ajouter au panier" color="white" textColor="black" border="black"  @click="addToBasket()"/>
+            <Button v-if="user" class="flex-1" text="ajouter au panier" color="white" textColor="black" border="black"  @click="addToBasket()"/>
+            <Button v-else class="flex-1" :route="route('login')" text="ajouter au panier" color="white" textColor="black" border="black"/>
 
             <button class="like-button" type="button" @click="like()">
               <font-awesome-icon icon="fa-solid fa-heart" class="text-xl" v-if="liked"/>
@@ -220,7 +221,8 @@ export default {
         visibleRatingsCount: 3,
         startDate: null,
         endDate: null,
-        dateErrors: ""
+        dateErrors: "",
+        user: this.$page.props.auth.user
       }
     },
 
