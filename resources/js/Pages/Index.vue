@@ -14,7 +14,7 @@
                     <p class="w-100 sm:w-4/5 md:w-3/5 lg:w-2/5 text-white">
                         L’Armoire à louer, plateforme de location de vêtements de haute couture vous offre l’opportunité de vivre un luxe responsable quand vous le souhaitez.
                     </p>
-                    <Button class="mt-5" text="Découvrir nos marques" :route="route('index')" color="white" textColor="black"/>
+                    <Button class="mt-5" text="Découvrir nos marques" :route="route('search')" color="white" textColor="black"/>
                 </div>
             </div>
             <div class="header-bottom"></div>
@@ -53,7 +53,7 @@
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                 </p>
-                <Button text="À propos de nous" :route="route('index')" border="black" textColor="black"/>
+                <Button text="À propos de nous" :route="route('concept')" border="black" textColor="black"/>
             </div>
         </section>
 
@@ -78,7 +78,7 @@
         </section>
         <PartenairesSlider />
         <div class="flex justify-center mt-4">
-            <Button text="Découvrir toutes nos marques" color="black" textColor="white"/>
+            <Button :route="route('search')" text="Découvrir toutes nos marques" color="black" textColor="white"/>
         </div>
 
 
@@ -90,7 +90,7 @@
                         <p class="text-white text-center">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
                         </p>
-                        <Button text="Parcourir nos produits" color="white" textColor="black"/>                        
+                        <Button :route="route('search')" text="Parcourir nos produits" color="white" textColor="black"/>                        
                     </div>
                 </div>
             </div>
