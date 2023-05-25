@@ -14,7 +14,7 @@
           >
             <div class="flex items-center">
                 <img style="width: 20px" src="/images/icons/search_black.svg" />
-                <input v-model="search" @keyup.enter="makeSearch()" class="search-input" type="text" autofocus placeholder="Robes">
+                <input v-model="search" @keyup.enter="makeSearch()" class="search-input" type="text" autofocus placeholder="Robes, pantalons, vestes, manteaux et bien plus...">
             </div>
             <button
               type="button"
