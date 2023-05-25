@@ -14,7 +14,7 @@
           >
             <div class="flex items-center">
                 <img style="width: 20px" src="/images/icons/search_black.svg" />
-                <input v-model="search" @keyup.enter="makeSearch()" class="search-input" type="text" autofocus placeholder="Robes, pantalons, vestes, manteaux et bien plus...">
+                <input v-model="search" @keyup.enter="makeSearch(search)" class="search-input" type="text" autofocus placeholder="Robes, pantalons, vestes, manteaux et bien plus...">
             </div>
             <button
               type="button"
@@ -38,8 +38,12 @@
             </button>
           </div>
           <!-- Modal body -->
-          <div class="p-6 space-y-6">
-            <p class="text-center text-lg">Aucune recherche récente</p>
+          <div class="p-6 space-y-3">
+            <p v-if="! ancientSearches.length" class="text-center text-lg">Aucune recherche récente</p>
+
+            <p v-for="ancientSearch in ancientSearches" :key="ancientSearch" class="text-center text-lg cursor-pointer" @click="makeSearch(ancientSearch)">
+              {{ ancientSearch }}
+            </p>
           </div>
           <!-- Modal footer -->
           <div
@@ -54,6 +58,7 @@
 
 <script>
 import { Inertia } from '@inertiajs/inertia'
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
   data() {
@@ -62,16 +67,49 @@ export default {
     }
   },
 
+  components: {
+    Link
+  },
+
   mounted() {
     if (this.$page.props.queryParams && this.$page.props.queryParams.search) {
       this.search = this.$page.props.queryParams.search;
     }
   },
 
+  computed: {
+    ancientSearches() {
+      let ancientSearches = JSON.parse(localStorage.getItem("searches"));
+
+      if (! ancientSearches) {
+        ancientSearches = []
+      }
+
+      return Array.from(ancientSearches).reverse();
+    }
+  },
+
   methods: {
-    makeSearch() {
+    makeSearch(search) {
+      console.log("on passe là")
+      let ancientSearches = JSON.parse(localStorage.getItem("searches"));
+
+      if (ancientSearches) {
+        ancientSearches = Array.from(ancientSearches);
+      } else {
+        ancientSearches = [];
+      }
+
+      if (ancientSearches && ancientSearches.length > 4) {
+        ancientSearches = ancientSearches.slice(-4);
+      }
+
+      ancientSearches.push(search);
+
+      localStorage.setItem("searches", JSON.stringify(ancientSearches));
+
       const data = {
-          search: this.search
+          search: search
       }
 
       const options = {
