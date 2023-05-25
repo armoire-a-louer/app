@@ -24,6 +24,9 @@ class Reservation extends Model
     public const STATUS_WAITING_PAYMENT = "waiting_payment";
     public const STATUS_PROTECTED_WAITING_PAYMENT = "protected_waiting_payment";
 
+    public const MIN_DAYS_BEFORE_RESERVATION_STARTS = 5;
+    public const MAX_RESERVATION_DAYS = 20;
+
     // AMOUNT MUST BE LIKE THIS 15€99 => 1599
 
     protected $fillable = ["product_size_color_id", "date", "status", "user_id", "price", "transaction_id", "reservation_common_uuid"];

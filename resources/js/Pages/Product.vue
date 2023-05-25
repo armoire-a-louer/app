@@ -429,8 +429,15 @@ export default {
               this.$refs.layout.toggleBasket();
               this.dateErrors = "";
             } else {
-              this.dateErrors = "Les dates suivantes ne sont pas disponibles: ";
-              this.dateErrors += response.data.unavailableDays.join(', ');
+              if (response.data.message) {
+                this.dateErrors = response.data.message;
+              }
+
+              if (response.data.unavailableDays) {
+                this.dateErrors = "Les dates suivantes ne sont pas disponibles: ";
+                this.dateErrors += response.data.unavailableDays.join(', ');
+              }
+
               this.$refs.datesChoices.toggleModal();
             }
           })

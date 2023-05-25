@@ -25,7 +25,7 @@
 
                         <div class="flex flex-col flex-1">
                             <span>Au: </span>
-                            <input class="w-full" type="date" v-model="endDate" :min="startDatePlusFour" :disabled="! startDate"/>
+                            <input class="w-full" type="date" v-model="endDate" :min="startDatePlusTwo" :max="startDatePlusTwenty" :disabled="! startDate"/>
                         </div>
                     </div>
 
@@ -35,14 +35,14 @@
                         <span class="flex-1 flex flex-col items-center justify-center text-center bg-gray-200 py-3 px-2 rounded-3xl">
                             Livraison le
                             <span class="block font-bold">
-                                {{ startDate }}
+                                {{ formatDate(startDate) }}
                             </span>
                         </span>
 
                         <span class="flex-1 flex flex-col items-center justify-center text-center bg-gray-200 py-3 px-2 rounded-3xl">
                             À retourner avant le
                             <span class="block font-bold">
-                                {{ endDatePlusTwo }}
+                                {{ formatDate(endDatePlusOne) }}
                             </span>
                         </span>
 
@@ -85,6 +85,14 @@ export default {
             setTimeout(() => {
                 this.isFocus = false;
             }, 1000);
+        },
+
+        formatDate(date) {
+            if (!date) return;
+
+            date = moment(date);
+
+            return date.format('DD/MM/YYYY');
         }
     },
 
@@ -95,20 +103,28 @@ export default {
             return date.add('5', 'days').format('YYYY-MM-DD');
         },
 
-        startDatePlusFour() {
+        startDatePlusTwo() {
             if (!this.startDate) return;
 
             const date = moment(this.startDate);
 
-            return date.add('4', 'days').format('YYYY-MM-DD');
+            return date.add('2', 'days').format('YYYY-MM-DD');
+        },
+
+        startDatePlusTwenty() {
+            if (!this.startDate) return;
+
+            const date = moment(this.startDate);
+
+            return date.add('20', 'days').format('YYYY-MM-DD');
         },
         
-        endDatePlusTwo() {
+        endDatePlusOne() {
             if (!this.endDate) return;
 
             const date = moment(this.endDate);
 
-            return date.add('2', 'days').format('YYYY-MM-DD');
+            return date.add('1', 'days').format('YYYY-MM-DD');
         }
     }
 }

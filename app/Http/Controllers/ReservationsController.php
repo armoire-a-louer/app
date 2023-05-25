@@ -19,6 +19,24 @@ class ReservationsController extends Controller
     {
         $startDate = new DateTime($request->get('start_date'));
         $endDate = new DateTime($request->get('end_date'));
+
+        $minStartDate = now()->addDays(Reservation::MIN_DAYS_BEFORE_RESERVATION_STARTS)->setTime(0, 0, 0, 0);
+        $maxEndDate = (clone $minStartDate)->addDays(Reservation::MAX_RESERVATION_DAYS);
+
+        if ($startDate < $minStartDate) {
+            return response()->json([
+                "success" => false,
+                "message" => "Date minimale de départ: " . $minStartDate->format('d/m/Y')
+            ]);
+        }
+
+        if ($endDate > $maxEndDate) {
+            return response()->json([
+                "success" => false,
+                "message" => "Avec la date de départ que vous avez choisi, la date maximale de retour est: " . $maxEndDate->format('d/m/Y')
+            ]);
+        }
+
         // Trick pour que le DatePeriod prenne en compte le dernier jour (option qui ne fonctionne pas)
         $endDate->modify('+1 day');
 
