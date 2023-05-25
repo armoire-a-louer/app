@@ -1,5 +1,9 @@
 <template>
     <CheckoutLayout :loading="loading">
+        <Head>
+            <title>Paiement</title>
+            <meta name="description" content="Bienvenue sur L'Armoire à Louer, votre destination en ligne pour louer des vêtements de marque de qualité. Découvrez notre vaste sélection de styles et louez votre tenue parfaite pour chaque occasion. Profitez de la flexibilité de la location de vêtements et élevez votre style sans effort.">
+        </Head>
         <!-- MOBILE & TABLETTES -->
         <section class="mobile pb-14">
             <!-- <h1 class="title">Checkout</h1>
@@ -312,12 +316,14 @@ import CheckoutLayout from '@/Layouts/CheckoutLayout.vue'
 import axios from 'axios'
 import Button from '@/Components/Buttons/Button.vue'
 import CheckoutTimeline from '@/Components/CheckoutTimeline.vue'
+import { Head } from '@inertiajs/inertia-vue3'
 
 export default {
     components: {
         CheckoutLayout,
         Button,
-        CheckoutTimeline
+        CheckoutTimeline,
+        Head
     },
 
     mounted() {

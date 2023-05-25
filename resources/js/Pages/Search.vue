@@ -1,5 +1,10 @@
 <template>
     <Layout>
+        <Head>
+            <title>Recherche</title>
+            <meta name="description" content="Armoire à louer - recherche">
+        </Head>
+
         <div class="container mx-auto mb-10 navbar-margin">
             <div class="flex md:hidden h-12 text-center items-center">
                 <div class="flex-1">
@@ -102,6 +107,7 @@ import { Inertia } from '@inertiajs/inertia'
 import FilterGroup from '@/Components/Search/FilterGroup.vue'
 import ProductCard from '@/Components/ProductCard.vue'
 import Pagination from '@/Components/Search/Pagination.vue'
+import { Head } from '@inertiajs/inertia-vue3'
 
 export default {
     name: 'Search',
@@ -160,6 +166,7 @@ export default {
         FilterGroup,
         ProductCard,
         Pagination,
+        Head
     },
 
     methods: {

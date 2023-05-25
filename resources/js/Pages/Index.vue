@@ -1,5 +1,11 @@
 <template>
     <Layout ref="layout">
+
+        <Head>
+            <title>Accueil</title>
+            <meta name="description" content="Bienvenue sur L'Armoire à Louer, votre destination en ligne pour louer des vêtements de marque de qualité. Découvrez notre vaste sélection de styles et louez votre tenue parfaite pour chaque occasion. Profitez de la flexibilité de la location de vêtements et élevez votre style sans effort.">
+        </Head>
+
         <div class="header">
             <div class="header-gradient"></div>
             <div class="container mx-auto header-container">
@@ -132,6 +138,7 @@ import FAQ from '@/Components/Index/FAQ.vue'
 import Feedbacks from '@/Components/Index/Feedbacks.vue'
 import ConseilCard from '@/Components/Index/ConseilCard.vue'
 import VousAimerezAussi from '@/Components/Index/VousAimerezAussi.vue'
+import { Head } from '@inertiajs/inertia-vue3'
 
 export default {
     name: 'Index',
@@ -143,7 +150,8 @@ export default {
         FAQ,
         Feedbacks,
         ConseilCard,
-        VousAimerezAussi
+        VousAimerezAussi,
+        Head
     },
 
     props: ["mostRentedProducts"],

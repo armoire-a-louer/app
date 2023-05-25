@@ -1,5 +1,10 @@
 <template>
   <Layout ref="layout">
+    <Head>
+      <title>{{ product.name }}</title>
+      <meta name="description" :content="product.description">
+    </Head>
+
     <div class="container mx-auto">
       <Breadcrumb class="padding-navbar" :actualPage="product.name" :links="[{ name: product.category.name, route: route('search', { categories: [product.category.id] }) }]"/>
       <section class="py-14 flex flex-col md:flex-row gap-16 xl:gap-32 items-start">
@@ -189,6 +194,7 @@ import VousAimerezAussi from '@/Components/Index/VousAimerezAussi.vue'
 import Rating from '@/Components/Rating.vue'
 import Sticky from 'sticky-js';
 import axios from 'axios'
+import { Head } from '@inertiajs/inertia-vue3'
 
 export default {
     name: "Product",
@@ -203,7 +209,8 @@ export default {
       DatesChoices,
       Button,
       VousAimerezAussi,
-      Rating
+      Rating,
+      Head
     },
 
     data() {
