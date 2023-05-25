@@ -58,7 +58,7 @@ export default {
         this.dragging = false;
         this.dragEnd = e.clientX || e.changedTouches[0].clientX;
         const diff = this.dragEnd - this.dragStart;
-        const totalPages = this.items.length;
+        const totalPages = this.products.length;
         const currentPage = Math.round(Math.abs(this.posX) / this.itemWidth);
         let targetPage = currentPage;
         if (diff > 0 && currentPage > 0) {
@@ -88,7 +88,7 @@ export default {
     },
 
     next() {
-        if (this.posX > -(this.items.length - this.itemsPerPage) * this.itemWidth) {
+        if (this.posX > -(this.products.length - this.itemsPerPage) * this.itemWidth) {
             this.posX -= this.itemWidth;
             
             this.checkButtons();
@@ -96,7 +96,7 @@ export default {
     },
 
     checkButtons() {
-        if (this.posX > -(this.items.length - this.itemsPerPage) * this.itemWidth) {
+        if (this.posX > -(this.products.length - this.itemsPerPage) * this.itemWidth) {
             this.$emit('canNext', true)
         }
         else this.$emit('canNext', false);
