@@ -1,6 +1,16 @@
 <template>
     <Layout>
-        <div class="container mx-auto mt-40 mb-10">
+        <div class="container mx-auto mb-10 navbar-margin">
+            <div class="flex md:hidden h-12 text-center items-center">
+                <div class="flex-1">
+                    <font-awesome-icon icon="fa-solid fa-sliders" />
+                    Filtres
+                </div>
+                <div class="flex-1">
+                    Trier par
+                </div>
+            </div>
+
             <div class="flex gap-14">
                 <section class="w-80 hidden md:block">
                     <h2 class="font-serif text-2xl mb-10">Filtres</h2>
@@ -57,7 +67,7 @@
                 </section>
 
                 <div class="flex-1">
-                    <div class="flex justify-between items-center">
+                    <div class="justify-between items-center hidden md:flex">
                         <span>
                             {{ products.total }} produit{{ products.total > 1 ? 's' : '' }}
                         </span>
@@ -208,5 +218,15 @@ export default {
 .select {
     border: none;
     font-weight: 400;
+}
+
+.navbar-margin {
+    margin-top: 160px;
+}
+
+@media screen and (max-width: 767px) {
+    .navbar-margin {
+        margin-top: 120px;
+    }
 }
 </style>
