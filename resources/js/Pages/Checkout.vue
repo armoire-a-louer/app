@@ -348,12 +348,16 @@ export default {
                 city: ""
             },
             selectedAddressId: null,
-            showAddressForm: this.addresses && this.addresses.length === 0,
+            showAddressForm: false,
             checkboxes: {
                 conditions_generales: false,
                 droit_retractation: false
             }
         }
+    },
+
+    mounted() {
+        this.showAddressForm = this.addresses && this.addresses.length === 0;
     },
 
     methods: {
