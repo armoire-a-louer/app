@@ -146,7 +146,7 @@
                 </span>
               </div>
               <span>
-                {{ product.ratings.length }} avi{{ product.ratings.length > 1 ? 's' : '' }}
+                {{ product.ratings.length }} avis
               </span>
             </div>
           </div>
@@ -457,7 +457,14 @@ export default {
     computed: {
       ratingsAvg() {
         if (! this.product.ratings) return 0;
-        return (this.product.ratings.reduce((sum, rating) => sum + rating.rating, 0) / this.product.ratings.length).toFixed(1);
+
+        const ratingsAvg = (this.product.ratings.reduce((sum, rating) => sum + rating.rating, 0) / this.product.ratings.length).toFixed(1);
+
+        if (isNaN(ratingsAvg)) {
+          return 0;
+        }
+
+        return ratingsAvg;
       },
 
       visibleRatings() {
