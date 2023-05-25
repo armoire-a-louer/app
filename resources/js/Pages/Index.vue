@@ -172,7 +172,7 @@ export default {
 
 <style scoped>
 .header {
-    background-image: url('/images/index-header.png');
+    background-image: url('/images/index-header-small.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
