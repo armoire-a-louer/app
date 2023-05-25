@@ -122,7 +122,7 @@
           </span>
         </div>
 
-        <Button v-if="reservations.length === 0" route="" text="découvrir nos produits" class="w-full" color="black" textColor="white" />
+        <Button v-if="reservations.length === 0" :route="route('search')" text="découvrir nos produits" class="w-full" color="black" textColor="white" />
         <Button v-else :route="route('checkout')" text="valider" class="w-full" color="black" textColor="white"/>
       </div>
     </section>
