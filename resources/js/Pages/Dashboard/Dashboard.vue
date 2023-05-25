@@ -58,6 +58,7 @@ export default {
 
                             <hr class="my-10">
                         </div>
+                        <p v-if="! transactions.length">Aucune réservation pour le moment.</p>
                     </div>
                 </div>
             </div>
