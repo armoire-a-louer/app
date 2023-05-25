@@ -31,12 +31,14 @@
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 text-gray-900 gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+
+          <p class="p-6 text-gray-900" v-if="user.likes.length === 0">
+            Vous n'avez aucun produit favori pour le moment.
+          </p>
+          <div v-else class="p-6 text-gray-900 gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             <ProductCard v-for="product in user.likes" :key="product.id" :product="product"/>
 
-            <p v-if="user.likes.length === 0">
-              Vous n'avez aucun produit favori pour le moment.
-            </p>
+
           </div>
         </div>
       </div>

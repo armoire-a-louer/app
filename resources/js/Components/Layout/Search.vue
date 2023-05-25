@@ -91,7 +91,6 @@ export default {
 
   methods: {
     makeSearch(search) {
-      console.log("on passe là")
       let ancientSearches = JSON.parse(localStorage.getItem("searches"));
 
       if (ancientSearches) {
