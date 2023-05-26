@@ -269,6 +269,7 @@ class Reservation extends Model
                         ]);
                 }
             ])
+            ->orderBy('paid_at', 'desc')
             ->get();
     }
 }
