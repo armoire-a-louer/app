@@ -1,10 +1,14 @@
 <template>
     <div>
-        <button class="button flex gap-5 items-center" :class="isFocus ? 'focus' : ''" type="button" @click="toggleModal()">
+        <button class="button flex gap-5 items-center border border-black border-2 relative" :class="{ 'focus': isFocus }" type="button" @click="toggleModal()">
             <font-awesome-icon class="text-xl" icon="fa-regular fa-calendar" />
             <span v-if="!startDate || !endDate" class="font-bold text-lg">Choisissez vos dates</span>
             <font-awesome-icon v-if="!startDate || !endDate" icon="fa-solid fa-chevron-down" />
             <span v-else class="font-bold text-lg">Du {{ formatDate(startDate) }} au {{ formatDate(endDate) }}</span>
+
+            <span class="check" v-if="startDate && endDate">
+                <font-awesome-icon icon="fa-solid fa-check" />
+            </span>
         </button>
 
         <transition name="fade">
@@ -203,5 +207,17 @@ export default {
 .datepicker-day {
   text-align: center;
   cursor: pointer;
+}
+
+.check {
+    color: white;
+    background: black;
+    border-radius: 150px;
+    padding: 3px;
+    top: -9px;
+    right: -9px;
+    font-size: 12px;
+    line-height: 10px;
+    position: absolute;
 }
 </style>

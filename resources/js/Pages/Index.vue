@@ -12,7 +12,7 @@
                 <div class="z-50 flex gap-4 flex-col items-start">
                     <h1 class="app-title">Changer de look <br> à volonté.</h1>
                     <p class="w-100 sm:w-4/5 md:w-3/5 lg:w-2/5 text-white">
-                        L’Armoire à louer, plateforme de location de vêtements de haute couture vous offre l’opportunité de vivre un luxe responsable quand vous le souhaitez.
+                        L’Armoire à louer, plateforme de location de vêtements haut de gamme vous offre l’opportunité de vivre un luxe responsable quand vous le souhaitez.
                     </p>
                     <Button class="mt-5" text="Découvrir nos marques" :route="route('search')" color="white" textColor="black"/>
                 </div>
