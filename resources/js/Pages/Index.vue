@@ -51,7 +51,7 @@
                     Avec l’Armoire à Louer, n’achetez plus vos vêtements, louez-les !
                 </h2>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                    L'Armoire à Louer est née en Bretagne avec l'idée de lutter contre le gaspillage vestimentaire. Nous offrons une solution écologique et économique, en proposant des vêtements de qualité provenant de marques locales et européennes respectueuses de notre éthique.
                 </p>
                 <Button text="À propos de nous" :route="route('concept')" border="black" textColor="black"/>
             </div>
@@ -73,7 +73,7 @@
         <section class="partenaires mt-16 container mx-auto">
             <h2 class="text-center title">Nos marques partenaires.</h2>
             <p class="text-center mt-5 w-100 sm:w-2/3 2xl:w-3/5  mx-auto">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                Découvrez la diversité et la qualité exceptionnelle de nos marques partenaires. Chacune apporte son style unique pour enrichir notre collection de vêtements à la location.
             </p>
         </section>
         <PartenairesSlider />
@@ -86,9 +86,9 @@
             <div class="products">
                 <div>
                     <div class="w-11/12 sm:w-10/12 md:w-9/12 lg:w-7/12 xl:w-4/12 h-full mx-auto flex flex-col gap-10 justify-center items-center">
-                        <h2 class="title text-white text-center">Lorem ipsum.</h2>
+                        <h2 class="title text-white text-center">Explorer nos collections.</h2>
                         <p class="text-white text-center">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                            Découvrez nos sélections soigneusement choisies, réunissant qualité et style durable. Des créations locales aux grandes marques, nous proposons des vêtements qui reflètent votre sens du style tout en respectant notre engagement envers l'environnement.
                         </p>
                         <Button :route="route('search')" text="Parcourir nos produits" color="white" textColor="black"/>                        
                     </div>
