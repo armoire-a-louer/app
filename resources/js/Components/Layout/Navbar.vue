@@ -69,9 +69,13 @@
           <img v-if="scrolled" style="width: 17px" src="/images/icons/user_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/user.svg" />
         </Link>
-        <div class="p-2 md:p-4 pr-0 cursor-pointer" @click="toggleBasket()">
+        <div class="p-2 md:p-4 pr-0 cursor-pointer relative" @click="toggleBasket()">
           <img v-if="scrolled" style="width: 17px" src="/images/icons/bag_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/bag.svg" />
+
+          <span class="absolute top-0 right-0 bg-black p-1 rounded-full text-xs px-2 text-white" v-if="reservations.length">
+            {{ reservations.length }}
+          </span>
         </div>
       </div>
     </div>
