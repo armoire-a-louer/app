@@ -16,12 +16,12 @@
             <Link class="nav-a py-2 px-4" :href="route('index')">Accueil</Link>
           </span>
           <span class="nav-dropdown">
-            <span class="nav-a py-2 px-4"
-              >Collections
+            <Link :href="route('search')" class="nav-a py-2 px-4">
+              Collections
               <font-awesome-icon
                 icon="fa-solid fa-chevron-down"
-                class="text-xs pl-2"
-            /></span>
+                class="text-xs pl-2"/>
+            </Link>
             <div class="nav-dropdown-menu">
               <div>
                 <Link
@@ -36,12 +36,12 @@
             </div>
           </span>
           <span class="nav-dropdown">
-            <span class="nav-a py-2 px-4"
-              >Marques
+            <Link :href="route('search')">
+              Marques
               <font-awesome-icon
                 icon="fa-solid fa-chevron-down"
-                class="text-xs pl-2"
-            /></span>
+                class="text-xs pl-2"/>
+            </Link>
             <div class="nav-dropdown-menu">
               <div>
                 <Link
@@ -321,20 +321,8 @@ export default {
   position: static;
 }
 
-.nav-link .nav-a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 4px;
-  background: black;
-  transition: width ease 200ms;
-}
-
-.nav-link .nav-a:hover::after {
-  width: 100%;
-  cursor: pointer;
+.nav-link a:hover, .nav-dropdown a:hover {
+  text-decoration: underline;
 }
 
 .nav-dropdown:hover .nav-dropdown-menu {
