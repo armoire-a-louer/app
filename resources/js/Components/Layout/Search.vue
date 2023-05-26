@@ -99,11 +99,11 @@ export default {
         ancientSearches = [];
       }
 
-      if (ancientSearches && ancientSearches.length > 4) {
-        ancientSearches = ancientSearches.slice(-4);
-      }
-
       ancientSearches.push(search);
+
+      if (ancientSearches && ancientSearches.length > 5) {
+        ancientSearches = ancientSearches.slice(-5);
+      }
 
       localStorage.setItem("searches", JSON.stringify(ancientSearches));
 
