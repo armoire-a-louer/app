@@ -73,7 +73,7 @@
           <img v-if="scrolled" style="width: 17px" src="/images/icons/bag_black.svg" />
           <img v-else style="width: 17px" src="/images/icons/bag.svg" />
 
-          <span class="absolute top-0 right-0 bg-black p-1 rounded-full text-xs px-2 text-white" v-if="reservations.length">
+          <span class="absolute top-0 right-0 p-1 rounded-full text-xs px-2 text-white" style="background: #D5C4B6;" v-if="reservations.length">
             {{ reservations.length }}
           </span>
         </div>
