@@ -58,7 +58,7 @@
           </div>
 
           <div class="flex gap-4 items-center mt-12 w-full xl:w-2/3">
-            <Button v-if="user" class="flex-1" text="ajouter au panier" color="white" textColor="black" border="black"  @click="addToBasket()"/>
+            <Button v-if="user" :class="{ 'disabled': !startDate || !endDate }" class="flex-1" text="ajouter au panier" color="white" textColor="black" border="black"  @click="addToBasket()"/>
             <Button v-else class="flex-1" :route="route('login')" text="ajouter au panier" color="white" textColor="black" border="black"/>
 
             <button class="like-button" type="button" @click="like()">
@@ -581,5 +581,13 @@ export default {
 
 .bg-bar-black {
   background-color: #1A1A1A;
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.disabled:hover {
+  cursor: default;
 }
 </style>

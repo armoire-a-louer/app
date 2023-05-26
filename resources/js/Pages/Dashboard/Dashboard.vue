@@ -1,6 +1,7 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
+import moment from 'moment';
 
 export default {
     components: {
@@ -13,6 +14,12 @@ export default {
             transactions: this.$page.props.reservations
         }
     },
+
+    methods: {
+        formatDate(date) {
+            return moment(date).format('DD/MM/YYYY');
+        }
+    }
 }
 </script>
 
@@ -40,7 +47,7 @@ export default {
                                     <h4 class="font-gothic text-xl lowercase">{{ reservation.item.product.brand.name }}</h4>
                                     <h3 class="font-serif text-2xl">{{ reservation.item.product.name }}</h3>
                                     <span class="font-bold">
-                                        Du {{ reservation.earliest_date }} au {{ reservation.latest_date }}
+                                        Du {{ formatDate(reservation.earliest_date) }} au {{ formatDate(reservation.latest_date) }}
                                     </span>
                                     <span>
                                         {{ reservation.count }} jours de location

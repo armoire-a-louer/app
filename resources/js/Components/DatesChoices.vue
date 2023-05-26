@@ -2,8 +2,9 @@
     <div>
         <button class="button flex gap-5 items-center" :class="isFocus ? 'focus' : ''" type="button" @click="toggleModal()">
             <font-awesome-icon class="text-xl" icon="fa-regular fa-calendar" />
-            <span class="font-bold text-lg">Choisissez vos dates</span>
-            <font-awesome-icon icon="fa-solid fa-chevron-down" />
+            <span v-if="!startDate || !endDate" class="font-bold text-lg">Choisissez vos dates</span>
+            <font-awesome-icon v-if="!startDate || !endDate" icon="fa-solid fa-chevron-down" />
+            <span v-else class="font-bold text-lg">Du {{ formatDate(startDate) }} au {{ formatDate(endDate) }}</span>
         </button>
 
         <transition name="fade">
