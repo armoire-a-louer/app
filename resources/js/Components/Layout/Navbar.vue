@@ -372,7 +372,7 @@ export default {
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .basket .basket-container {
@@ -382,7 +382,7 @@ export default {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   padding-top: 100px;
   padding-bottom: 100px;
   overflow-x: hidden;
