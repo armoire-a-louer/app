@@ -112,17 +112,11 @@
         <section class="conseils pb-48">
             <div class="container mx-auto">
                 <h2 class="title mb-5 pt-8">Nos conseils.</h2>
-                <p class="w-full md:w-3/4 xl:w-1/2 mb-16">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <p class="w-full md:w-3/4 xl:w-1/2 mb-16">Découvrez nos astuces et orientations pour une expérience de location de vêtements enrichissante et réussie. Nos conseils vous guideront à travers toutes les étapes.</p>
 
                 <div class="flex gap-8 lg:gap-4 flex-wrap lg:flex-nowrap">
-                    <div class="w-full">
-                        <ConseilCard />
-                    </div>
-                    <div class="w-full">
-                        <ConseilCard />
-                    </div>
-                    <div class="w-full">
-                        <ConseilCard />
+                    <div class="w-full" v-for="conseil in conseils" :key="conseil.title">
+                        <ConseilCard :conseil="conseil"/>
                     </div>
                 </div>
             </div>
@@ -158,7 +152,29 @@ export default {
 
     data() {
         return {
-
+            conseils: [
+                {
+                    img: '/images/conseil1.jpg',
+                    title: 'Comment choisir la bonne taille',
+                    category: 'Mode',
+                    date: '25/05/2023',
+                    short_description: 'Trouver la bonne taille en ligne peut être délicat. Pour vous aider, nous proposons un guide des tailles détaillé. Connaissez vos mensurations et utilisez notre guide pour un ajustement parfait.'
+                },
+                {
+                    img: '/images/conseil2.jpg',
+                    title: 'La mode durable grâce à la location',
+                    category: 'Mode',
+                    date: '15/05/2023',
+                    short_description: 'La location de vêtements contribue à une mode plus durable. Découvrez comment, en choisissant la location, vous faites un geste pour l\'environnement.'
+                },
+                {
+                    img: '/images/conseil3.jpg',
+                    title: 'Comment maximiser votre expérience de location',
+                    category: 'Mode',
+                    date: '20/04/2023',
+                    short_description: 'Pour tirer le meilleur parti de votre location, il est important de comprendre comment fonctionne notre service. Découvrez nos astuces pour une expérience de location sans tracas et agréable.'
+                },
+            ]
         }
     },
 

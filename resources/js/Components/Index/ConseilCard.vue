@@ -17,19 +17,7 @@
 
 <script>
 export default {
-    props: ['//conseil'],
-
-    data() {
-        return {
-            conseil: {
-                img: '/images/banner-4.jpg',
-                title: 'Nos 3 conseils du mois !',
-                category: 'Mode',
-                date: '06/01/2023',
-                short_description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation'
-            }
-        }
-    }
+    props: ['conseil']
 }
 </script>
 

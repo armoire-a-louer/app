@@ -26,16 +26,16 @@ export default {
       activeIndex: null,
       items: [
         {
-          header: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ?',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate'
+          header: 'Comment louer sur L\'Armoire à Louer ?',
+          content: 'Sur notre plateforme, la location de vêtements est simple. Vous commencez par parcourir notre vaste catalogue de vêtements. Une fois que vous avez choisi un article, vous sélectionnez la période de location désirée, puis vous l\'ajoutez à votre panier. Lorsque vous êtes prêt à passer à la caisse, vous pouvez payer en toute sécurité via Stripe. Après la période de location, vous nous renvoyez simplement l\'article.'
         },
         {
-          header: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ?',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate'
+          header: 'Puis-je acheter un article que j\'ai loué si je l\'apprécie particulièrement ?',
+          content: 'Absolument ! Nous prévoyons d\'introduire une fonctionnalité qui permettra aux utilisateurs d\'acheter un article avant la fin de la période de location s\'ils le souhaitent. Ainsi, si vous tombez amoureux d\'une pièce que vous avez louée, vous aurez l\'option de la garder pour toujours.'
         },
         {
-          header: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ?',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate'
+          header: 'Comment assurez-vous la propreté et l\'hygiène des vêtements entre deux locations ?',
+          content: 'La propreté et l\'hygiène de nos articles sont de la plus haute importance pour nous. Chaque vêtement, après avoir été retourné, passe par un processus de nettoyage rigoureux et professionnel pour garantir qu\'il soit impeccable pour le prochain utilisateur. Nous respectons toutes les normes sanitaires et d\'hygiène et nous engageons à fournir à nos clients des produits sûrs et propres à chaque location.'
         }
       ]
     }
