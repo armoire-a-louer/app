@@ -176,4 +176,8 @@ html {
 .fade-leave-to {
   opacity: 0;
 }
+
+p {
+  line-height: 22px !important;
+}
 </style>
