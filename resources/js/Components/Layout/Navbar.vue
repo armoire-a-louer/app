@@ -36,7 +36,7 @@
             </div>
           </span>
           <span class="nav-dropdown">
-            <Link :href="route('search')">
+            <Link :href="route('search')" class="nav-a py-2 px-4">
               Marques
               <font-awesome-icon
                 icon="fa-solid fa-chevron-down"
