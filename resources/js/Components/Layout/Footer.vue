@@ -68,7 +68,7 @@
                     <div class="hidden lg:block"></div>
                 </div>
             </div>
-            <hr>
+            <hr style="opacity: 0.4;">
             <p class="text-white py-14">
                 © 2023 L’Armoire à louer - Tous droits réservés
             </p>
